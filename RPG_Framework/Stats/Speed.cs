@@ -73,7 +73,9 @@ namespace RPG_Framework.Stats
             SaveData.Save_SaveFile();
             XP_Events.NotifyStatIncrease("Swim Speed", gainedLevels, saveData.SwimSpeedLevel);
             if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost)
-                Log.InGameMSG("Swim Speed has reached max level");
+                Log.InGameMSG("Swim Speed is now max level");
+
+            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
         }
         #endregion
 
@@ -104,42 +106,11 @@ namespace RPG_Framework.Stats
             SaveData.Save_SaveFile();
             XP_Events.NotifyStatIncrease("Walk Speed", gainedLevels, saveData.WalkSpeedLevel);
             if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost)
-                Log.InGameMSG("Walk Speed has reached max level");
+                Log.InGameMSG("Walk Speed is now max level");
+
+            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
         }
 
         #endregion
-    }
-
-
-
-    [HarmonyPatch(typeof(Player))]
-    [HarmonyPatch("Update")]
-    class IncreaseSavedSpeed
-    {
-        private static SaveData saveData = SaveData.GetSaveData();
-        private static Config cfg = Config.GetConfig();
-        [HarmonyPostfix]
-        public static void PostFix(Player __instance)
-        {
-            if (Guard.IsGamePaused())
-                return;
-
-            if (__instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
-            {
-                if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
-
-                saveData.SwimDistanceTravelled += __instance.movementSpeed;
-                saveData.SwimSpeed_XP += __instance.movementSpeed;
-            }
-            else if (__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //add xp to walk speed
-            {
-                if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
-
-                saveData.WalkDistanceTravelled += __instance.movementSpeed;
-                saveData.WalkSpeed_XP += __instance.movementSpeed;
-            }
-
-            Player.main.playerController.SetMotorMode(__instance.motorMode);
-        }
-    }   
+    }  
 }

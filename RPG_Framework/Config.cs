@@ -14,10 +14,15 @@ namespace RPG_Framework
 
         public float XP_Multiplier { get; set; } = 1f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.10f;
+
         public float SwimXP_Modifier { get; set; } = 1.23f;
         public float WalkXP_Modifier { get; set; } = 1.23f;
+        public float HealthXP_Modifier { get; set; } = 1.23f;
+
         public int MaxSwimSpeedBoost { get; set; } = 15;
         public int MaxWalkSpeedBoost { get; set; } = 10;
+        public int MaxHealthBoost { get; set; } = 100;
+
         public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
         public int MaxWalkSpeedBoost_InSub { get; set; } = 5;
 
