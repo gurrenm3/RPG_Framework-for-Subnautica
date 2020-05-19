@@ -8,12 +8,6 @@ namespace RPG_Framework
 {
     class XP_Events
     {
-        public static void LevelUpStats(int currentLevel, float currentXPtoNextxLevel)
-        {
-            //float newXPtoNextLevel = XP_Handler.CalcXPToNextLevel(currentLevel, currentXPtoNextxLevel);
-            
-        }
-
         public static void AddExperience(float amount)
         {
             SaveData.GetSaveData().PlayerXP += Config.GetConfig().XP_Multiplier;
@@ -26,6 +20,10 @@ namespace RPG_Framework
         }
 
 
+
+        //
+        // Harmony Events
+        //
         #region Harmony Events
         [HarmonyPatch(typeof(CreatureDeath))]
         [HarmonyPatch("OnKill")]

@@ -14,10 +14,10 @@ namespace RPG_Framework.Stats
         private static Config cfg = Config.GetConfig();
         private static SaveData saveData = SaveData.GetSaveData();
 
-        //order is forward, back, strafe, accel
+        //order is: forward, back, strafe, accel
         List<float> swimBaseValues = new List<float> { 5f, 5f, 5f, 5f };
 
-        //order is forward, back, strafe, accel
+        //order is: forward, back, strafe, accel
         List<float> walkBaseValues = new List<float> { 3.5f, 5f, 5f, 5f };
 
         [HarmonyPostfix]
@@ -27,14 +27,10 @@ namespace RPG_Framework.Stats
                 return;
 
             if(Player.main.motorMode == Player.MotorMode.Dive)
-            {
                 UpdateSwimSpeed();
-            }
 
             else if (Player.main.motorMode == Player.MotorMode.Run || Player.main.motorMode == Player.MotorMode.Walk)
-            {
-                //setSpeed.UpdateLandSpeed(__instance);
-            }
+                UpdateWalkSpeed();
 
         }
         public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, List<float> baseValues)
@@ -52,9 +48,6 @@ namespace RPG_Framework.Stats
         {
             var __instance = Player.main.playerController;
             SetSpeed setSpeed = new SetSpeed();
-
-            /*Log.InGameMSG("Current magnitude is: " + __instance.velocity.magnitude);
-            Log.InGameMSG("Current SPEED/5 is: " + __instance.underWaterController.);*/
             UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
 
             if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
@@ -77,76 +70,38 @@ namespace RPG_Framework.Stats
             if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost)
                 Log.InGameMSG("Swim Speed has reached max level");
         }
-
-        
-        #endregion
-
-        /*#region Swim Speed stuff
-        public void UpdateSwimSpeedaaa(PlayerController __instance)
-        {
-            float boost = XP_Handler.CalcStatBoost(saveData.SwimDistanceTravelled, cfg.SwimSpeedBoost_Modifier);
-            //float boost = (saveData.SwimDistanceTravelled * cfg.SwimSpeedBoost_Modifier);
-            float baseSpeed = BaseForwardSwimSpeed;
-
-            if (boost + baseSpeed > cfg.MaxSwimSpeed)
-                boost = cfg.MaxSwimSpeed - baseSpeed;
-
-            __instance.underWaterController.forwardMaxSpeed = BaseForwardSwimSpeed + boost;
-            __instance.underWaterController.backwardMaxSpeed = BaseBackSwimSpeed + boost;
-            __instance.underWaterController.acceleration = BaseAccelSwimSpeed + boost;
-            __instance.underWaterController.strafeMaxSpeed = BaseStrafeSwimSpeed + boost;
-
-
-            if (baseSpeed + saveData.SwimSpeed_NextPassiveIncrease > cfg.MaxSwimSpeed)
-            {
-                saveData.SwimSpeed_PassiveIncrease = cfg.MaxSwimSpeed - baseSpeed;
-                return;
-            }
-            saveData.SwimSpeed_PassiveIncrease = boost;
-
-            if (StatNotify.HasStatIncrease(boost, saveData.SwimSpeed_NextPassiveIncrease))
-            {
-                if (NotifyStatIncrease("Swim Speed", BaseForwardSwimSpeed, boost,
-                    saveData.SwimSpeed_PassiveIncrease, saveData.SwimSpeed_NextPassiveIncrease))
-                    saveData.SwimSpeed_NextPassiveIncrease++;
-            }
-            //SwimSpeedNotify(boost);
-        }
         #endregion
 
 
-        #region Land Speed stuff
-        public void UpdateLandSpeed(PlayerController __instance)
+        #region Walk Speed stuff
+        public static void UpdateWalkSpeed()
         {
-            float boost = (saveData.LandDistanceTravelled * cfg.LandSpeedBoost_Modifier);
-            float baseSpeed = BaseForwardLandSpeed;
+            var __instance = Player.main.playerController;
+            SetSpeed setSpeed = new SetSpeed();
+            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
 
-            if (boost + baseSpeed > cfg.MaxLandSpeed)
-                boost = cfg.MaxLandSpeed - baseSpeed;
-
-            __instance.groundController.forwardMaxSpeed = BaseForwardLandSpeed + boost;
-            __instance.groundController.backwardMaxSpeed = BaseBackLandSpeed + boost;
-            __instance.groundController.acceleration = BaseAccelLandSpeed + boost;
-            __instance.groundController.strafeMaxSpeed = BaseStrafeLandSpeed + boost;
-
-
-            if (baseSpeed + saveData.LandSpeed_NextPassiveIncrease > cfg.MaxLandSpeed)
-            {
-                saveData.LandSpeed_PassiveIncrease = cfg.MaxLandSpeed - baseSpeed;
+            if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
+            if (!XP_Handler.DoesHaveLevelUp(saveData.WalkSpeed_XP, saveData.WalkSpeed_XPToNextLevel))
                 return;
-            }
-            saveData.LandSpeed_PassiveIncrease = boost;
 
-            if (StatNotify.HasStatIncrease(boost, saveData.LandSpeed_NextPassiveIncrease))
+            int gainedLevels = 0;
+            while (saveData.WalkSpeed_XP >= saveData.WalkSpeed_XPToNextLevel)
             {
-                if(NotifyStatIncrease("Walk Speed", BaseForwardLandSpeed, boost, 
-                    saveData.LandSpeed_PassiveIncrease, saveData.LandSpeed_NextPassiveIncrease))
-                    saveData.LandSpeed_NextPassiveIncrease++;
+                if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) break;
+                gainedLevels++;
+                saveData.WalkSpeedLevel++;
+                saveData.WalkSpeed_XP -= saveData.WalkSpeed_XPToNextLevel;
+                if (saveData.WalkSpeed_XP < 0) saveData.WalkSpeed_XP = 0;
+
+                saveData.WalkSpeed_XPToNextLevel = XP_Handler.CalcXPToNextLevel(saveData.WalkSpeed_XPToNextLevel, cfg.WalkXP_Modifier);
             }
-            
+            SaveData.Save_SaveFile();
+            XP_Events.NotifyStatIncrease("Walk Speed", gainedLevels, saveData.WalkSpeedLevel);
+            if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost)
+                Log.InGameMSG("Walk Speed has reached max level");
         }
-        
-        #endregion*/
+
+        #endregion
     }
 
 
@@ -163,19 +118,22 @@ namespace RPG_Framework.Stats
             if (Guard.IsGamePaused())
                 return;
 
-            if (__instance.motorMode == Player.MotorMode.Dive)
+            if (__instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
                 if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
 
                 saveData.SwimDistanceTravelled += __instance.movementSpeed;
                 saveData.SwimSpeed_XP += __instance.movementSpeed;
             }
-            /*else if(__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //do on land stuff
-                saveData.LandDistanceTravelled += __instance.movementSpeed;*/
+            else if (__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //add xp to walk speed
+            {
+                if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
+
+                saveData.WalkDistanceTravelled += __instance.movementSpeed;
+                saveData.WalkSpeed_XP += __instance.movementSpeed;
+            }
 
             Player.main.playerController.SetMotorMode(__instance.motorMode);
         }
-    }
-
-    
+    }   
 }

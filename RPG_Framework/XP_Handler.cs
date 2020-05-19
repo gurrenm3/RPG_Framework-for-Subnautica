@@ -22,18 +22,5 @@ namespace RPG_Framework
 
             return false;
         }
-
-
-
-
-        public static float CalcStatBoost(float total, float modifier)
-        {
-            float boost = total * modifier;
-            float baseLevel = (float)Math.Truncate(total * modifier);
-            float newModifier = 1 / ((1 / modifier / 4 * baseLevel * 2) + (1 / modifier));
-
-
-            return boost;
-        }
     }
 }

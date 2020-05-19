@@ -11,7 +11,5 @@ namespace RPG_Framework.LevelUp
         {
 
         }
-
-        
     }
 }
