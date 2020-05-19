@@ -27,7 +27,7 @@ namespace RPG_Framework
 
         public static Config LoadConfig()
         {
-            Log.Output("Loading SaveData...");
+            Log.Output("Loading Config...");
             if (!File.Exists(ConfigPath) || File.ReadAllText(ConfigPath).Length == 0)
             {
                 Log.Output("Config file doesn't exist or it is empty. Creating a new one");

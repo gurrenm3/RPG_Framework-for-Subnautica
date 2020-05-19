@@ -18,24 +18,38 @@ namespace RPG_Framework
         public int PlayerLevel { get; set; }
         public float PlayerXP { get; set; }
 
-        //Swim Speed stuff
+
+        #region Attack stuff
+        
+        #endregion
+
+        #region Swim Stuff
+        //Main Swim Speed stuff
+        public float SwimDistanceTravelled { get; set; } = 0f;
         public float SwimSpeed_PassiveIncrease { get; set; } = 0f;
         public float SwimSpeed_NextPassiveIncrease { get; set; } = 0f;
-        public float SwimDistanceTravelled { get; set; } = 0f;
+
+        //Added Swim Speed stuff
         public float AddedForwardSwimSpeed { get; set; } = 0f;
         public float AddedBackwardSwimSpeed { get; set; } = 0f;
         public float AddedStrafeSwimSpeed { get; set; } = 0f;
         public float AddedSwimAcceleration { get; set; } = 0f;
+        #endregion
 
-
-        //Land Speed stuff
+        #region Land speed stuff
+        //Main Land Speed stuff
+        public float LandDistanceTravelled { get; set; } = 0f;
         public float LandSpeed_PassiveIncrease { get; set; } = 0f;
         public float LandSpeed_NextPassiveIncrease { get; set; } = 0f;
-        public float LandDistanceTravelled { get; set; } = 0f;
+
+
+        //Added Swim Speed stuff
         public float AddedForwardLandSpeed { get; set; } = 0f;
         public float AddedBackwardLandSpeed { get; set; } = 0f;
         public float AddedStrafeLandSpeed { get; set; } = 0f;
         public float AddedLandAcceleration { get; set; } = 0f;
+        #endregion
+
 
         public static SaveData GetSaveData()
         {
@@ -61,11 +75,7 @@ namespace RPG_Framework
                 saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(SaveDataPath));
 
                 //Set next level stuff for proper notifications
-                float swimNextLevel = (float)Math.Truncate((saveData.SwimDistanceTravelled * Config.GetConfig().SwimSpeedBoost_Modifier)) + 1;
-                saveData.SwimSpeed_NextPassiveIncrease = swimNextLevel;
-
-                float landNextLevel = (float)Math.Truncate((saveData.LandDistanceTravelled * Config.GetConfig().LandSpeedBoost_Modifier)) + 1;
-                saveData.LandSpeed_NextPassiveIncrease = landNextLevel;
+                saveData.SetStatNextLevels();
 
                 Log.Output("Successfully loaded SaveData");
                 return saveData;
@@ -77,6 +87,14 @@ namespace RPG_Framework
                 Save_SaveFile();
                 return saveData;
             }
+        }
+        public void SetStatNextLevels()
+        {
+            float swimNextLevel = (float)Math.Truncate((saveData.SwimDistanceTravelled * Config.GetConfig().SwimSpeedBoost_Modifier)) + 1;
+            saveData.SwimSpeed_NextPassiveIncrease = swimNextLevel;
+
+            float landNextLevel = (float)Math.Truncate((saveData.LandDistanceTravelled * Config.GetConfig().LandSpeedBoost_Modifier)) + 1;
+            saveData.LandSpeed_NextPassiveIncrease = landNextLevel;
         }
 
         public static void Save_SaveFile() => Save_SaveFile(saveData);

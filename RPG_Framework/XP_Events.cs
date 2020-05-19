@@ -23,8 +23,8 @@ namespace RPG_Framework
             //public static void Postfix(CreatureDeath __instance) => AddXP.OnCreatureKilled(__instance);
             public static void Postfix(CreatureDeath __instance)
             {
-                Log.InGameMSG("Killed " + CreatureClass.GetName(__instance));
-                AddXP.OnCreatureKilled(__instance);
+                //Log.InGameMSG("Killed " + CreatureClass.GetName(__instance));
+                //AddXP.OnCreatureKilled(__instance);
             }
         }
 

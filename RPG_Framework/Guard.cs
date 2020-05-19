@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using UnityEngine;
 
 namespace RPG_Framework
 {
@@ -19,6 +20,9 @@ namespace RPG_Framework
 
         public static bool IsGamePaused()
         {
+            if (Time.timeScale == 0f)
+                return true;
+
             return false;
         }
     }
