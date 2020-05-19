@@ -14,10 +14,13 @@ namespace RPG_Framework
 
         public float XP_Multiplier { get; set; } = 1f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.10f;
-        public float SwimSpeedBoost_Modifier { get; set; } = 0.00001f;
+        public float SwimXP_Modifier { get; set; } = 1.23f;
         public float LandSpeedBoost_Modifier { get; set; } = 0.00001f;
-        public float MaxSwimSpeed { get; set; } = 18f;
-        public float MaxLandSpeed { get; set; } = 10f;
+        public int MaxSwimSpeedBoost { get; set; } = 15;
+        public int MaxWalkSpeedBoost { get; set; } = 10;
+
+        //public float MaxSwimSpeed { get; set; } = 18f;
+        //public float MaxLandSpeed { get; set; } = 10f;
 
         public static Config GetConfig()
         {
@@ -39,6 +42,7 @@ namespace RPG_Framework
             try
             {
                 Cfg = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath));
+                SaveConfig();   //Saving so new properties get added to file
                 Log.Output("Successfully loaded Config");
                 return Cfg;
             }

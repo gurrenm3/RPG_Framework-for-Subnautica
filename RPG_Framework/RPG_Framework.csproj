@@ -68,7 +68,7 @@
     <Compile Include="Stats\StatNotify.cs" />
     <Compile Include="Stats\Speed.cs" />
     <Compile Include="XP_Events.cs" />
-    <Compile Include="AddXP.cs" />
+    <Compile Include="XP_Handler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Perks\" />

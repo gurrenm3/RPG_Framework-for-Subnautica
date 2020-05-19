@@ -14,15 +14,11 @@ namespace RPG_Framework.Stats
         private static Config cfg = Config.GetConfig();
         private static SaveData saveData = SaveData.GetSaveData();
 
-        const float BaseForwardSwimSpeed = 5f;
-        const float BaseBackSwimSpeed = 5f;
-        const float BaseStrafeSwimSpeed = 5f;
-        const float BaseAccelSwimSpeed = 5f;
+        //order is forward, back, strafe, accel
+        List<float> swimBaseValues = new List<float> { 5f, 5f, 5f, 5f };
 
-        const float BaseForwardLandSpeed = 3.5f;
-        const float BaseBackLandSpeed = 5f;
-        const float BaseStrafeLandSpeed = 5f;
-        const float BaseAccelLandSpeed = 5f;
+        //order is forward, back, strafe, accel
+        List<float> walkBaseValues = new List<float> { 3.5f, 5f, 5f, 5f };
 
         [HarmonyPostfix]
         public static void PostFix(PlayerController __instance)
@@ -30,36 +26,65 @@ namespace RPG_Framework.Stats
             if (Guard.IsGamePaused())
                 return;
 
-            SetSpeed setSpeed = new SetSpeed();
             if(Player.main.motorMode == Player.MotorMode.Dive)
             {
-                setSpeed.UpdateSwimSpeed(__instance);
+                UpdateSwimSpeed();
             }
 
             else if (Player.main.motorMode == Player.MotorMode.Run || Player.main.motorMode == Player.MotorMode.Walk)
             {
-                setSpeed.UpdateLandSpeed(__instance);
+                //setSpeed.UpdateLandSpeed(__instance);
             }
 
         }
-        public bool NotifyStatIncrease(string statName, float baseSpeed, float boost, float currentLevel, float nextLevel)
+        public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, List<float> baseValues)
         {
-            float increase = (float)Math.Truncate((boost + 1) - nextLevel);
-            StatNotify.NotifyStatIncrease(statName, increase, currentLevel);
-
-            if (nextLevel + baseSpeed > cfg.MaxSwimSpeed)
-            {
-                Log.InGameMSG("Your " + statName + " is max level");
-                return false;
-            }
-
-            return true;
+            __instance.forwardMaxSpeed = baseValues[0] + currentBoost;
+            __instance.backwardMaxSpeed = baseValues[1] + currentBoost;
+            __instance.acceleration = baseValues[2] + currentBoost;
+            __instance.strafeMaxSpeed = baseValues[3] + currentBoost;
         }
+
+
 
         #region Swim Speed stuff
-        public void UpdateSwimSpeed(PlayerController __instance)
+        public static void UpdateSwimSpeed()
         {
-            float boost = AddXP.CalcStatBoost(saveData.SwimDistanceTravelled, cfg.SwimSpeedBoost_Modifier);
+            var __instance = Player.main.playerController;
+            SetSpeed setSpeed = new SetSpeed();
+
+            /*Log.InGameMSG("Current magnitude is: " + __instance.velocity.magnitude);
+            Log.InGameMSG("Current SPEED/5 is: " + __instance.underWaterController.);*/
+            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+
+            if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
+            if (!XP_Handler.DoesHaveLevelUp(saveData.SwimSpeed_XP, saveData.SwimSpeed_XPToNextLevel))
+                return;
+
+            int gainedLevels = 0;
+            while (saveData.SwimSpeed_XP >= saveData.SwimSpeed_XPToNextLevel)
+            {
+                if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) break;
+                gainedLevels++;
+                saveData.SwimSpeedLevel++;
+                saveData.SwimSpeed_XP -= saveData.SwimSpeed_XPToNextLevel;
+                if (saveData.SwimSpeed_XP < 0) saveData.SwimSpeed_XP = 0;
+
+                saveData.SwimSpeed_XPToNextLevel = XP_Handler.CalcXPToNextLevel(saveData.SwimSpeed_XPToNextLevel, cfg.SwimXP_Modifier);
+            }
+            SaveData.Save_SaveFile();
+            XP_Events.NotifyStatIncrease("Swim Speed", gainedLevels, saveData.SwimSpeedLevel);
+            if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost)
+                Log.InGameMSG("Swim Speed has reached max level");
+        }
+
+        
+        #endregion
+
+        /*#region Swim Speed stuff
+        public void UpdateSwimSpeedaaa(PlayerController __instance)
+        {
+            float boost = XP_Handler.CalcStatBoost(saveData.SwimDistanceTravelled, cfg.SwimSpeedBoost_Modifier);
             //float boost = (saveData.SwimDistanceTravelled * cfg.SwimSpeedBoost_Modifier);
             float baseSpeed = BaseForwardSwimSpeed;
 
@@ -121,7 +146,7 @@ namespace RPG_Framework.Stats
             
         }
         
-        #endregion
+        #endregion*/
     }
 
 
@@ -131,19 +156,22 @@ namespace RPG_Framework.Stats
     class IncreaseSavedSpeed
     {
         private static SaveData saveData = SaveData.GetSaveData();
+        private static Config cfg = Config.GetConfig();
         [HarmonyPostfix]
         public static void PostFix(Player __instance)
         {
             if (Guard.IsGamePaused())
                 return;
 
-            if (__instance.motorMode == Player.MotorMode.Dive)  //do underwater stuff
+            if (__instance.motorMode == Player.MotorMode.Dive)
             {
+                if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
+
                 saveData.SwimDistanceTravelled += __instance.movementSpeed;
-                //Log.InGameMSG("dist: " + SaveData.GetSaveData().SwimDistance);    //Temporary. Being used to test if paused
+                saveData.SwimSpeed_XP += __instance.movementSpeed;
             }
-            else if(__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //do on land stuff
-                saveData.LandDistanceTravelled += __instance.movementSpeed;
+            /*else if(__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //do on land stuff
+                saveData.LandDistanceTravelled += __instance.movementSpeed;*/
 
             Player.main.playerController.SetMotorMode(__instance.motorMode);
         }

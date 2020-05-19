@@ -7,19 +7,24 @@ using RPG_Framework.LevelUp;
 
 namespace RPG_Framework
 {
-    public class AddXP
+    public class XP_Handler
     {
-        public static void OnCreatureKilled(CreatureDeath __instance)
+        public static float CalcXPToNextLevel(float currentXPtoNextLevel, float xpModifier)
         {
-            AddExperience(__instance.liveMixin.maxHealth * Config.GetConfig().OnKillcreatureKillXP_Modifier);
-            Player.main.playerController.SetMotorMode(Player.main.motorMode);
+            float xpNextLevel = (currentXPtoNextLevel * xpModifier);
+            return xpNextLevel;
         }
 
-        public static void AddExperience(float amount)
+        public static bool DoesHaveLevelUp(float currentXP, float XPtoNextLevel)
         {
-            SaveData.GetSaveData().PlayerXP += Config.GetConfig().XP_Multiplier;
-            SaveData.Save_SaveFile();
+            if (currentXP >= XPtoNextLevel)
+                return true;
+
+            return false;
         }
+
+
+
 
         public static float CalcStatBoost(float total, float modifier)
         {
