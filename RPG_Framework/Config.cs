@@ -17,11 +17,11 @@ namespace RPG_Framework
 
         public float SwimXP_Modifier { get; set; } = 1.23f;
         public float WalkXP_Modifier { get; set; } = 1.23f;
-        public float HealthXP_Modifier { get; set; } = 1.23f;
+        public float HealthXP_Modifier { get; set; } = 1.25f;
 
-        public int MaxSwimSpeedBoost { get; set; } = 15;
-        public int MaxWalkSpeedBoost { get; set; } = 10;
-        public int MaxHealthBoost { get; set; } = 100;
+        public int MaxSwimSpeedBoost { get; set; } = 20;
+        public int MaxWalkSpeedBoost { get; set; } = 15;
+        public int MaxHealthBoost { get; set; } = 150;
 
         public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
         public int MaxWalkSpeedBoost_InSub { get; set; } = 5;
