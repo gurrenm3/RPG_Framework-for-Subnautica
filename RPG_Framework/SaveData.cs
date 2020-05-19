@@ -29,7 +29,7 @@ namespace RPG_Framework
         public float SwimDistanceTravelled { get; set; } = 0f;
         public int SwimSpeedLevel { get; set; } = 0;
         public float SwimSpeed_XP { get; set; } = 0f;
-        public float SwimSpeed_XPToNextLevel { get; set; } = 7500f;
+        public float SwimSpeed_XPToNextLevel { get; set; } = 6500f;
         #endregion
 
         #region Land speed stuff
@@ -37,7 +37,7 @@ namespace RPG_Framework
         public float WalkDistanceTravelled { get; set; } = 0f;
         public int WalkSpeedLevel { get; set; } = 0;
         public float WalkSpeed_XP { get; set; }
-        public float WalkSpeed_XPToNextLevel { get; set; } = 7500f;
+        public float WalkSpeed_XPToNextLevel { get; set; } = 6500f;
         #endregion
 
 

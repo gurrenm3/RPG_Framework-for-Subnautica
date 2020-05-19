@@ -34,7 +34,12 @@ namespace RPG_Framework.Stats
 
         }
         public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, List<float> baseValues)
+            => UpdatePlayerController(__instance, currentBoost, baseValues, -999);
+
+        public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, List<float> baseValues, int max)
         {
+            if (max != -999) if(currentBoost > max) currentBoost = max;
+
             __instance.forwardMaxSpeed = baseValues[0] + currentBoost;
             __instance.backwardMaxSpeed = baseValues[1] + currentBoost;
             __instance.acceleration = baseValues[2] + currentBoost;
@@ -78,6 +83,7 @@ namespace RPG_Framework.Stats
         {
             var __instance = Player.main.playerController;
             SetSpeed setSpeed = new SetSpeed();
+
             UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
 
             if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;

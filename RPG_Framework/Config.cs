@@ -18,6 +18,8 @@ namespace RPG_Framework
         public float WalkXP_Modifier { get; set; } = 1.23f;
         public int MaxSwimSpeedBoost { get; set; } = 15;
         public int MaxWalkSpeedBoost { get; set; } = 10;
+        public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
+        public int MaxWalkSpeedBoost_InSub { get; set; } = 5;
 
         public static Config GetConfig()
         {
