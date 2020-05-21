@@ -95,8 +95,9 @@ namespace RPG_Framework
             if (Guard.IsGamePaused())
                 return;
 
+            SaveData.GetSaveData(true);
             Log.InGameMSG("All the XP you have gained since your last save is lost");
-            SaveData.LoadSave(true);
+            
         }
     }
 }

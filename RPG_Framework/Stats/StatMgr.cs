@@ -7,8 +7,7 @@ namespace RPG_Framework.Stats
 {
     class StatMgr
     {
-        private static Config cfg = Config.GetConfig();
-        public static SaveData saveData = SaveData.GetSaveData();
+        private static Config cfg = Config.GetConfig();        
 
         public static float AddXP(float current, float max)
         {

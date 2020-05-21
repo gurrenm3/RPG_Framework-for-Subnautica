@@ -12,7 +12,7 @@ namespace RPG_Framework.Stats
     class SetSpeed
     {
         private static Config cfg = Config.GetConfig();
-        //private static SaveData saveData = SaveData.GetSaveData();
+        private static SaveData saveData = SaveData.GetSaveData();
 
         //order is: forward, back, strafe, accel
         List<float> swimBaseValues = new List<float> { 5f, 5f, 5f, 5f };
@@ -62,16 +62,16 @@ namespace RPG_Framework.Stats
             StatObject stat = new StatObject()
             {
                 Name = "Swim Speed",
-                Level = StatMgr.saveData.SwimSpeedLevel,
+                Level = saveData.SwimSpeedLevel,
                 MaxLevel = cfg.MaxSwimSpeedBoost,
-                XP = StatMgr.saveData.SwimSpeed_XP,
-                XPToNextLevel = StatMgr.saveData.SwimSpeed_XPToNextLevel,
+                XP = saveData.SwimSpeed_XP,
+                XPToNextLevel = saveData.SwimSpeed_XPToNextLevel,
                 Modifier = cfg.SwimXP_Modifier
             };
 
             if (!StatMgr.CanLevelUp(stat))
             {
-                UpdatePlayerController(__instance.underWaterController, StatMgr.saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+                UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
                 SaveData.Save_SaveFile();
                 return;
             }
@@ -79,12 +79,12 @@ namespace RPG_Framework.Stats
             int gainedLevels = StatMgr.DoWhileLevelUp(stat);
             StatMgr.NotifyLevelUp(stat, gainedLevels);
 
-            StatMgr.saveData.SwimSpeedLevel = stat.Level;
-            StatMgr.saveData.SwimSpeed_XP = stat.XP;
-            StatMgr.saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
+            saveData.SwimSpeedLevel = stat.Level;
+            saveData.SwimSpeed_XP = stat.XP;
+            saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
 
-            UpdatePlayerController(__instance.underWaterController, StatMgr.saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
         }
         #endregion
 

@@ -161,15 +161,19 @@ namespace RPG_Framework
         public float Air_XPToNextLevel { get; set; } = 1500f;
         #endregion
 
-        public static SaveData GetSaveData()
+        public static SaveData GetSaveData() => GetSaveData(false);
+        public static SaveData GetSaveData(bool reloadSave)
         {
             if (saveData == null)
                 saveData = LoadSave();
 
+            if(reloadSave == true)
+                saveData = LoadSave();
+
             return saveData;
         }
-        public static SaveData LoadSave() => LoadSave(false);
-        public static SaveData LoadSave(bool playerDied)
+
+        public static SaveData LoadSave()
         {
             string SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
                 + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), "RPGSaveData.json");
@@ -186,8 +190,7 @@ namespace RPG_Framework
 
             try
             {
-                if (playerDied) saveData = new SaveData();
-                else saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(SaveDataPath));
+                saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(SaveDataPath));
                 //Save_SaveFile();    //Saving here to add new properties to json file
                 Log.Output("Successfully loaded SaveData");
                 return saveData;
