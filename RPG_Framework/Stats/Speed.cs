@@ -12,7 +12,7 @@ namespace RPG_Framework.Stats
     class SetSpeed
     {
         private static Config cfg = Config.GetConfig();
-        private static SaveData saveData = SaveData.GetSaveData();
+        //private static SaveData saveData = SaveData.GetSaveData();
 
         //order is: forward, back, strafe, accel
         List<float> swimBaseValues = new List<float> { 5f, 5f, 5f, 5f };
@@ -58,29 +58,33 @@ namespace RPG_Framework.Stats
         {
             var __instance = Player.main.playerController;
             SetSpeed setSpeed = new SetSpeed();
-            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
 
             StatObject stat = new StatObject()
             {
                 Name = "Swim Speed",
-                Level = saveData.SwimSpeedLevel,
+                Level = StatMgr.saveData.SwimSpeedLevel,
                 MaxLevel = cfg.MaxSwimSpeedBoost,
-                XP = saveData.SwimSpeed_XP,
-                XPToNextLevel = saveData.SwimSpeed_XPToNextLevel,
+                XP = StatMgr.saveData.SwimSpeed_XP,
+                XPToNextLevel = StatMgr.saveData.SwimSpeed_XPToNextLevel,
                 Modifier = cfg.SwimXP_Modifier
             };
 
-            if (!StatMgr.CanLevelUp(stat)) return;
+            if (!StatMgr.CanLevelUp(stat))
+            {
+                UpdatePlayerController(__instance.underWaterController, StatMgr.saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+                SaveData.Save_SaveFile();
+                return;
+            }
 
             int gainedLevels = StatMgr.DoWhileLevelUp(stat);
             StatMgr.NotifyLevelUp(stat, gainedLevels);
 
-            saveData.SwimSpeedLevel = stat.Level;
-            saveData.SwimSpeed_XP = stat.XP;
-            saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
+            StatMgr.saveData.SwimSpeedLevel = stat.Level;
+            StatMgr.saveData.SwimSpeed_XP = stat.XP;
+            StatMgr.saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
 
-            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+            UpdatePlayerController(__instance.underWaterController, StatMgr.saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
         }
         #endregion
 
@@ -88,10 +92,8 @@ namespace RPG_Framework.Stats
         #region Walk Speed stuff
         public static void UpdateWalkSpeed()
         {
-            var __instance = Player.main.playerController;
+            /*var __instance = Player.main.playerController;
             SetSpeed setSpeed = new SetSpeed();
-
-            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
 
             StatObject stat = new StatObject()
             {
@@ -103,7 +105,12 @@ namespace RPG_Framework.Stats
                 Modifier = cfg.WalkXP_Modifier
             };
 
-            if (!StatMgr.CanLevelUp(stat)) return;
+            if (!StatMgr.CanLevelUp(stat))
+            {
+                UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
+                SaveData.Save_SaveFile();
+                return;
+            }
 
             int gainedLevels = StatMgr.DoWhileLevelUp(stat);
             StatMgr.NotifyLevelUp(stat, gainedLevels);
@@ -113,7 +120,7 @@ namespace RPG_Framework.Stats
             saveData.WalkSpeed_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
 
-            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
+            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);*/
         }
 
         #endregion

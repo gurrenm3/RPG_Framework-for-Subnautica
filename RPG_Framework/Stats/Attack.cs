@@ -19,6 +19,7 @@ namespace RPG_Framework.Stats
         public static void Postfix(DamageInfo damageInfo)
         {
             //dealer is null for some reason. Will try again later
+
         }
     }
 }

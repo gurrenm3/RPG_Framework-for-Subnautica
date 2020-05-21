@@ -54,11 +54,13 @@ namespace RPG_Framework.Stats
                 ApplyStarveResist(__instance, damageInfo);
             else if (damageInfo.type == DamageType.Undefined)
                 ApplyUndefinedResist(__instance, damageInfo);
+
+            SaveData.Save_SaveFile();
         }
 
         public static void IgnoreDamage(Player __instance, DamageInfo damageInfo, float amountToIgnore)
         {
-            if (__instance.liveMixin.health <= 1) return;
+            if (__instance.liveMixin.health <= 1 && damageInfo.damage >=1 && amountToIgnore != 100) return;
 
             float percentIgnore = amountToIgnore / 100;
             float numToIgnore = damageInfo.damage * percentIgnore;

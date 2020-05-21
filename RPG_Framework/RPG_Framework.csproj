@@ -73,6 +73,7 @@
     <Compile Include="Stats\Air.cs" />
     <Compile Include="Stats\Speed.cs" />
     <Compile Include="Stats\StatMgr.cs" />
+    <Compile Include="Stats\Suffocation.cs" />
     <Compile Include="XP_Events.cs" />
     <Compile Include="XP_Handler.cs" />
   </ItemGroup>

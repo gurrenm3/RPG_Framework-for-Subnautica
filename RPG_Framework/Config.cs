@@ -11,9 +11,9 @@ namespace RPG_Framework
     {
         private static Config Cfg;
         public static string ConfigPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\Config.json";
-        public static int defaultMaxResistLvl = 38;
-        public static float defaultResistModifier = 1.5f;
-        
+        public static float DefResistanceXPModifier = 1.5f;
+        public static int DefResistanceMaxLvl = 38;
+
         public float XP_Multiplier { get; set; } = 1f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.10f;
 
@@ -37,48 +37,54 @@ namespace RPG_Framework
         //
         //Resistance modifiers
         //
-        public float ResistancePerLevel { get; } = 2.5f;
+        public float PercentResistancePerLevel { get; } = 2.5f;
+        public int MaxResistanceLevel { get; set; } = 38;
+        public float ResistanceXPModifier { get; set; } = 1.5f;
 
-        public float AcidResistModifier { get; set; } = defaultResistModifier;
-        public float ColdResistModifier { get; set; } = defaultResistModifier;
-        public float CollideResistModifier { get; set; } = defaultResistModifier;
-        public float DrillResistModifier { get; set; } = defaultResistModifier;
-        public float ElectricResistModifier { get; set; } = defaultResistModifier;
-        public float ExplosiveResistModifier { get; set; } = defaultResistModifier;
-        public float FireResistModifier { get; set; } = defaultResistModifier;
-        public float HeatResistModifier { get; set; } = defaultResistModifier;
-        public float LaserCutterResistModifier { get; set; } = defaultResistModifier;
-        public float NormalResistModifier { get; set; } = defaultResistModifier;
-        public float PoisonResistModifier { get; set; } = defaultResistModifier;
-        public float PressureResistModifier { get; set; } = defaultResistModifier;
-        public float PunctureResistModifier { get; set; } = defaultResistModifier;
-        public float RadResistModifier { get; set; } = defaultResistModifier;
-        public float SmokeResistModifier { get; set; } = defaultResistModifier;
-        public float StarveResistModifier { get; set; } = defaultResistModifier;
-        public float UndefinedResistModifier { get; set; } = defaultResistModifier;
+        public float SuffocateResistModifier { get; set; } = 1.35f;
+
+        public float AcidResistModifier { get; set; } = DefResistanceXPModifier;
+        public float ColdResistModifier { get; set; } = DefResistanceXPModifier;
+        public float CollideResistModifier { get; set; } = DefResistanceXPModifier;
+        public float DrillResistModifier { get; set; } = DefResistanceXPModifier;
+        public float ElectricResistModifier { get; set; } = DefResistanceXPModifier;
+        public float ExplosiveResistModifier { get; set; } = DefResistanceXPModifier;
+        public float FireResistModifier { get; set; } = DefResistanceXPModifier;
+        public float HeatResistModifier { get; set; } = DefResistanceXPModifier;
+        public float LaserCutterResistModifier { get; set; } = DefResistanceXPModifier;
+        public float NormalResistModifier { get; set; } = DefResistanceXPModifier;
+        public float PoisonResistModifier { get; set; } = DefResistanceXPModifier;
+        public float PressureResistModifier { get; set; } = DefResistanceXPModifier;
+        public float PunctureResistModifier { get; set; } = DefResistanceXPModifier;
+        public float RadResistModifier { get; set; } = DefResistanceXPModifier;
+        public float SmokeResistModifier { get; set; } = DefResistanceXPModifier;
+        public float StarveResistModifier { get; set; } = DefResistanceXPModifier;
+        public float UndefinedResistModifier { get; set; } = DefResistanceXPModifier;
 
 
 
         //
         //max resistance levels
         //
-        public int MaxAcidResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxColdResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxCollideResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxDrillResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxElectricResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxExplosiveResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxFireResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxHeatResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxLaserCutterResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxNormalResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxPoisonResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxPressureResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxPunctureResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxRadResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxSmokeResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxStarveResistLevel { get; set; } = defaultMaxResistLvl;
-        public int MaxUndefinedResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxSuffocateResistLevel { get; set; } = 17;
+
+        public int MaxAcidResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxColdResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxCollideResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxDrillResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxElectricResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxExplosiveResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxFireResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxHeatResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxLaserCutterResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxNormalResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxPoisonResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxPressureResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxPunctureResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxRadResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxSmokeResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxStarveResistLevel { get; set; } = DefResistanceMaxLvl;
+        public int MaxUndefinedResistLevel { get; set; } = DefResistanceMaxLvl;
 
         public static Config GetConfig()
         {
@@ -100,6 +106,8 @@ namespace RPG_Framework
             try
             {
                 Cfg = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath));
+                DefResistanceMaxLvl = Cfg.MaxResistanceLevel;
+                DefResistanceXPModifier = Cfg.ResistanceXPModifier;
                 SaveConfig();   //Saving so new properties get added to file
                 Log.Output("Successfully loaded Config");
                 return Cfg;

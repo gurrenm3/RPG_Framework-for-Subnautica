@@ -12,7 +12,7 @@ namespace RPG_Framework.Stats
 
         public static void UpdateFood(Player __instance)
         {
-            
+
             /*StatObject stat = new StatObject()
             {
                 Name = "Max Food",
@@ -23,7 +23,11 @@ namespace RPG_Framework.Stats
                 Modifier = cfg.FoodXP_Modifier
             };
 
-            if (!StatMgr.CanLevelUp(stat)) return;
+            if (!StatMgr.CanLevelUp(stat)) 
+            {
+                SaveData.Save_SaveFile();
+                return;
+            }
 
             int gainedLevels = StatMgr.DoWhileLevelUp(stat);
             StatMgr.NotifyLevelUp(stat, gainedLevels);

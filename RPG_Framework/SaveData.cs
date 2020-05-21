@@ -13,8 +13,13 @@ namespace RPG_Framework
     class SaveData
     {
         private static SaveData saveData;
-        public static string SaveDataPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\SaveData\\SaveData.json";
-        public static float resistBaseXP = 75;//100f;
+        //public static string SaveDataPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\SaveData\\SaveData.json";
+        public static string TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), "SaveData.json");
+
+        private static string SaveSlot = "";
+        private static string LastSaveSlot = "";
+        //public static string SaveDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveSlot, "SaveData.json");
+        public static float resistBaseXP = 125f;//100f;
 
         public int PlayerLevel { get; set; } = 0;
         public float PlayerXP { get; set; } = 0f;
@@ -57,6 +62,13 @@ namespace RPG_Framework
 
 
         #region Damage Resistance
+
+        //Suffocation isnt technically damage type but its going in here anyways
+        public int SuffocateResistLevel { get; set; }
+        public float SuffocateResist_XP { get; set; }
+        public float SuffocateResist_XPToNextLevel { get; set; } = 50;
+
+
         public int AcidResistLevel { get; set; }
         public float AcidResist_XP { get; set; }
         public float AcidResist_XPToNextLevel { get; set; } = resistBaseXP;
@@ -156,10 +168,14 @@ namespace RPG_Framework
 
             return saveData;
         }
-
-        public static SaveData LoadSave()
+        public static SaveData LoadSave() => LoadSave(false);
+        public static SaveData LoadSave(bool playerDied)
         {
+            string SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
+                + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), "RPGSaveData.json");
+
             Log.Output("Loading SaveData...");
+
             if (!File.Exists(SaveDataPath) || File.ReadAllText(SaveDataPath).Length == 0)
             {
                 Log.Output("SaveData file doesn't exist or it is empty. Creating a new one");
@@ -170,8 +186,9 @@ namespace RPG_Framework
 
             try
             {
-                saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(SaveDataPath));
-                Save_SaveFile();    //Saving here to add new properties to json file
+                if (playerDied) saveData = new SaveData();
+                else saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(SaveDataPath));
+                //Save_SaveFile();    //Saving here to add new properties to json file
                 Log.Output("Successfully loaded SaveData");
                 return saveData;
             }
@@ -190,13 +207,13 @@ namespace RPG_Framework
         {
             if (save == null) save = new SaveData();
 
-            FileInfo savePath = new FileInfo(SaveDataPath);
-            if (!Directory.Exists(savePath.FullName.Replace("\\" + savePath.Name, "")))
-                Directory.CreateDirectory(savePath.FullName.Replace("\\" + savePath.Name, ""));
+            FileInfo savePath = new FileInfo(TempSaveDataPath);
+            /*if (!Directory.Exists(savePath.FullName.Replace("\\" + savePath.Name, "")))
+                Directory.CreateDirectory(savePath.FullName.Replace("\\" + savePath.Name, ""));*/
 
             string output_Cfg = JsonConvert.SerializeObject(save, Formatting.Indented);
 
-            StreamWriter serialize = new StreamWriter(SaveDataPath, false);
+            StreamWriter serialize = new StreamWriter(TempSaveDataPath, false);
             serialize.Write(output_Cfg);
             serialize.Close();
         }

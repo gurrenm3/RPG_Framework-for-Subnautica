@@ -9,15 +9,14 @@ namespace RPG_Framework
 {
     [HarmonyPatch(typeof(Player))]
     [HarmonyPatch("OnTakeDamage")]
-    class Player_UpdatePrefix
+    class Player_OnTakeDamage_Patch
     {
         [HarmonyPrefix]
         public static bool Prefix(Player __instance, DamageInfo damageInfo)
         {
-            /*if (Guard.IsGamePaused())
-                return true;*/
+            if (Guard.IsGamePaused())
+                return true;
 
-            //Log.InGameMSG("Prefix ");
             UpdateResistance(__instance, damageInfo);
             return true;
         }
@@ -45,25 +44,24 @@ namespace RPG_Framework
             pUpdate.UpdateMovement(__instance);
 
             pUpdate.UpdateHealth(__instance);
-            
 
-            //pUpdate.UpdateOxygen(__instance);
+            pUpdate.UpdateSuffocation(__instance);
         }
 
         public void UpdateMovement(Player __instance)
         {
-            if (__instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
+            if ((__instance.IsUnderwaterForSwimming() && (__instance.motorMode != Player.MotorMode.Mech
+                && __instance.motorMode != Player.MotorMode.Seaglide && __instance.motorMode != Player.MotorMode.Vehicle))
+                || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
                 if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
 
-                saveData.SwimDistanceTravelled += __instance.movementSpeed;
                 saveData.SwimSpeed_XP += __instance.movementSpeed;
             }
             else if (__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //add xp to walk speed
             {
                 if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
 
-                saveData.WalkDistanceTravelled += __instance.movementSpeed;
                 saveData.WalkSpeed_XP += __instance.movementSpeed;
             }
 
@@ -78,18 +76,27 @@ namespace RPG_Framework
             Health.UpdateHealth(__instance);
         }
 
-
-        public void UpdateFood(Player __instance)
+        public void UpdateSuffocation(Player __instance)
         {
-            /*saveData.Food_XP += StatMgr.AddXP(__instance);
-            Food.UpdateFood(__instance);*/
+            if(__instance.GetOxygenAvailable() > 3) return;
+
+            saveData.SuffocateResist_XP += 0.01f;
+            Suffocation.UpdateSuffocation(__instance);
         }
+    }
 
-        public void UpdateOxygen(Player __instance)
+    [HarmonyPatch(typeof(Player))]
+    [HarmonyPatch("OnKill")]
+    class Player_OnKill_Patch
+    {
+        [HarmonyPostfix]
+        public static void Postfix()
         {
-            //if (!__instance.IsUnderwater() || __instance.oxygenMgr.GetOxygenAvailable() >= __instance.oxygenMgr.GetOxygenCapacity()) return;
-            
-            Air.UpdateOxygen(__instance);            
+            if (Guard.IsGamePaused())
+                return;
+
+            Log.InGameMSG("All the XP you have gained since your last save is lost");
+            SaveData.LoadSave(true);
         }
     }
 }

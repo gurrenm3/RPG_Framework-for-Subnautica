@@ -8,7 +8,7 @@ namespace RPG_Framework.Stats
     class StatMgr
     {
         private static Config cfg = Config.GetConfig();
-        private static SaveData saveData = SaveData.GetSaveData();
+        public static SaveData saveData = SaveData.GetSaveData();
 
         public static float AddXP(float current, float max)
         {
@@ -55,7 +55,7 @@ namespace RPG_Framework.Stats
 
         public static float CalcResistance(int level)
         {
-            float resistance = level * cfg.ResistancePerLevel;
+            float resistance = level * cfg.PercentResistancePerLevel;
             
             if (resistance >= 100)
                 resistance = 100;
@@ -73,8 +73,11 @@ namespace RPG_Framework.Stats
 
         public static void Notify_ResistanceLevelUp(StatObject stat, int gainedLevels, float currentResistance)
         {
-            if(gainedLevels == 1)
-            Log.InGameMSG(stat.Name + " has gained a level. Current resistance is " + currentResistance + "%");
+            if (gainedLevels == 1)
+                Log.InGameMSG(stat.Name + " has gained a level. Current resistance is " + currentResistance + "%");
+            else
+                Log.InGameMSG(stat.Name + " has gained " + gainedLevels + " levels. Current resistance is " + currentResistance + "%");
+
 
             if (stat.Level >= stat.MaxLevel)
                 Log.InGameMSG(stat.Name + " is now max level");
