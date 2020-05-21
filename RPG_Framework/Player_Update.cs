@@ -31,7 +31,7 @@ namespace RPG_Framework
     [HarmonyPatch("Update")]
     class Player_Update
     {
-        private static SaveData saveData = SaveData.GetSaveData();
+        private static SaveData saveData;
         private static Config cfg = Config.GetConfig();
         private static Player_Update pUpdate = new Player_Update();
 
@@ -41,6 +41,7 @@ namespace RPG_Framework
             if (Guard.IsGamePaused())
                 return;
 
+            saveData = SaveData.GetSaveData();
             pUpdate.UpdateMovement(__instance);
 
             pUpdate.UpdateHealth(__instance);
@@ -95,9 +96,9 @@ namespace RPG_Framework
             if (Guard.IsGamePaused())
                 return;
 
-            SaveData.GetSaveData(true);
-            Log.InGameMSG("All the XP you have gained since your last save is lost");
             
+            Log.InGameMSG("All the XP you have gained since your last save is lost");
+            SaveData.GetSaveData(true);
         }
     }
 }

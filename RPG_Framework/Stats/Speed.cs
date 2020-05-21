@@ -12,7 +12,7 @@ namespace RPG_Framework.Stats
     class SetSpeed
     {
         private static Config cfg = Config.GetConfig();
-        private static SaveData saveData = SaveData.GetSaveData();
+        private static SaveData saveData;
 
         //order is: forward, back, strafe, accel
         List<float> swimBaseValues = new List<float> { 5f, 5f, 5f, 5f };
@@ -26,7 +26,9 @@ namespace RPG_Framework.Stats
             if (Guard.IsGamePaused())
                 return;
 
-            if(Player.main.motorMode == Player.MotorMode.Dive)
+            saveData = SaveData.GetSaveData();
+
+            if (Player.main.motorMode == Player.MotorMode.Dive)
                 UpdateSwimSpeed();
 
             else if (Player.main.motorMode == Player.MotorMode.Run || Player.main.motorMode == Player.MotorMode.Walk)
@@ -44,11 +46,6 @@ namespace RPG_Framework.Stats
             __instance.backwardMaxSpeed += currentBoost;
             __instance.acceleration += currentBoost;
             __instance.strafeMaxSpeed += currentBoost;
-
-            /*__instance.forwardMaxSpeed = baseValues[0] + currentBoost;
-            __instance.backwardMaxSpeed = baseValues[1] + currentBoost;
-            __instance.acceleration = baseValues[2] + currentBoost;
-            __instance.strafeMaxSpeed = baseValues[3] + currentBoost;*/
         }
 
 

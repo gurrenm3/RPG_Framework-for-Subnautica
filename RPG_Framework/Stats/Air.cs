@@ -7,13 +7,14 @@ namespace RPG_Framework.Stats
 {
     class Air
     {
-        private static SaveData saveData = SaveData.GetSaveData();
+        private static SaveData saveData;
         private static Config cfg = Config.GetConfig();
 
         //float defaultMaxHealth = 100f;
 
         /*public static float AddXP(Player __instance)
         {
+            saveData  = SaveData.GetSaveData();
             float addXP = 0f;
             float percentEmpty = (__instance.oxygenMgr. - __instance.liveMixin.health) / 100;
 

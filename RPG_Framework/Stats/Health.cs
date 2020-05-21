@@ -7,13 +7,14 @@ namespace RPG_Framework.Stats
 {
     class Health
     {
-        private static SaveData saveData = SaveData.GetSaveData();
+        private static SaveData saveData;
         private static Config cfg = Config.GetConfig();
 
         //float defaultMaxHealth = 100f;
         
         public static void UpdateHealth(Player __instance)
         {
+            saveData = SaveData.GetSaveData();
             StatObject stat = new StatObject()
             {
                 Name = "Max Health",

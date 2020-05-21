@@ -13,11 +13,12 @@ namespace RPG_Framework
     class SaveData
     {
         private static SaveData saveData;
+        public static string saveFileName = "RPGSaveData.json";
         //public static string SaveDataPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\SaveData\\SaveData.json";
-        public static string TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), "SaveData.json");
+        public static string TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
 
-        private static string SaveSlot = "";
-        private static string LastSaveSlot = "";
+        private static string LastSavePath = "";
+        
         //public static string SaveDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveSlot, "SaveData.json");
         public static float resistBaseXP = 125f;//100f;
 
@@ -164,10 +165,7 @@ namespace RPG_Framework
         public static SaveData GetSaveData() => GetSaveData(false);
         public static SaveData GetSaveData(bool reloadSave)
         {
-            if (saveData == null)
-                saveData = LoadSave();
-
-            if(reloadSave == true)
+            if (reloadSave || saveData == null)
                 saveData = LoadSave();
 
             return saveData;
@@ -175,8 +173,16 @@ namespace RPG_Framework
 
         public static SaveData LoadSave()
         {
-            string SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
-                + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), "RPGSaveData.json");
+            string SaveDataPath = "";
+            if (!Guard.IsStringValid(LastSavePath))
+            {
+                SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
+                + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), saveFileName);
+
+                LastSavePath = SaveDataPath;
+            }
+            else
+                SaveDataPath = LastSavePath;
 
             Log.Output("Loading SaveData...");
 

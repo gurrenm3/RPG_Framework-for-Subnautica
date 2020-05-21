@@ -15,9 +15,11 @@ namespace RPG_Framework.Stats
     [HarmonyPatch("OnTakeDamage")]
     class IncreaseSavedAttack
     {
+        //private static SaveData saveData;
         [HarmonyPostfix]
         public static void Postfix(DamageInfo damageInfo)
         {
+            //saveData = SaveData.GetSaveData();
             //dealer is null for some reason. Will try again later
 
         }
