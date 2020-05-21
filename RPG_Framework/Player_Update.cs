@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace RPG_Framework
 {
@@ -55,6 +56,7 @@ namespace RPG_Framework
                 && __instance.motorMode != Player.MotorMode.Seaglide && __instance.motorMode != Player.MotorMode.Vehicle))
                 || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
+                
                 if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
 
                 saveData.SwimSpeed_XP += __instance.movementSpeed;
@@ -73,7 +75,13 @@ namespace RPG_Framework
         {
             if (__instance.liveMixin.IsFullHealth()) return;
 
-            saveData.Health_XP += StatMgr.AddXP(__instance.liveMixin.health, __instance.liveMixin.maxHealth);
+            float nextRun = 0f;
+            if (Time.time > nextRun)
+            {
+                nextRun = Time.time + 1f;
+                saveData.Health_XP += StatMgr.AddXP(__instance.liveMixin.health, __instance.liveMixin.maxHealth);
+            }
+            
             Health.UpdateHealth(__instance);
         }
 
@@ -81,7 +89,14 @@ namespace RPG_Framework
         {
             if(__instance.GetOxygenAvailable() > 3) return;
 
-            saveData.SuffocateResist_XP += 0.01f;
+            float nextRun = 0f;
+            if (Time.time > nextRun)
+            {
+                nextRun = Time.time + 1f;
+                //saveData.SuffocateResist_XP += 0.01f;
+                saveData.SuffocateResist_XP += 1f;
+            }
+            
             Suffocation.UpdateSuffocation(__instance);
         }
     }

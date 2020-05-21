@@ -51,7 +51,7 @@ namespace RPG_Framework
         #region Health stuff
         public int HealthBonusLevel { get; set; }
         public float Health_XP { get; set; }
-        public float Health_XPToNextLevel { get; set; } = 1500f;
+        public float Health_XPToNextLevel { get; set; } = 1250f;
         #endregion
 
 
@@ -67,7 +67,7 @@ namespace RPG_Framework
         //Suffocation isnt technically damage type but its going in here anyways
         public int SuffocateResistLevel { get; set; }
         public float SuffocateResist_XP { get; set; }
-        public float SuffocateResist_XPToNextLevel { get; set; } = 50;
+        public float SuffocateResist_XPToNextLevel { get; set; } = 18;
 
 
         public int AcidResistLevel { get; set; }
