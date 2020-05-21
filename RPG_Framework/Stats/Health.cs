@@ -10,29 +10,35 @@ namespace RPG_Framework.Stats
         private static SaveData saveData = SaveData.GetSaveData();
         private static Config cfg = Config.GetConfig();
 
-        float defaultMaxHealth = 100f;
-
-        public static float AddXP(Player __instance)
-        {
-            float addXP = 0f;
-            float percentEmpty = (__instance.liveMixin.maxHealth - __instance.liveMixin.health) / 100;
-
-            float multiplier = 1;
-            if (percentEmpty >= 33 && percentEmpty < 66) multiplier = 1.35f;
-            else if (percentEmpty >= 66 && percentEmpty < 90) multiplier = 1.75f;
-            else if (percentEmpty >= 90 && percentEmpty < 95) multiplier = 2.25f;
-            else if (percentEmpty >= 95 && percentEmpty < 100) multiplier = 3;
-
-            addXP = percentEmpty * multiplier/10;
-            return addXP;
-        }
+        //float defaultMaxHealth = 100f;
         
         public static void UpdateHealth(Player __instance)
         {
             Health h = new Health();
-            __instance.liveMixin.data.maxHealth = h.defaultMaxHealth + saveData.HealthBonusLevel;
+            //__instance.liveMixin.data.maxHealth = h.defaultMaxHealth + saveData.HealthBonusLevel;
+            __instance.liveMixin.data.maxHealth += saveData.HealthBonusLevel;
 
-            if (saveData.HealthBonusLevel >= cfg.MaxHealthBoost) return;
+            StatObject stat = new StatObject()
+            {
+                Name = "Max Health",
+                Level = saveData.HealthBonusLevel,
+                MaxLevel = cfg.MaxHealthBoost,
+                XP = saveData.Health_XP,
+                XPToNextLevel = saveData.Health_XPToNextLevel,
+                Modifier = cfg.HealthXP_Modifier
+            };
+
+            if (!StatMgr.CanLevelUp(stat)) return;
+
+            int gainedLevels = StatMgr.DoWhileLevelUp(stat);
+            StatMgr.NotifyLevelUp(stat, gainedLevels);
+
+            saveData.HealthBonusLevel = stat.Level;
+            saveData.Health_XP = stat.XP;
+            saveData.Health_XPToNextLevel = stat.XPToNextLevel;
+            SaveData.Save_SaveFile();
+
+            /*if (saveData.HealthBonusLevel >= cfg.MaxHealthBoost) return;
             if (!XP_Handler.DoesHaveLevelUp(saveData.Health_XP, saveData.Health_XPToNextLevel)) return;
 
             int gainedLevels = 0;
@@ -49,9 +55,10 @@ namespace RPG_Framework.Stats
             SaveData.Save_SaveFile();
             XP_Events.NotifyStatIncrease("Max health", gainedLevels, saveData.HealthBonusLevel);
             if (saveData.HealthBonusLevel >= cfg.MaxHealthBoost)
-                Log.InGameMSG("Max health is now max level");
+                Log.InGameMSG("Max health is now max level");*/
 
-            __instance.liveMixin.data.maxHealth = h.defaultMaxHealth + saveData.HealthBonusLevel;
+            __instance.liveMixin.data.maxHealth += saveData.HealthBonusLevel;
+            //__instance.liveMixin.data.maxHealth = h.defaultMaxHealth + saveData.HealthBonusLevel;
         }
     }
 }

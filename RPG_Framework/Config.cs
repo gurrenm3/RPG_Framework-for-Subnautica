@@ -11,20 +11,74 @@ namespace RPG_Framework
     {
         private static Config Cfg;
         public static string ConfigPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\Config.json";
-
+        public static int defaultMaxResistLvl = 38;
+        public static float defaultResistModifier = 1.5f;
+        
         public float XP_Multiplier { get; set; } = 1f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.10f;
 
         public float SwimXP_Modifier { get; set; } = 1.23f;
         public float WalkXP_Modifier { get; set; } = 1.23f;
         public float HealthXP_Modifier { get; set; } = 1.25f;
+        public float AirXP_Modifier { get; set; } = 1.2f;
+        public float FoodXP_Modifier { get; set; } = 1.2f;
 
         public int MaxSwimSpeedBoost { get; set; } = 20;
         public int MaxWalkSpeedBoost { get; set; } = 15;
         public int MaxHealthBoost { get; set; } = 150;
+        public int MaxAirBoost { get; set; } = 100;
+        public int MaxFoodBoost { get; set; } = 250;
 
         public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
         public int MaxWalkSpeedBoost_InSub { get; set; } = 5;
+
+
+
+        //
+        //Resistance modifiers
+        //
+        public float ResistancePerLevel { get; } = 2.5f;
+
+        public float AcidResistModifier { get; set; } = defaultResistModifier;
+        public float ColdResistModifier { get; set; } = defaultResistModifier;
+        public float CollideResistModifier { get; set; } = defaultResistModifier;
+        public float DrillResistModifier { get; set; } = defaultResistModifier;
+        public float ElectricResistModifier { get; set; } = defaultResistModifier;
+        public float ExplosiveResistModifier { get; set; } = defaultResistModifier;
+        public float FireResistModifier { get; set; } = defaultResistModifier;
+        public float HeatResistModifier { get; set; } = defaultResistModifier;
+        public float LaserCutterResistModifier { get; set; } = defaultResistModifier;
+        public float NormalResistModifier { get; set; } = defaultResistModifier;
+        public float PoisonResistModifier { get; set; } = defaultResistModifier;
+        public float PressureResistModifier { get; set; } = defaultResistModifier;
+        public float PunctureResistModifier { get; set; } = defaultResistModifier;
+        public float RadResistModifier { get; set; } = defaultResistModifier;
+        public float SmokeResistModifier { get; set; } = defaultResistModifier;
+        public float StarveResistModifier { get; set; } = defaultResistModifier;
+        public float UndefinedResistModifier { get; set; } = defaultResistModifier;
+
+
+
+        //
+        //max resistance levels
+        //
+        public int MaxAcidResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxColdResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxCollideResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxDrillResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxElectricResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxExplosiveResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxFireResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxHeatResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxLaserCutterResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxNormalResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxPoisonResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxPressureResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxPunctureResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxRadResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxSmokeResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxStarveResistLevel { get; set; } = defaultMaxResistLvl;
+        public int MaxUndefinedResistLevel { get; set; } = defaultMaxResistLvl;
 
         public static Config GetConfig()
         {

@@ -14,6 +14,7 @@ namespace RPG_Framework
     {
         private static SaveData saveData;
         public static string SaveDataPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\SaveData\\SaveData.json";
+        public static float resistBaseXP = 75;//100f;
 
         public int PlayerLevel { get; set; } = 0;
         public float PlayerXP { get; set; } = 0f;
@@ -45,6 +46,107 @@ namespace RPG_Framework
         public int HealthBonusLevel { get; set; }
         public float Health_XP { get; set; }
         public float Health_XPToNextLevel { get; set; } = 1500f;
+        #endregion
+
+
+        #region Food Stuff
+        public int FoodBonusLevel { get; set; }
+        public float Food_XP { get; set; }
+        public float Food_XPToNextLevel { get; set; } = 1500f;
+        #endregion
+
+
+        #region Damage Resistance
+        public int AcidResistLevel { get; set; }
+        public float AcidResist_XP { get; set; }
+        public float AcidResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int ColdResistLevel { get; set; }
+        public float ColdResist_XP { get; set; }
+        public float ColdResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int CollideResistLevel { get; set; }
+        public float CollideResist_XP { get; set; }
+        public float CollideResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int DrillResistLevel { get; set; }
+        public float DrillResist_XP { get; set; }
+        public float DrillResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int ElectricResistLevel { get; set; }
+        public float ElectricResist_XP { get; set; }
+        public float ElectricResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int ExplosiveResistLevel { get; set; }
+        public float ExplosiveResist_XP { get; set; }
+        public float ExplosiveResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int FireResistLevel { get; set; }
+        public float FireResist_XP { get; set; }
+        public float FireResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int HeatResistLevel { get; set; }
+        public float HeatResist_XP { get; set; }
+        public float HeatResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int LaserCutterResistLevel { get; set; }
+        public float LaserCutterResist_XP { get; set; }
+        public float LaserCutterResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int NormalResistLevel { get; set; }
+        public float NormalResist_XP { get; set; }
+        public float NormalResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int PoisonResistLevel { get; set; }
+        public float PoisonResist_XP { get; set; }
+        public float PoisonResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int PressureResistLevel { get; set; }
+        public float PressureResist_XP { get; set; }
+        public float PressureResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int PunctureResistLevel { get; set; }
+        public float PunctureResist_XP { get; set; }
+        public float PunctureResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int RadResistLevel { get; set; }
+        public float RadResist_XP { get; set; }
+        public float RadResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int SmokeResistLevel { get; set; }
+        public float SmokeResist_XP { get; set; }
+        public float SmokeResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int StarveResistLevel { get; set; }
+        public float StarveResist_XP { get; set; }
+        public float StarveResist_XPToNextLevel { get; set; } = resistBaseXP;
+
+
+        public int UndefinedResistLevel { get; set; }
+        public float UndefinedResist_XP { get; set; }
+        public float UndefinedResist_XPToNextLevel { get; set; } = resistBaseXP;
+        #endregion
+
+
+        #region Air stuff
+        public int AirBonusLevel { get; set; }
+        public float Air_XP { get; set; }
+        public float Air_XPToNextLevel { get; set; } = 1500f;
         #endregion
 
         public static SaveData GetSaveData()

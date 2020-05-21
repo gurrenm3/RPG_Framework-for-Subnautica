@@ -40,10 +40,15 @@ namespace RPG_Framework.Stats
         {
             if (max != -999) if(currentBoost > max) currentBoost = max;
 
-            __instance.forwardMaxSpeed = baseValues[0] + currentBoost;
+            __instance.forwardMaxSpeed += currentBoost;
+            __instance.backwardMaxSpeed += currentBoost;
+            __instance.acceleration += currentBoost;
+            __instance.strafeMaxSpeed += currentBoost;
+
+            /*__instance.forwardMaxSpeed = baseValues[0] + currentBoost;
             __instance.backwardMaxSpeed = baseValues[1] + currentBoost;
             __instance.acceleration = baseValues[2] + currentBoost;
-            __instance.strafeMaxSpeed = baseValues[3] + currentBoost;
+            __instance.strafeMaxSpeed = baseValues[3] + currentBoost;*/
         }
 
 
@@ -55,25 +60,25 @@ namespace RPG_Framework.Stats
             SetSpeed setSpeed = new SetSpeed();
             UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
 
-            if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
-            if (!XP_Handler.DoesHaveLevelUp(saveData.SwimSpeed_XP, saveData.SwimSpeed_XPToNextLevel))
-                return;
-
-            int gainedLevels = 0;
-            while (saveData.SwimSpeed_XP >= saveData.SwimSpeed_XPToNextLevel)
+            StatObject stat = new StatObject()
             {
-                if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) break;
-                gainedLevels++;
-                saveData.SwimSpeedLevel++;
-                saveData.SwimSpeed_XP -= saveData.SwimSpeed_XPToNextLevel;
-                if (saveData.SwimSpeed_XP < 0) saveData.SwimSpeed_XP = 0;
+                Name = "Swim Speed",
+                Level = saveData.SwimSpeedLevel,
+                MaxLevel = cfg.MaxSwimSpeedBoost,
+                XP = saveData.SwimSpeed_XP,
+                XPToNextLevel = saveData.SwimSpeed_XPToNextLevel,
+                Modifier = cfg.SwimXP_Modifier
+            };
 
-                saveData.SwimSpeed_XPToNextLevel = XP_Handler.CalcXPToNextLevel(saveData.SwimSpeed_XPToNextLevel, cfg.SwimXP_Modifier);
-            }
+            if (!StatMgr.CanLevelUp(stat)) return;
+
+            int gainedLevels = StatMgr.DoWhileLevelUp(stat);
+            StatMgr.NotifyLevelUp(stat, gainedLevels);
+
+            saveData.SwimSpeedLevel = stat.Level;
+            saveData.SwimSpeed_XP = stat.XP;
+            saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
-            XP_Events.NotifyStatIncrease("Swim Speed", gainedLevels, saveData.SwimSpeedLevel);
-            if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost)
-                Log.InGameMSG("Swim Speed is now max level");
 
             UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
         }
@@ -88,25 +93,25 @@ namespace RPG_Framework.Stats
 
             UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
 
-            if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
-            if (!XP_Handler.DoesHaveLevelUp(saveData.WalkSpeed_XP, saveData.WalkSpeed_XPToNextLevel))
-                return;
-
-            int gainedLevels = 0;
-            while (saveData.WalkSpeed_XP >= saveData.WalkSpeed_XPToNextLevel)
+            StatObject stat = new StatObject()
             {
-                if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) break;
-                gainedLevels++;
-                saveData.WalkSpeedLevel++;
-                saveData.WalkSpeed_XP -= saveData.WalkSpeed_XPToNextLevel;
-                if (saveData.WalkSpeed_XP < 0) saveData.WalkSpeed_XP = 0;
+                Name = "Walk Speed",
+                Level = saveData.WalkSpeedLevel,
+                MaxLevel = cfg.MaxWalkSpeedBoost,
+                XP = saveData.WalkSpeed_XP,
+                XPToNextLevel = saveData.WalkSpeed_XPToNextLevel,
+                Modifier = cfg.WalkXP_Modifier
+            };
 
-                saveData.WalkSpeed_XPToNextLevel = XP_Handler.CalcXPToNextLevel(saveData.WalkSpeed_XPToNextLevel, cfg.WalkXP_Modifier);
-            }
+            if (!StatMgr.CanLevelUp(stat)) return;
+
+            int gainedLevels = StatMgr.DoWhileLevelUp(stat);
+            StatMgr.NotifyLevelUp(stat, gainedLevels);
+
+            saveData.WalkSpeedLevel = stat.Level;
+            saveData.WalkSpeed_XP = stat.XP;
+            saveData.WalkSpeed_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
-            XP_Events.NotifyStatIncrease("Walk Speed", gainedLevels, saveData.WalkSpeedLevel);
-            if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost)
-                Log.InGameMSG("Walk Speed is now max level");
 
             UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
         }
