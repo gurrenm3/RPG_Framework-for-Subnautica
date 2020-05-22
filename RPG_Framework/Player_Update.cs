@@ -96,7 +96,7 @@ namespace RPG_Framework
             if (Time.time > nextSuffocate)
             {
                 nextSuffocate = Time.time + 1f;
-                saveData.SuffocateResist_XP += 1f;
+                saveData.SuffocateResist_XP += (1f * cfg.XP_Multiplier);
             }
             
             Suffocation.UpdateSuffocation(__instance);

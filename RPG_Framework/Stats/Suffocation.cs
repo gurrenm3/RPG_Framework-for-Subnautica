@@ -29,7 +29,6 @@ namespace RPG_Framework.Stats
             if (!StatMgr.CanLevelUp(stat))
             {
                 __instance.suffocationTime = 8 + saveData.SuffocateResistLevel;
-                SaveData.Save_SaveFile();
                 return;
             }
 
@@ -39,7 +38,6 @@ namespace RPG_Framework.Stats
             saveData.SuffocateResistLevel = stat.Level;
             saveData.SuffocateResist_XP = stat.XP;
             saveData.SuffocateResist_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();
 
             __instance.suffocationTime = 8 + saveData.SuffocateResistLevel;
         }

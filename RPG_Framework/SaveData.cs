@@ -11,7 +11,7 @@ using SMLHelper.V2.Utility;
 
 namespace RPG_Framework
 {
-    
+
     class SaveData
     {
         private static SaveData saveData;
@@ -20,7 +20,7 @@ namespace RPG_Framework
         public static string TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
 
         private static string LastSavePath = "";
-        
+
         //public static string SaveDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveSlot, "SaveData.json");
         public static float resistBaseXP = 125f;//100f;
 
@@ -187,7 +187,7 @@ namespace RPG_Framework
             {
                 SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
                 + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), saveFileName);
-                
+
                 LastSavePath = SaveDataPath;
             }
             else
@@ -249,6 +249,26 @@ namespace RPG_Framework
 
             //Set movement stuff
             Player.main.playerController.SetMotorMode(Player.main.motorMode);
+        }
+    }
+
+
+
+    [HarmonyPatch(typeof(SaveLoadManager))]
+    [HarmonyPatch("SaveToDeepStorageAsync")]
+    [HarmonyPatch(new Type[] { typeof(IOut<SaveLoadManager.SaveResult>) })]
+    public class SavePatch
+    {
+        [HarmonyPrefix]
+        public static bool Prefix()
+        {
+            Log.InGameMSG("Saving RPG data");
+            SaveData.Save_SaveFile();
+            //SaveData.GetSaveData();
+
+            //Set movement stuff
+            //Player.main.playerController.SetMotorMode(Player.main.motorMode);
+            return true;
         }
     }
 }

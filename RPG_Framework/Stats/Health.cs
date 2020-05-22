@@ -28,7 +28,6 @@ namespace RPG_Framework.Stats
             if (!StatMgr.CanLevelUp(stat))
             {
                 __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
-                SaveData.Save_SaveFile();
                 return;
             }
 
@@ -38,7 +37,6 @@ namespace RPG_Framework.Stats
             saveData.HealthBonusLevel = stat.Level;
             saveData.Health_XP = stat.XP;
             saveData.Health_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();
 
             __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
         }

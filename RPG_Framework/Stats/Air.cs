@@ -9,7 +9,6 @@ namespace RPG_Framework.Stats
     {
         private static SaveData saveData;
         private static Config cfg = Config.GetConfig();
-        //private static float lastBreathInterval = 0f;
         public static float UpdateBreathPeriod(Player __instance, ref float __result)
         {
             saveData = SaveData.GetSaveData();
@@ -25,9 +24,7 @@ namespace RPG_Framework.Stats
 
             if (!StatMgr.CanLevelUp(stat))
             {
-                SaveData.Save_SaveFile();
                 __result += CalcBreathPeriodPercent(saveData.BreathPeriodLevel);
-                //lastBreathInterval = __result;
                 return __result;
             }
 
@@ -37,10 +34,8 @@ namespace RPG_Framework.Stats
             saveData.BreathPeriodLevel = stat.Level;
             saveData.BreathPeriod_XP = stat.XP;
             saveData.BreathPeriod_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();
 
             __result += CalcBreathPeriodPercent(saveData.BreathPeriodLevel);
-            //lastBreathInterval = __result;
             return __result;
         }
 

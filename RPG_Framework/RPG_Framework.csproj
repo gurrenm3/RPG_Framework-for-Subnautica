@@ -59,10 +59,11 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>D:\Program Files (x86)\Games\Subnautica\Subnautica_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
-    <Compile Include="CreatureClass.cs" />
+    <Compile Include="Creature.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="LevelingSystem.cs" />
     <Compile Include="Log.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Stats\Food.cs" />
     <Compile Include="Stats\Health.cs" />
     <Compile Include="Stats\Air.cs" />
+    <Compile Include="Stats\Knife.cs" />
     <Compile Include="Stats\Speed.cs" />
     <Compile Include="Stats\StatMgr.cs" />
     <Compile Include="Stats\Suffocation.cs" />

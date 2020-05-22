@@ -25,7 +25,6 @@ namespace RPG_Framework.Stats
 
             if (!StatMgr.CanLevelUp(stat)) 
             {
-                SaveData.Save_SaveFile();
                 return;
             }
 
@@ -34,8 +33,7 @@ namespace RPG_Framework.Stats
 
             saveData.FoodBonusLevel = stat.Level;
             saveData.Food_XP = stat.XP;
-            saveData.Food_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();*/
+            saveData.Food_XPToNextLevel = stat.XPToNextLevel;*/
         }
     }
 }

@@ -69,7 +69,6 @@ namespace RPG_Framework.Stats
             if (!StatMgr.CanLevelUp(stat))
             {
                 UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
-                SaveData.Save_SaveFile();
                 return;
             }
 
@@ -79,7 +78,6 @@ namespace RPG_Framework.Stats
             saveData.SwimSpeedLevel = stat.Level;
             saveData.SwimSpeed_XP = stat.XP;
             saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();
 
             UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
         }
@@ -105,7 +103,6 @@ namespace RPG_Framework.Stats
             if (!StatMgr.CanLevelUp(stat))
             {
                 UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
-                SaveData.Save_SaveFile();
                 return;
             }
 
@@ -115,7 +112,6 @@ namespace RPG_Framework.Stats
             saveData.WalkSpeedLevel = stat.Level;
             saveData.WalkSpeed_XP = stat.XP;
             saveData.WalkSpeed_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();
 
             UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
         }
