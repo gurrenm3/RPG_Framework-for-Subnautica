@@ -24,9 +24,9 @@ namespace RPG_Framework
         //public static string SaveDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveSlot, "SaveData.json");
         public static float resistBaseXP = 125f;//100f;
 
-        public int PlayerLevel { get; set; } = 0;
+        //public int PlayerLevel { get; set; } = 0;
         public float PlayerXP { get; set; } = 0f;
-        public float Player_XPToNextLevel { get; set; } = 0f;
+        //public float Player_XPToNextLevel { get; set; } = 0f;
 
 
         #region Attack stuff
@@ -35,7 +35,7 @@ namespace RPG_Framework
 
         #region Swim speed Stuff
         //Main Swim Speed stuff
-        public float SwimDistanceTravelled { get; set; } = 0f;
+        //public float SwimDistanceTravelled { get; set; } = 0f;
         public int SwimSpeedLevel { get; set; } = 0;
         public float SwimSpeed_XP { get; set; } = 0f;
         public float SwimSpeed_XPToNextLevel { get; set; } = 6500f;
@@ -43,7 +43,7 @@ namespace RPG_Framework
 
         #region Land speed stuff
         //Main Land Speed stuff
-        public float WalkDistanceTravelled { get; set; } = 0f;
+        //public float WalkDistanceTravelled { get; set; } = 0f;
         public int WalkSpeedLevel { get; set; } = 0;
         public float WalkSpeed_XP { get; set; }
         public float WalkSpeed_XPToNextLevel { get; set; } = 6500f;
@@ -64,11 +64,11 @@ namespace RPG_Framework
         #endregion
 
 
-        #region Food Stuff
+        /*#region Food Stuff
         public int FoodBonusLevel { get; set; }
         public float Food_XP { get; set; }
         public float Food_XPToNextLevel { get; set; } = 1500f;
-        #endregion
+        #endregion*/
 
 
         #region Damage Resistance
@@ -165,11 +165,11 @@ namespace RPG_Framework
         #endregion
 
 
-        #region Air stuff
+        /*#region Air stuff
         public int AirBonusLevel { get; set; }
         public float Air_XP { get; set; }
         public float Air_XPToNextLevel { get; set; } = 1500f;
-        #endregion
+        #endregion*/
 
         public static SaveData GetSaveData() => GetSaveData(false);
         public static SaveData GetSaveData(bool reloadSave)
@@ -226,8 +226,6 @@ namespace RPG_Framework
             if (save == null) save = new SaveData();
 
             FileInfo savePath = new FileInfo(TempSaveDataPath);
-            /*if (!Directory.Exists(savePath.FullName.Replace("\\" + savePath.Name, "")))
-                Directory.CreateDirectory(savePath.FullName.Replace("\\" + savePath.Name, ""));*/
 
             string output_Cfg = JsonConvert.SerializeObject(save, Formatting.Indented);
 
@@ -262,12 +260,8 @@ namespace RPG_Framework
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            Log.InGameMSG("Saving RPG data");
             SaveData.Save_SaveFile();
-            //SaveData.GetSaveData();
-
-            //Set movement stuff
-            //Player.main.playerController.SetMotorMode(Player.main.motorMode);
+            Log.InGameMSG("RPG data saved");
             return true;
         }
     }
