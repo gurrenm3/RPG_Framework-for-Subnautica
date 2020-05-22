@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using SMLHelper;
 using Oculus.Newtonsoft.Json;
 using Oculus.Platform.Models;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using SMLHelper.V2.Utility;
 
 namespace RPG_Framework
 {
@@ -67,7 +69,7 @@ namespace RPG_Framework
         //Suffocation isnt technically damage type but its going in here anyways
         public int SuffocateResistLevel { get; set; }
         public float SuffocateResist_XP { get; set; }
-        public float SuffocateResist_XPToNextLevel { get; set; } = 18;
+        public float SuffocateResist_XPToNextLevel { get; set; } = 30;
 
 
         public int AcidResistLevel { get; set; }
@@ -178,7 +180,7 @@ namespace RPG_Framework
             {
                 SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
                 + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), saveFileName);
-
+                
                 LastSavePath = SaveDataPath;
             }
             else

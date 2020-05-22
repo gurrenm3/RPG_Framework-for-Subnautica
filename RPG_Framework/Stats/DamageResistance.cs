@@ -98,7 +98,7 @@ namespace RPG_Framework.Stats
             saveData.AcidResist_XP = stat.XP;
             saveData.AcidResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -130,7 +130,7 @@ namespace RPG_Framework.Stats
             saveData.ColdResist_XP = stat.XP;
             saveData.ColdResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -162,7 +162,7 @@ namespace RPG_Framework.Stats
             saveData.CollideResist_XP = stat.XP;
             saveData.CollideResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -194,7 +194,7 @@ namespace RPG_Framework.Stats
             saveData.DrillResist_XP = stat.XP;
             saveData.DrillResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -226,7 +226,7 @@ namespace RPG_Framework.Stats
             saveData.ElectricResist_XP = stat.XP;
             saveData.ElectricResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -258,7 +258,7 @@ namespace RPG_Framework.Stats
             saveData.ExplosiveResist_XP = stat.XP;
             saveData.ExplosiveResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -290,7 +290,7 @@ namespace RPG_Framework.Stats
             saveData.FireResist_XP = stat.XP;
             saveData.FireResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -322,7 +322,7 @@ namespace RPG_Framework.Stats
             saveData.HeatResist_XP = stat.XP;
             saveData.HeatResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -354,7 +354,7 @@ namespace RPG_Framework.Stats
             saveData.LaserCutterResist_XP = stat.XP;
             saveData.LaserCutterResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -386,7 +386,7 @@ namespace RPG_Framework.Stats
             saveData.NormalResist_XP = stat.XP;
             saveData.NormalResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -418,7 +418,7 @@ namespace RPG_Framework.Stats
             saveData.PoisonResist_XP = stat.XP;
             saveData.PoisonResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -450,7 +450,7 @@ namespace RPG_Framework.Stats
             saveData.PressureResist_XP = stat.XP;
             saveData.PressureResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -482,7 +482,7 @@ namespace RPG_Framework.Stats
             saveData.PunctureResist_XP = stat.XP;
             saveData.PunctureResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -514,7 +514,7 @@ namespace RPG_Framework.Stats
             saveData.RadResist_XP = stat.XP;
             saveData.RadResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -546,7 +546,7 @@ namespace RPG_Framework.Stats
             saveData.SmokeResist_XP = stat.XP;
             saveData.SmokeResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -578,7 +578,7 @@ namespace RPG_Framework.Stats
             saveData.StarveResist_XP = stat.XP;
             saveData.StarveResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
         }
 
@@ -610,8 +610,114 @@ namespace RPG_Framework.Stats
             saveData.UndefinedResist_XP = stat.XP;
             saveData.UndefinedResist_XPToNextLevel = stat.XPToNextLevel;
 
-            StatMgr.Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
+            Notify_ResistanceLevelUp(stat, gainedLevels, StatMgr.CalcResistance(stat.Level));
             IgnoreDamage(__instance, damageInfo, StatMgr.CalcResistance(stat.Level));
+        }
+
+
+
+        List<string> singleLevelNotifs = new List<string>
+        {
+            "{0} has gone up. Current resistance: {1}%",
+            "{0} has gone up. Current resistance is {1}%",
+            "{0} has gone up. Resistance is currently at {1}%",
+            "{0} has gained a level. Current resistance: {1}%",
+            "{0} has gained a level. Current resistance is {1}%",
+            "{0} has gained a level. Resistance is currently at {1}%",
+            "{0} has been raised. Current resistance: {1}%",
+            "{0} has been raised. Current resistance is {1}%",
+            "{0} has been raised. Resistance is currently at {1}%",
+            "{0} has increased. Current resistance: {1}%",
+            "{0} has increased. Current resistance is {1}%",
+            "{0} has increased. Resistance is currently at {1}%",
+
+            "{0} has gone up. Your current resistance: {1}%",
+            "{0} has gone up. Your current resistance is {1}%",
+            "{0} has gone up. Your resistance is currently at {1}%",
+            "{0} has gained a level. Your current resistance: {1}%",
+            "{0} has gained a level. Your current resistance is {1}%",
+            "{0} has gained a level. Your resistance is currently at {1}%",
+            "{0} has been raised. Your current resistance: {1}%",
+            "{0} has been raised. Your current resistance is {1}%",
+            "{0} has been raised. Your resistance is currently at {1}%",
+            "{0} has increased. Your current resistance: {1}%",
+            "{0} has increased. Your current resistance is {1}%",
+            "{0} has increased. Your resistance is currently at {1}%",
+
+            "Your {0} has gone up. Current resistance: {1}%",
+            "Your {0} has gone up. Current resistance is {1}%",
+            "Your {0} has gone up. Resistance is currently at {1}%",
+            "Your {0} has gained a level. Current resistance: {1}%",
+            "Your {0} has gained a level. Current resistance is {1}%",
+            "Your {0} has gained a level. Resistance is currently at {1}%",
+            "Your {0} has been raised. Current resistance: {1}%",
+            "Your {0} has been raised. Current resistance is {1}%",
+            "Your {0} has been raised. Resistance is currently at {1}%",
+            "Your {0} has increased. Current resistance: {1}%",
+            "Your {0} has increased. Current resistance is {1}%",
+            "Your {0} has increased. Resistance is currently at {1}%",
+        };
+
+        List<string> multiLevelNotifs = new List<string>
+        {
+            "{0} has gone up by {1}. Current resistance: {2}%",
+            "{0} has gone up by {1}. Current resistance is {2}%",
+            "{0} has gone up by {1}. Resistance is currently at {2}%",
+            "{0} has gained {1} levels. Current resistance: {2}%",
+            "{0} has gained {1} levels. Current resistance is {2}%",
+            "{0} has gained {1} levels. Resistance is currently at {2}%",
+            "{0} has been raised by {1}. Current resistance: {2}%",
+            "{0} has been raised by {1}. Current resistance is {2}%",
+            "{0} has been raised by {1}. Resistance is currently at {2}%",
+            "{0} has increased by {1}. Current resistance: {2}%",
+            "{0} has increased by {1}. Current resistance is {2}%",
+            "{0} has increased by {1}. Resistance is currently at {2}%",
+
+            "{0} has gone up by {1}. Your current resistance: {2}%",
+            "{0} has gone up by {1}. Your current resistance is {2}%",
+            "{0} has gone up by {1}. Your resistance is currently at {2}%",
+            "{0} has gained {1} levels. Your current resistance: {2}%",
+            "{0} has gained {1} levels. Your current resistance is {2}%",
+            "{0} has gained {1} levels. Your resistance is currently at {2}%",
+            "{0} has been raised by {1}. Your current resistance: {2}%",
+            "{0} has been raised by {1}. Your current resistance is {2}%",
+            "{0} has been raised by {1}. Your resistance is currently at {2}%",
+            "{0} has increased by {1}. Your current resistance: {2}%",
+            "{0} has increased by {1}. Your current resistance is {2}%",
+            "{0} has increased by {1}. Your resistance is currently at {2}%",
+
+            "Your {0} has gone up by {1}. Current resistance: {2}%",
+            "Your {0} has gone up by {1}. Current resistance is {2}%",
+            "Your {0} has gone up by {1}. Resistance is currently at {2}%",
+            "Your {0} has gained {1} levels. Current resistance: {2}%",
+            "Your {0} has gained {1} levels. Current resistance is {2}%",
+            "Your {0} has gained {1} levels. Resistance is currently at {2}%",
+            "Your {0} has been raised by {1}. Current resistance: {2}%",
+            "Your {0} has been raised by {1}. Current resistance is {2}%",
+            "Your {0} has been raised by {1}. Resistance is currently at {2}%",
+            "Your {0} has increased by {1}. Current resistance: {2}%",
+            "Your {0} has increased by {1}. Current resistance is {2}%",
+            "Your {0} has increased by {1}. Resistance is currently at {2}%",
+        };
+
+        public static void Notify_ResistanceLevelUp(StatObject stat, int gainedLevels, float currentResistance)
+        {
+            Random random = new Random();
+            DamageResistance d = new DamageResistance();
+            StatMgr mgr = new StatMgr();
+
+            int responseNum = random.Next(0, d.singleLevelNotifs.Count - 1);
+            if (gainedLevels == 1)
+                Log.InGameMSG(String.Format(d.singleLevelNotifs[responseNum], stat.Name, currentResistance));
+            else
+                Log.InGameMSG(String.Format(d.multiLevelNotifs[responseNum], stat.Name, gainedLevels, currentResistance));
+
+
+            if (stat.Level >= stat.MaxLevel)
+            {
+                int maxRandom = random.Next(0, mgr.maxLevelNotifs.Count - 1);
+                Log.InGameMSG(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name) + ". Current resistance is at " + currentResistance + "%");
+            }
         }
     }
 }

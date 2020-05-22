@@ -71,29 +71,31 @@ namespace RPG_Framework
             Player.main.playerController.SetMotorMode(__instance.motorMode);
         }
 
+
+        static float nextHealth;// = 0f;
         public void UpdateHealth(Player __instance)
         {
             if (__instance.liveMixin.IsFullHealth()) return;
 
-            float nextRun = 0f;
-            if (Time.time > nextRun)
+            if (Time.time > nextHealth)
             {
-                nextRun = Time.time + 1f;
+                nextHealth = Time.time + 1f;
                 saveData.Health_XP += StatMgr.AddXP(__instance.liveMixin.health, __instance.liveMixin.maxHealth);
             }
             
             Health.UpdateHealth(__instance);
         }
 
+
+        static float nextSuffocate;// = 0f;
         public void UpdateSuffocation(Player __instance)
         {
             if(__instance.GetOxygenAvailable() > 3) return;
 
-            float nextRun = 0f;
-            if (Time.time > nextRun)
+            
+            if (Time.time > nextSuffocate)
             {
-                nextRun = Time.time + 1f;
-                //saveData.SuffocateResist_XP += 0.01f;
+                nextSuffocate = Time.time + 1f;
                 saveData.SuffocateResist_XP += 1f;
             }
             

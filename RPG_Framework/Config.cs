@@ -17,8 +17,8 @@ namespace RPG_Framework
         public float XP_Multiplier { get; set; } = 1f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.10f;
 
-        public float SwimXP_Modifier { get; set; } = 1.23f;
-        public float WalkXP_Modifier { get; set; } = 1.23f;
+        public float SwimXP_Modifier { get; set; } = 2.23f;
+        public float WalkXP_Modifier { get; set; } = 2.23f;
         public float HealthXP_Modifier { get; set; } = 1.25f;
         public float AirXP_Modifier { get; set; } = 1.2f;
         public float FoodXP_Modifier { get; set; } = 1.2f;

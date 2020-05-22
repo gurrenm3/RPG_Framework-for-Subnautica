@@ -46,10 +46,101 @@ namespace RPG_Framework.Stats
 
         public static void Notify_LevelUp(StatObject stat, int gainedLevels, float currentResistance)
         {
-            Log.InGameMSG(stat.Name + " has increased. You can now last " + (currentResistance + 8) + " seconds before suffocating from no air");
+            System.Random random = new System.Random();
+            Suffocation s = new Suffocation();
+            StatMgr mgr = new StatMgr();
+
+            int responseNum = random.Next(0, s.Notifs.Count - 1);
+            Log.InGameMSG(String.Format(s.Notifs[responseNum], stat.Name, stat.Level));
+
 
             if (stat.Level >= stat.MaxLevel)
-                Log.InGameMSG(stat.Name + " is now max level");
+            {
+                int maxRandom = random.Next(0, mgr.maxLevelNotifs.Count - 1);
+                Log.InGameMSG(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name));
+            }
         }
+
+        List<string> Notifs = new List<string>
+        {
+            "{0} has gone up. You're now able to last {1} seconds before suffocating",
+            "{0} has gone up. Currently you can last {1} seconds before suffocating",
+            "{0} has gone up. You can last {1} seconds before suffocating",
+            "{0} has gone up. You can survive {1} seconds before suffocating",
+            "{0} has gone up. You're now able to last {1} seconds before passing out",
+            "{0} has gone up. Currently you can last {1} seconds before passing out",
+            "{0} has gone up. You can last {1} seconds before passing out",
+            "{0} has gone up. You can survive {1} seconds before passing out",
+            "{0} has gone up. You're now able to last {1} seconds before drowning",
+            "{0} has gone up. Currently you can last {1} seconds before drowning",
+            "{0} has gone up. You can last {1} seconds before drowning",
+            "{0} has gone up. You can survive {1} seconds before drowning",
+
+            "{0} has been raised. You're now able to last {1} seconds before suffocating",
+            "{0} has been raised. Currently you can last {1} seconds before suffocating",
+            "{0} has been raised. You can last {1} seconds before suffocating",
+            "{0} has been raised. You can survive {1} seconds before suffocating",
+            "{0} has been raised. You're now able to last {1} seconds before passing out",
+            "{0} has been raised. Currently you can last {1} seconds before passing out",
+            "{0} has been raised. You can last {1} seconds before passing out",
+            "{0} has been raised. You can survive {1} seconds before passing out",
+            "{0} has been raised. You're now able to last {1} seconds before drowning",
+            "{0} has been raised. Currently you can last {1} seconds before drowning",
+            "{0} has been raised. You can last {1} seconds before drowning",
+            "{0} has been raised. You can survive {1} seconds before drowning",
+
+            "{0} has increased. You're now able to last {1} seconds before suffocating",
+            "{0} has increased. Currently you can last {1} seconds before suffocating",
+            "{0} has increased. You can last {1} seconds before suffocating",
+            "{0} has increased. You can survive {1} seconds before suffocating",
+            "{0} has increased. You're now able to last {1} seconds before passing out",
+            "{0} has increased. Currently you can last {1} seconds before passing out",
+            "{0} has increased. You can last {1} seconds before passing out",
+            "{0} has increased. You can survive {1} seconds before passing out",
+            "{0} has increased. You're now able to last {1} seconds before drowning",
+            "{0} has increased. Currently you can last {1} seconds before drowning",
+            "{0} has increased. You can last {1} seconds before drowning",
+            "{0} has increased. You can survive {1} seconds before drowning",
+
+
+            "Your {0} has gone up. You're now able to last {1} seconds before suffocating",
+            "Your {0} has gone up. Currently you can last {1} seconds before suffocating",
+            "Your {0} has gone up. You can last {1} seconds before suffocating",
+            "Your {0} has gone up. You can survive {1} seconds before suffocating",
+            "Your {0} has gone up. You're now able to last {1} seconds before passing out",
+            "Your {0} has gone up. Currently you can last {1} seconds before passing out",
+            "Your {0} has gone up. You can last {1} seconds before passing out",
+            "Your {0} has gone up. You can survive {1} seconds before passing out",
+            "Your {0} has gone up. You're now able to last {1} seconds before drowning",
+            "Your {0} has gone up. Currently you can last {1} seconds before drowning",
+            "Your {0} has gone up. You can last {1} seconds before drowning",
+            "Your {0} has gone up. You can survive {1} seconds before drowning",
+
+            "Your {0} has been raised. You're now able to last {1} seconds before suffocating",
+            "Your {0} has been raised. Currently you can last {1} seconds before suffocating",
+            "Your {0} has been raised. You can last {1} seconds before suffocating",
+            "Your {0} has been raised. You can survive {1} seconds before suffocating",
+            "Your {0} has been raised. You're now able to last {1} seconds before passing out",
+            "Your {0} has been raised. Currently you can last {1} seconds before passing out",
+            "Your {0} has been raised. You can last {1} seconds before passing out",
+            "Your {0} has been raised. You can survive {1} seconds before passing out",
+            "Your {0} has been raised. You're now able to last {1} seconds before drowning",
+            "Your {0} has been raised. Currently you can last {1} seconds before drowning",
+            "Your {0} has been raised. You can last {1} seconds before drowning",
+            "Your {0} has been raised. You can survive {1} seconds before drowning",
+
+            "Your {0} has increased. You're now able to last {1} seconds before suffocating",
+            "Your {0} has increased. Currently you can last {1} seconds before suffocating",
+            "Your {0} has increased. You can last {1} seconds before suffocating",
+            "Your {0} has increased. You can survive {1} seconds before suffocating",
+            "Your {0} has increased. You're now able to last {1} seconds before passing out",
+            "Your {0} has increased. Currently you can last {1} seconds before passing out",
+            "Your {0} has increased. You can last {1} seconds before passing out",
+            "Your {0} has increased. You can survive {1} seconds before passing out",
+            "Your {0} has increased. You're now able to last {1} seconds before drowning",
+            "Your {0} has increased. Currently you can last {1} seconds before drowning",
+            "Your {0} has increased. You can last {1} seconds before drowning",
+            "Your {0} has increased. You can survive {1} seconds before drowning"
+        };
     }
 }

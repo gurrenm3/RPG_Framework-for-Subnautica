@@ -89,7 +89,7 @@ namespace RPG_Framework.Stats
         #region Walk Speed stuff
         public static void UpdateWalkSpeed()
         {
-            /*var __instance = Player.main.playerController;
+            var __instance = Player.main.playerController;
             SetSpeed setSpeed = new SetSpeed();
 
             StatObject stat = new StatObject()
@@ -117,7 +117,7 @@ namespace RPG_Framework.Stats
             saveData.WalkSpeed_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
 
-            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);*/
+            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
         }
 
         #endregion

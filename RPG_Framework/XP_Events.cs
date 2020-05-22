@@ -14,12 +14,6 @@ namespace RPG_Framework
             SaveData.Save_SaveFile();
         }
 
-        public static void NotifyStatIncrease(string stat, float amount, int currentLevel)
-        {
-            Log.InGameMSG(stat + " has increased by " + amount + ". Current level: " + currentLevel);
-        }
-
-
 
         //
         // Harmony Events
