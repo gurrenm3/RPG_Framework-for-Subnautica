@@ -59,13 +59,13 @@ namespace RPG_Framework
                 
                 if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
 
-                saveData.SwimSpeed_XP += __instance.movementSpeed;
+                saveData.SwimSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
             }
             else if (__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //add xp to walk speed
             {
                 if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
 
-                saveData.WalkSpeed_XP += __instance.movementSpeed;
+                saveData.WalkSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
             }
 
             Player.main.playerController.SetMotorMode(__instance.motorMode);
@@ -134,11 +134,40 @@ namespace RPG_Framework
 
             if (Time.time > nextXP)
             {
-                SaveData.GetSaveData().BreathPeriod_XP += StatMgr.AddXP(__instance.oxygenMgr.GetOxygenAvailable(), __instance.oxygenMgr.GetOxygenCapacity());
+                SaveData.GetSaveData().BreathPeriod_XP += Air.AddXP(__instance.oxygenMgr.GetOxygenAvailable(), __instance.oxygenMgr.GetOxygenCapacity());
                 nextXP = Time.time + 1f;
             }
 
-            Air.UpdateBreathPeriod(__instance);
+            __result = Air.UpdateBreathPeriod(__instance, ref __result);
+            return;
+        }
+    }
+
+
+
+
+    [HarmonyPatch(typeof(Player))]
+    [HarmonyPatch("GetOxygenPerBreath")]
+    class Player_GetOxygenPerBreath_Patch
+    {
+        static float lastBreathInterval;
+        [HarmonyPrefix]
+        public static bool Prefix(float breathingInterval)
+        {
+            if (Guard.IsGamePaused()) return true;
+            lastBreathInterval = breathingInterval;
+
+            return true;
+        }
+
+        
+        static float nextXP;
+        [HarmonyPostfix]
+        public static void Postfix(Player __instance, ref float __result)//, float __state)
+        {
+            if (Guard.IsGamePaused() || __instance.CanBreathe() || __result == 0) return;
+
+            __result = Air.UpdateOxygenPerBreath(__instance, ref __result, lastBreathInterval);
             return;
         }
     }

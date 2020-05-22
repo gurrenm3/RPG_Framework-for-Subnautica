@@ -18,7 +18,7 @@ namespace RPG_Framework.Stats
             float percentEmpty = (max - current) / max;
 
             float multiplier = percentEmpty * 2;
-            float addXP = percentEmpty * multiplier / 10;
+            float addXP = percentEmpty * multiplier / 10 * cfg.XP_Multiplier;
             return addXP;
         }
 

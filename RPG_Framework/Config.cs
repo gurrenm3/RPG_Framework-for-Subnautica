@@ -21,7 +21,7 @@ namespace RPG_Framework
         public float WalkXP_Modifier { get; set; } = 2.23f;
         public float HealthXP_Modifier { get; set; } = 1.25f;
         public float AirXP_Modifier { get; set; } = 1.2f;
-        public float BreathPeriodXP_Modifier { get; set; } = 1.2f;
+        public float BreathPeriodXP_Modifier { get; set; } = 1.25f;
         public float FoodXP_Modifier { get; set; } = 1.2f;
 
         public int MaxSwimSpeedBoost { get; set; } = 20;
@@ -33,7 +33,7 @@ namespace RPG_Framework
 
         public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
         public int MaxWalkSpeedBoost_InSub { get; set; } = 5;
-        public float PercentBreathPeriodPerLevel { get; } = 10f;
+        public float PercentBreathPeriodPerLevel { get; } = 0.225f;
 
 
 

@@ -9,26 +9,8 @@ namespace RPG_Framework.Stats
     {
         private static SaveData saveData;
         private static Config cfg = Config.GetConfig();
-
-        //float defaultMaxHealth = 100f;
-
-        /*public static float AddXP(Player __instance)
-        {
-            saveData  = SaveData.GetSaveData();
-            float addXP = 0f;
-            float percentEmpty = (__instance.oxygenMgr. - __instance.liveMixin.health) / 100;
-
-            float multiplier = 1;
-            if (percentEmpty >= 33 && percentEmpty < 66) multiplier = 1.35f;
-            else if (percentEmpty >= 66 && percentEmpty < 90) multiplier = 1.75f;
-            else if (percentEmpty >= 90 && percentEmpty < 95) multiplier = 2.25f;
-            else if (percentEmpty >= 95 && percentEmpty < 100) multiplier = 3;
-
-            addXP = percentEmpty * multiplier / 10;
-            return addXP;
-        }*/
-
-        public static void UpdateBreathPeriod(Player __instance)
+        //private static float lastBreathInterval = 0f;
+        public static float UpdateBreathPeriod(Player __instance, ref float __result)
         {
             saveData = SaveData.GetSaveData();
             StatObject stat = new StatObject()
@@ -43,9 +25,10 @@ namespace RPG_Framework.Stats
 
             if (!StatMgr.CanLevelUp(stat))
             {
-                __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
                 SaveData.Save_SaveFile();
-                return;
+                __result += CalcBreathPeriodPercent(saveData.BreathPeriodLevel);
+                //lastBreathInterval = __result;
+                return __result;
             }
 
             int gainedLevels = StatMgr.DoWhileLevelUp(stat);
@@ -56,82 +39,40 @@ namespace RPG_Framework.Stats
             saveData.BreathPeriod_XPToNextLevel = stat.XPToNextLevel;
             SaveData.Save_SaveFile();
 
-            __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
+            __result += CalcBreathPeriodPercent(saveData.BreathPeriodLevel);
+            //lastBreathInterval = __result;
+            return __result;
         }
+
+        
+        public static float UpdateOxygenPerBreath(Player __instance, ref float __result, float lastBreathInterval)
+        {
+            saveData = SaveData.GetSaveData();
+            float num = __result / lastBreathInterval;
+            float originalBreath = lastBreathInterval - CalcBreathPeriodPercent(saveData.BreathPeriodLevel);
+
+            __result = originalBreath * num;
+            return __result;
+        }
+
+
+
+
 
         public static float CalcBreathPeriodPercent(int level)
         {
             return level * cfg.PercentBreathPeriodPerLevel;
         }
 
-        public static void UpdateOxygen(Player __instance)
+        public static float AddXP(float current, float max)
         {
-            /*//float baseMaxO2 = __instance.oxygenMgr.GetOxygenCapacity();
-            //__instance.liveMixin.data.maxHealth = h.defaultMaxHealth + saveData.HealthBonusLevel;
+            if (current == max) return 0f;
 
-            Log.InGameMSG("Checking sources...");
+            float percentEmpty = (max - current) / max;
 
-
-            //Oxygen a = new Oxygen();
-
-            //a.name = "StatO2";
-            //a.oxygenAvailable = 500;
-            //a.oxygenCapacity = 500;
-
-            //__instance.oxygenMgr.RegisterSource(a);
-            //var sources = (List<Oxygen>)typeof(OxygenManager).GetField("sources").GetValue(__instance.oxygenMgr);
-            
-            
-            
-            
-            
-            
-            //var sources2 = (List<Oxygen>)typeof(OxygenManager).GetField("sources").GetValue(__instance);
-            *//*if (sources == null)
-            {
-                Log.InGameMSG("Sources is null");
-                
-                if(sources2 == null)
-                    Log.InGameMSG("Sources2 == null");
-                else
-                    Log.InGameMSG("Sources2 is not null");
-                return;
-            }
-
-            Log.InGameMSG("Count1: " + sources.Count());
-            Log.InGameMSG("Count2: " + sources2.Count());
-
-            Log.InGameMSG("Now on souces");
-            foreach (var a in sources)
-            {
-                Log.InGameMSG("Capacity1: " +a.oxygenCapacity.ToString());
-            }*//*
-
-            Log.InGameMSG("Now on souces2 ");
-            *//*foreach (var a in sources2)
-            {
-                Log.InGameMSG("Capacity2: " + a.oxygenCapacity.ToString());
-            }*//*
-            return;
-            StatObject stat = new StatObject()
-            {
-                Name = "Max Air",
-                Level = saveData.AirBonusLevel,
-                MaxLevel = cfg.MaxAirBoost,
-                XP = saveData.Air_XP,
-                XPToNextLevel = saveData.Air_XPToNextLevel,
-                Modifier = cfg.AirXP_Modifier
-            };
-
-            if (!StatMgr.CanLevelUp(stat)) return;
-
-            int gainedLevels = StatMgr.DoWhileLevelUp(stat);
-            StatMgr.NotifyLevelUp(stat, gainedLevels);
-
-            saveData.AirBonusLevel = stat.Level;
-            saveData.Air_XP = stat.XP;
-            saveData.Air_XPToNextLevel = stat.XPToNextLevel;
-            SaveData.Save_SaveFile();*/
+            float multiplier = percentEmpty * 2;
+            float addXP = percentEmpty * multiplier / 10 * cfg.XP_Multiplier;
+            return addXP;
         }
     }
 }

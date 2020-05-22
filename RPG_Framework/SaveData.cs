@@ -60,7 +60,7 @@ namespace RPG_Framework
         #region Breath Period stuff
         public int BreathPeriodLevel { get; set; }
         public float BreathPeriod_XP { get; set; }
-        public float BreathPeriod_XPToNextLevel { get; set; } = 1250f;
+        public float BreathPeriod_XPToNextLevel { get; set; } = 50f;//1250f;
         #endregion
 
 

@@ -12,7 +12,7 @@ namespace RPG_Framework.Stats
 
         public static float AddXP(float statValue, float amountToAdd)
         {
-            float addXP = statValue + amountToAdd;
+            float addXP = statValue + amountToAdd * cfg.XP_Multiplier;
             return addXP;
         }
 
