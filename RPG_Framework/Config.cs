@@ -21,16 +21,19 @@ namespace RPG_Framework
         public float WalkXP_Modifier { get; set; } = 2.23f;
         public float HealthXP_Modifier { get; set; } = 1.25f;
         public float AirXP_Modifier { get; set; } = 1.2f;
+        public float BreathPeriodXP_Modifier { get; set; } = 1.2f;
         public float FoodXP_Modifier { get; set; } = 1.2f;
 
         public int MaxSwimSpeedBoost { get; set; } = 20;
         public int MaxWalkSpeedBoost { get; set; } = 15;
         public int MaxHealthBoost { get; set; } = 150;
         public int MaxAirBoost { get; set; } = 100;
+        public int MaxBreathPeriodBoost { get; set; } = 40;
         public int MaxFoodBoost { get; set; } = 250;
 
         public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
         public int MaxWalkSpeedBoost_InSub { get; set; } = 5;
+        public float PercentBreathPeriodPerLevel { get; } = 10f;
 
 
 

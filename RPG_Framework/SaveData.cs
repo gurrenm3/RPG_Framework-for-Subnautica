@@ -57,6 +57,13 @@ namespace RPG_Framework
         #endregion
 
 
+        #region Breath Period stuff
+        public int BreathPeriodLevel { get; set; }
+        public float BreathPeriod_XP { get; set; }
+        public float BreathPeriod_XPToNextLevel { get; set; } = 1250f;
+        #endregion
+
+
         #region Food Stuff
         public int FoodBonusLevel { get; set; }
         public float Food_XP { get; set; }

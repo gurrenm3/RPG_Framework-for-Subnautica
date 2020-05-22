@@ -15,11 +15,10 @@ namespace RPG_Framework.Stats
         {
             if (current == max) return 0f;
 
-            float addXP = 0f;
             float percentEmpty = (max - current) / max;
 
             float multiplier = percentEmpty * 2;
-            addXP = percentEmpty * multiplier / 10;
+            float addXP = percentEmpty * multiplier / 10;
             return addXP;
         }
 

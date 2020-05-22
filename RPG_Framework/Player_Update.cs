@@ -101,6 +101,7 @@ namespace RPG_Framework
             
             Suffocation.UpdateSuffocation(__instance);
         }
+
     }
 
     [HarmonyPatch(typeof(Player))]
@@ -116,6 +117,29 @@ namespace RPG_Framework
             
             Log.InGameMSG("All the XP you have gained since your last save is lost");
             SaveData.GetSaveData(true);
+        }
+    }
+
+
+    [HarmonyPatch(typeof(Player))]
+    [HarmonyPatch("GetBreathPeriod")]
+    class Player_GetBreathPeriod_Patch
+    {
+        static float nextXP;
+
+        [HarmonyPostfix]
+        public static void Postfix(Player __instance, ref float __result)
+        {
+            if (Guard.IsGamePaused() || __instance.CanBreathe() || __result == 99999) return;
+
+            if (Time.time > nextXP)
+            {
+                SaveData.GetSaveData().BreathPeriod_XP += StatMgr.AddXP(__instance.oxygenMgr.GetOxygenAvailable(), __instance.oxygenMgr.GetOxygenCapacity());
+                nextXP = Time.time + 1f;
+            }
+
+            Air.UpdateBreathPeriod(__instance);
+            return;
         }
     }
 }

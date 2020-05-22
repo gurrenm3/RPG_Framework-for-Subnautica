@@ -28,6 +28,42 @@ namespace RPG_Framework.Stats
             return addXP;
         }*/
 
+        public static void UpdateBreathPeriod(Player __instance)
+        {
+            saveData = SaveData.GetSaveData();
+            StatObject stat = new StatObject()
+            {
+                Name = "Breath Period",
+                Level = saveData.BreathPeriodLevel,
+                MaxLevel = cfg.MaxBreathPeriodBoost,
+                XP = saveData.BreathPeriod_XP,
+                XPToNextLevel = saveData.BreathPeriod_XPToNextLevel,
+                Modifier = cfg.BreathPeriodXP_Modifier
+            };
+
+            if (!StatMgr.CanLevelUp(stat))
+            {
+                __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
+                SaveData.Save_SaveFile();
+                return;
+            }
+
+            int gainedLevels = StatMgr.DoWhileLevelUp(stat);
+            StatMgr.NotifyLevelUp(stat, gainedLevels);
+
+            saveData.BreathPeriodLevel = stat.Level;
+            saveData.BreathPeriod_XP = stat.XP;
+            saveData.BreathPeriod_XPToNextLevel = stat.XPToNextLevel;
+            SaveData.Save_SaveFile();
+
+            __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
+        }
+
+        public static float CalcBreathPeriodPercent(int level)
+        {
+            return level * cfg.PercentBreathPeriodPerLevel;
+        }
+
         public static void UpdateOxygen(Player __instance)
         {
             /*//float baseMaxO2 = __instance.oxygenMgr.GetOxygenCapacity();
