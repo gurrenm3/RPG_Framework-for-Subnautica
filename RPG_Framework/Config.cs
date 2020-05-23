@@ -21,7 +21,7 @@ namespace RPG_Framework
         public float Walk_XPNextLevel_Multiplier { get; set; } = 2.3f;
         public float Health_XPNextLevel_Multiplier { get; set; } = 1.3f;
         //public float AirXP_Modifier { get; set; } = 1.3f;
-        public float BreathPeriod_XPNextLevel_Multiplier { get; set; } = 1.25f;
+        public float BreathPeriod_XPNextLevel_Multiplier { get; set; } = 1.35f;
         //public float FoodXP_Modifier { get; set; } = 1.2f;
 
         public int MaxSwimSpeedLevel { get; set; } = 20;
@@ -44,7 +44,7 @@ namespace RPG_Framework
         public int MaxResistanceLevel { get; set; } = 38;
         public float Resistance_XPNextLevel_Multiplier { get; set; } = 1.5f;
 
-        public float SuffocateResistModifier { get; set; } = 1.35f;
+        public float SuffocateResist_XPNextLevel_Multiplier { get; set; } = 2.3f;
 
         public float AcidResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
         public float ColdResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
@@ -69,7 +69,7 @@ namespace RPG_Framework
         //
         //max resistance levels
         //
-        public int MaxSuffocateResistLevel { get; set; } = 17;
+        public int MaxSuffocateResistLevel { get; set; } = 10;
 
         public int MaxAcidResistLevel { get; set; } = DefResistanceMaxLvl;
         public int MaxColdResistLevel { get; set; } = DefResistanceMaxLvl;

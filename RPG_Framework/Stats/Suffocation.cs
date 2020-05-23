@@ -23,7 +23,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxSuffocateResistLevel,
                 XP = saveData.SuffocateResist_XP,
                 XPToNextLevel = saveData.SuffocateResist_XPToNextLevel,
-                Modifier = cfg.SuffocateResistModifier
+                Modifier = cfg.SuffocateResist_XPNextLevel_Multiplier
             };
 
             if (!StatMgr.CanLevelUp(stat))

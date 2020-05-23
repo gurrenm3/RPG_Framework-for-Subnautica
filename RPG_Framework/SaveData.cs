@@ -44,14 +44,14 @@ namespace RPG_Framework
         //Main Land Speed stuff
         //public float WalkDistanceTravelled { get; set; } = 0f;
         public int WalkSpeedLevel { get; set; } = 0;
-        public float WalkSpeed_XP { get; set; }
+        public float WalkSpeed_XP { get; set; } = 0;
         public float WalkSpeed_XPToNextLevel { get; set; } = 6500f;
         #endregion
 
 
         #region Health stuff
-        public int HealthLevel { get; set; }
-        public float Health_XP { get; set; }
+        public int HealthLevel { get; set; } = 0;
+        public float Health_XP { get; set; } = 0;
         public float Health_XPToNextLevel { get; set; } = 1250f;
         #endregion
 
