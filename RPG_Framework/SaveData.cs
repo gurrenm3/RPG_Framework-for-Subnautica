@@ -16,6 +16,7 @@ namespace RPG_Framework
     {
         private static SaveData saveData;
         public static string saveFileName = "RPGSaveData.json";
+        public static string saveSlot = "";
         //public static string SaveDataPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\SaveData\\SaveData.json";
         public static string TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
 
@@ -170,6 +171,13 @@ namespace RPG_Framework
         public float Air_XP { get; set; }
         public float Air_XPToNextLevel { get; set; } = 1500f;
         #endregion*/
+        public static void FirstLoad(string currentSlot)
+        {
+            saveSlot = currentSlot;
+            /*Config.GetConfig();
+            Log.InGameMSG("Loading RPG Data");
+            saveData = GetSaveData(true);*/
+        }
 
         public static SaveData GetSaveData() => GetSaveData(false);
         public static SaveData GetSaveData(bool reloadSave)
@@ -182,18 +190,11 @@ namespace RPG_Framework
 
         public static SaveData LoadSave()
         {
-            string SaveDataPath = "";
-            if (!Guard.IsStringValid(LastSavePath))
-            {
-                SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
+            string SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
                 + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), saveFileName);
 
-                LastSavePath = SaveDataPath;
-            }
-            else
-                SaveDataPath = LastSavePath;
-
             Log.Output("Loading SaveData...");
+            Log.Output("SaveData path:  "+SaveDataPath);
 
             if (!File.Exists(SaveDataPath) || File.ReadAllText(SaveDataPath).Length == 0)
             {
@@ -235,7 +236,24 @@ namespace RPG_Framework
         }
     }
 
+
     [HarmonyPatch(typeof(SaveLoadManager))]
+    [HarmonyPatch("InitializeNewGame")]
+    public class LoadSaveData
+    {
+        [HarmonyPostfix]
+        public static void Postfix()
+        {
+            //SaveData.FirstLoad(__result);
+            //Config.GetConfig();
+            //Log.InGameMSG("Loading RPG Data");
+            SaveData.GetSaveData(true);
+            //Set movement stuff
+            //Player.main.playerController.SetMotorMode(Player.main.motorMode);
+        }
+    }
+
+    /*[HarmonyPatch(typeof(SaveLoadManager))]
     [HarmonyPatch("StartNewSession")]
     public class LoadSaveData
     {
@@ -248,7 +266,7 @@ namespace RPG_Framework
             //Set movement stuff
             Player.main.playerController.SetMotorMode(Player.main.motorMode);
         }
-    }
+    }*/
 
 
 
