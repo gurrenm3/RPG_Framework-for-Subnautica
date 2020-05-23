@@ -80,7 +80,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxAcidResistLevel,
                 XP = saveData.AcidResist_XP,
                 XPToNextLevel = saveData.AcidResist_XPToNextLevel,
-                Modifier = cfg.AcidResistModifier
+                Modifier = cfg.AcidResist_XPNextLevel_Multiplier
             };
 
 
@@ -112,7 +112,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxColdResistLevel,
                 XP = saveData.ColdResist_XP,
                 XPToNextLevel = saveData.ColdResist_XPToNextLevel,
-                Modifier = cfg.ColdResistModifier
+                Modifier = cfg.ColdResist_XPNextLevel_Multiplier
             };
 
 
@@ -144,7 +144,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxCollideResistLevel,
                 XP = saveData.CollideResist_XP,
                 XPToNextLevel = saveData.CollideResist_XPToNextLevel,
-                Modifier = cfg.CollideResistModifier
+                Modifier = cfg.CollideResist_XPNextLevel_Multiplier
             };
 
 
@@ -176,7 +176,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxDrillResistLevel,
                 XP = saveData.DrillResist_XP,
                 XPToNextLevel = saveData.DrillResist_XPToNextLevel,
-                Modifier = cfg.DrillResistModifier
+                Modifier = cfg.DrillResist_XPNextLevel_Multiplier
             };
 
 
@@ -208,7 +208,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxElectricResistLevel,
                 XP = saveData.ElectricResist_XP,
                 XPToNextLevel = saveData.ElectricResist_XPToNextLevel,
-                Modifier = cfg.ElectricResistModifier
+                Modifier = cfg.ElectricResist_XPNextLevel_Multiplier
             };
 
 
@@ -240,7 +240,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxExplosiveResistLevel,
                 XP = saveData.ExplosiveResist_XP,
                 XPToNextLevel = saveData.ExplosiveResist_XPToNextLevel,
-                Modifier = cfg.ExplosiveResistModifier
+                Modifier = cfg.ExplosiveResist_XPNextLevel_Multiplier
             };
 
 
@@ -272,7 +272,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxFireResistLevel,
                 XP = saveData.FireResist_XP,
                 XPToNextLevel = saveData.FireResist_XPToNextLevel,
-                Modifier = cfg.FireResistModifier
+                Modifier = cfg.FireResist_XPNextLevel_Multiplier
             };
 
 
@@ -304,7 +304,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxHeatResistLevel,
                 XP = saveData.HeatResist_XP,
                 XPToNextLevel = saveData.HeatResist_XPToNextLevel,
-                Modifier = cfg.HeatResistModifier
+                Modifier = cfg.HeatResist_XPNextLevel_Multiplier
             };
 
 
@@ -336,7 +336,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxLaserCutterResistLevel,
                 XP = saveData.LaserCutterResist_XP,
                 XPToNextLevel = saveData.LaserCutterResist_XPToNextLevel,
-                Modifier = cfg.LaserCutterResistModifier
+                Modifier = cfg.LaserCutterResist_XPNextLevel_Multiplier
             };
 
 
@@ -368,7 +368,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxNormalResistLevel,
                 XP = saveData.NormalResist_XP,
                 XPToNextLevel = saveData.NormalResist_XPToNextLevel,
-                Modifier = cfg.NormalResistModifier
+                Modifier = cfg.NormalResist_XPNextLevel_Multiplier
             };
 
 
@@ -400,7 +400,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxPoisonResistLevel,
                 XP = saveData.PoisonResist_XP,
                 XPToNextLevel = saveData.PoisonResist_XPToNextLevel,
-                Modifier = cfg.PoisonResistModifier
+                Modifier = cfg.PoisonResist_XPNextLevel_Multiplier
             };
 
 
@@ -432,7 +432,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxPressureResistLevel,
                 XP = saveData.PressureResist_XP,
                 XPToNextLevel = saveData.PressureResist_XPToNextLevel,
-                Modifier = cfg.PressureResistModifier
+                Modifier = cfg.PressureResist_XPNextLevel_Multiplier
             };
 
 
@@ -464,7 +464,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxPunctureResistLevel,
                 XP = saveData.PunctureResist_XP,
                 XPToNextLevel = saveData.PunctureResist_XPToNextLevel,
-                Modifier = cfg.PunctureResistModifier
+                Modifier = cfg.PunctureResist_XPNextLevel_Multiplier
             };
 
 
@@ -496,7 +496,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxRadResistLevel,
                 XP = saveData.RadResist_XP,
                 XPToNextLevel = saveData.RadResist_XPToNextLevel,
-                Modifier = cfg.RadResistModifier
+                Modifier = cfg.RadResist_XPNextLevel_Multiplier
             };
 
 
@@ -528,7 +528,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxSmokeResistLevel,
                 XP = saveData.SmokeResist_XP,
                 XPToNextLevel = saveData.SmokeResist_XPToNextLevel,
-                Modifier = cfg.SmokeResistModifier
+                Modifier = cfg.SmokeResist_XPNextLevel_Multiplier
             };
 
 
@@ -560,7 +560,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxStarveResistLevel,
                 XP = saveData.StarveResist_XP,
                 XPToNextLevel = saveData.StarveResist_XPToNextLevel,
-                Modifier = cfg.StarveResistModifier
+                Modifier = cfg.StarveResist_XPNextLevel_Multiplier
             };
 
 
@@ -592,7 +592,7 @@ namespace RPG_Framework.Stats
                 MaxLevel = cfg.MaxUndefinedResistLevel,
                 XP = saveData.UndefinedResist_XP,
                 XPToNextLevel = saveData.UndefinedResist_XPToNextLevel,
-                Modifier = cfg.UndefinedResistModifier
+                Modifier = cfg.UndefinedResist_XPNextLevel_Multiplier
             };
 
 
@@ -653,7 +653,7 @@ namespace RPG_Framework.Stats
             "Your {0} has been raised. Resistance is currently at {1}%",
             "Your {0} has increased. Current resistance: {1}%",
             "Your {0} has increased. Current resistance is {1}%",
-            "Your {0} has increased. Resistance is currently at {1}%",
+            "Your {0} has increased. Resistance is currently at {1}%"
         };
 
         List<string> multiLevelNotifs = new List<string>
@@ -695,7 +695,7 @@ namespace RPG_Framework.Stats
             "Your {0} has been raised by {1}. Resistance is currently at {2}%",
             "Your {0} has increased by {1}. Current resistance: {2}%",
             "Your {0} has increased by {1}. Current resistance is {2}%",
-            "Your {0} has increased by {1}. Resistance is currently at {2}%",
+            "Your {0} has increased by {1}. Resistance is currently at {2}%"
         };
 
         public static void Notify_ResistanceLevelUp(StatObject stat, int gainedLevels, float currentResistance)

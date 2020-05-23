@@ -51,7 +51,7 @@ namespace RPG_Framework
 
 
         #region Health stuff
-        public int HealthBonusLevel { get; set; }
+        public int HealthLevel { get; set; }
         public float Health_XP { get; set; }
         public float Health_XPToNextLevel { get; set; } = 1250f;
         #endregion

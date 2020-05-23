@@ -15,20 +15,20 @@ namespace RPG_Framework
         public static int DefResistanceMaxLvl = 38;
 
         public float XP_Multiplier { get; set; } = 1f;
-        public float OnKillcreatureKillXP_Modifier { get; set; } = 0.10f;
+        public float OnKillcreatureKillXP_Modifier { get; set; } = 0.25f;
 
-        public float SwimXP_Modifier { get; set; } = 2.3f;
-        public float WalkXP_Modifier { get; set; } = 2.3f;
-        public float HealthXP_Modifier { get; set; } = 1.3f;
+        public float Swim_XPNextLevel_Multiplier { get; set; } = 2.3f;
+        public float Walk_XPNextLevel_Multiplier { get; set; } = 2.3f;
+        public float Health_XPNextLevel_Multiplier { get; set; } = 1.3f;
         //public float AirXP_Modifier { get; set; } = 1.3f;
-        public float BreathPeriodXP_Modifier { get; set; } = 1.25f;
+        public float BreathPeriod_XPNextLevel_Multiplier { get; set; } = 1.25f;
         //public float FoodXP_Modifier { get; set; } = 1.2f;
 
-        public int MaxSwimSpeedBoost { get; set; } = 20;
-        public int MaxWalkSpeedBoost { get; set; } = 15;
-        public int MaxHealthBoost { get; set; } = 150;
+        public int MaxSwimSpeedLevel { get; set; } = 20;
+        public int MaxWalkSpeedLevel { get; set; } = 15;
+        public int MaxHealthLevel { get; set; } = 150;
         //public int MaxAirBoost { get; set; } = 100;
-        public int MaxBreathPeriodBoost { get; set; } = 40;
+        public int MaxBreathPeriodLevel { get; set; } = 40;
         //public int MaxFoodBoost { get; set; } = 250;
 
         /*public int MaxWalkSpeedBoost_InBase { get; set; } = 5;
@@ -42,27 +42,27 @@ namespace RPG_Framework
         //
         public float PercentResistancePerLevel { get; } = 2.5f;
         public int MaxResistanceLevel { get; set; } = 38;
-        public float ResistanceXPModifier { get; set; } = 1.5f;
+        public float Resistance_XPNextLevel_Multiplier { get; set; } = 1.5f;
 
         public float SuffocateResistModifier { get; set; } = 1.35f;
 
-        public float AcidResistModifier { get; set; } = DefResistanceXPModifier;
-        public float ColdResistModifier { get; set; } = DefResistanceXPModifier;
-        public float CollideResistModifier { get; set; } = DefResistanceXPModifier;
-        public float DrillResistModifier { get; set; } = DefResistanceXPModifier;
-        public float ElectricResistModifier { get; set; } = DefResistanceXPModifier;
-        public float ExplosiveResistModifier { get; set; } = DefResistanceXPModifier;
-        public float FireResistModifier { get; set; } = DefResistanceXPModifier;
-        public float HeatResistModifier { get; set; } = DefResistanceXPModifier;
-        public float LaserCutterResistModifier { get; set; } = DefResistanceXPModifier;
-        public float NormalResistModifier { get; set; } = DefResistanceXPModifier;
-        public float PoisonResistModifier { get; set; } = DefResistanceXPModifier;
-        public float PressureResistModifier { get; set; } = DefResistanceXPModifier;
-        public float PunctureResistModifier { get; set; } = DefResistanceXPModifier;
-        public float RadResistModifier { get; set; } = DefResistanceXPModifier;
-        public float SmokeResistModifier { get; set; } = DefResistanceXPModifier;
-        public float StarveResistModifier { get; set; } = DefResistanceXPModifier;
-        public float UndefinedResistModifier { get; set; } = DefResistanceXPModifier;
+        public float AcidResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float ColdResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float CollideResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float DrillResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float ElectricResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float ExplosiveResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float FireResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float HeatResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float LaserCutterResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float NormalResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float PoisonResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float PressureResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float PunctureResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float RadResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float SmokeResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float StarveResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
+        public float UndefinedResist_XPNextLevel_Multiplier { get; set; } = DefResistanceXPModifier;
 
 
 
@@ -110,7 +110,7 @@ namespace RPG_Framework
             {
                 Cfg = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath));
                 DefResistanceMaxLvl = Cfg.MaxResistanceLevel;
-                DefResistanceXPModifier = Cfg.ResistanceXPModifier;
+                DefResistanceXPModifier = Cfg.Resistance_XPNextLevel_Multiplier;
                 SaveConfig();   //Saving so new properties get added to file
                 Log.Output("Successfully loaded Config");
                 return Cfg;

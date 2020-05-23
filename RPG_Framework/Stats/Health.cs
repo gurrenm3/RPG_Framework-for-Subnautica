@@ -18,27 +18,27 @@ namespace RPG_Framework.Stats
             StatObject stat = new StatObject()
             {
                 Name = "Max Health",
-                Level = saveData.HealthBonusLevel,
-                MaxLevel = cfg.MaxHealthBoost,
+                Level = saveData.HealthLevel,
+                MaxLevel = cfg.MaxHealthLevel,
                 XP = saveData.Health_XP,
                 XPToNextLevel = saveData.Health_XPToNextLevel,
-                Modifier = cfg.HealthXP_Modifier
+                Modifier = cfg.Health_XPNextLevel_Multiplier
             };
 
             if (!StatMgr.CanLevelUp(stat))
             {
-                __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
+                __instance.liveMixin.data.maxHealth = 100 + saveData.HealthLevel;
                 return;
             }
 
             int gainedLevels = StatMgr.DoWhileLevelUp(stat);
             StatMgr.NotifyLevelUp(stat, gainedLevels);
 
-            saveData.HealthBonusLevel = stat.Level;
+            saveData.HealthLevel = stat.Level;
             saveData.Health_XP = stat.XP;
             saveData.Health_XPToNextLevel = stat.XPToNextLevel;
 
-            __instance.liveMixin.data.maxHealth = 100 + saveData.HealthBonusLevel;
+            __instance.liveMixin.data.maxHealth = 100 + saveData.HealthLevel;
         }
     }
 }

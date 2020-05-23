@@ -10,8 +10,7 @@ namespace RPG_Framework
     {
         public static void AddExperience(float amount)
         {
-            SaveData.GetSaveData().PlayerXP += Config.GetConfig().XP_Multiplier;
-            SaveData.Save_SaveFile();
+            SaveData.GetSaveData().PlayerXP += amount;
         }
 
 
@@ -26,8 +25,7 @@ namespace RPG_Framework
             [HarmonyPostfix]
             public static void Postfix(CreatureDeath __instance)
             {
-                AddExperience(__instance.liveMixin.maxHealth * Config.GetConfig().OnKillcreatureKillXP_Modifier);
-                Player.main.playerController.SetMotorMode(Player.main.motorMode);
+                AddExperience(__instance.liveMixin.maxHealth * Config.GetConfig().OnKillcreatureKillXP_Modifier * Config.GetConfig().XP_Multiplier);
             }
         }
 

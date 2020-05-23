@@ -57,15 +57,13 @@ namespace RPG_Framework
                 || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
                 
-                if (saveData.SwimSpeedLevel >= cfg.MaxSwimSpeedBoost) return;
-
-                saveData.SwimSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
+                if (saveData.SwimSpeedLevel <= cfg.MaxSwimSpeedLevel)
+                    saveData.SwimSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
             }
             else if (__instance.motorMode == Player.MotorMode.Walk || __instance.motorMode == Player.MotorMode.Run)  //add xp to walk speed
             {
-                if (saveData.WalkSpeedLevel >= cfg.MaxWalkSpeedBoost) return;
-
-                saveData.WalkSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
+                if (saveData.WalkSpeedLevel <= cfg.MaxWalkSpeedLevel)
+                    saveData.WalkSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
             }
 
             Player.main.playerController.SetMotorMode(__instance.motorMode);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Configuration;
 using System.Text;
+using UnityEngine;
 
 namespace RPG_Framework.Stats
 {
@@ -42,10 +43,50 @@ namespace RPG_Framework.Stats
         {
             if (max != -999) if(currentBoost > max) currentBoost = max;
 
-            __instance.forwardMaxSpeed += currentBoost;
-            __instance.backwardMaxSpeed += currentBoost;
-            __instance.acceleration += currentBoost;
-            __instance.strafeMaxSpeed += currentBoost;
+            float boost = IncrementSpeedBoost(__instance, currentBoost);
+
+            __instance.forwardMaxSpeed += boost;
+            __instance.backwardMaxSpeed += boost;
+            __instance.acceleration += boost;
+            __instance.strafeMaxSpeed += boost;
+        }
+
+        static float dontAddBoostTime;
+        static float nextBoostTime;
+        static float boostCount;
+        public static float IncrementSpeedBoost(PlayerMotor __instance, float currentBoost)
+        {
+            float tempBoost = 0f;
+            float stallTime = 0.9f;
+            float timeBetweenBoosts = 0.06f;
+
+            if (currentBoost >= 1) tempBoost = 1f;
+
+            if (Player.main.movementSpeed < 1)
+            {
+                boostCount = tempBoost;
+                dontAddBoostTime = Time.time + stallTime;
+                return tempBoost;
+            }
+
+            if (Time.time < dontAddBoostTime)
+            {
+                boostCount = tempBoost;
+                return tempBoost;
+            }
+
+            if (boostCount < currentBoost)
+            {
+                if (Time.time > nextBoostTime)
+                {
+                    boostCount++;
+                    nextBoostTime = Time.time + timeBetweenBoosts;
+                    return boostCount;
+                }
+                return boostCount;
+            }
+            else
+                return currentBoost;
         }
 
 
@@ -60,10 +101,10 @@ namespace RPG_Framework.Stats
             {
                 Name = "Swim Speed",
                 Level = saveData.SwimSpeedLevel,
-                MaxLevel = cfg.MaxSwimSpeedBoost,
+                MaxLevel = cfg.MaxSwimSpeedLevel,
                 XP = saveData.SwimSpeed_XP,
                 XPToNextLevel = saveData.SwimSpeed_XPToNextLevel,
-                Modifier = cfg.SwimXP_Modifier
+                Modifier = cfg.Swim_XPNextLevel_Multiplier
             };
 
             if (!StatMgr.CanLevelUp(stat))
@@ -94,10 +135,10 @@ namespace RPG_Framework.Stats
             {
                 Name = "Walk Speed",
                 Level = saveData.WalkSpeedLevel,
-                MaxLevel = cfg.MaxWalkSpeedBoost,
+                MaxLevel = cfg.MaxWalkSpeedLevel,
                 XP = saveData.WalkSpeed_XP,
                 XPToNextLevel = saveData.WalkSpeed_XPToNextLevel,
-                Modifier = cfg.WalkXP_Modifier
+                Modifier = cfg.Walk_XPNextLevel_Multiplier
             };
 
             if (!StatMgr.CanLevelUp(stat))

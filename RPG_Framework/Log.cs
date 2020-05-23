@@ -46,7 +46,7 @@ namespace RPG_Framework
             }
 
             writeText += ">> " + text;
-            //Console.WriteLine(writeText);
+            Console.WriteLine(writeText);
 
             StreamWriter writer = new StreamWriter(LogPath);
             writer.Write(writeText);
