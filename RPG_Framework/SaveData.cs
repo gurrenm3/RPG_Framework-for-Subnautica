@@ -18,9 +18,7 @@ namespace RPG_Framework
         public static string saveFileName = "RPGSaveData.json";
         public static string saveSlot = "";
         //public static string SaveDataPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\SaveData\\SaveData.json";
-        public static string TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
-
-        private static string LastSavePath = "";
+        public static string TempSaveDataPath;
 
         //public static string SaveDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveSlot, "SaveData.json");
         public static float resistBaseXP = 125f;//100f;
@@ -226,6 +224,7 @@ namespace RPG_Framework
         {
             if (save == null) save = new SaveData();
 
+            TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
             FileInfo savePath = new FileInfo(TempSaveDataPath);
 
             string output_Cfg = JsonConvert.SerializeObject(save, Formatting.Indented);
