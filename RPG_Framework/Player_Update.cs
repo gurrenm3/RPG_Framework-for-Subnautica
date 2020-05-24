@@ -1,5 +1,6 @@
 ﻿using Harmony;
 using RPG_Framework.Stats;
+using RPG_Framework.Updater;
 using SMLHelper.V2.Utility;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,8 @@ namespace RPG_Framework
             pUpdate.UpdateHealth(__instance);
 
             pUpdate.UpdateSuffocation(__instance);
+
+            UpdateHandler.CheckForUpdates();
         }
 
         public void UpdateMovement(Player __instance)

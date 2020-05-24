@@ -80,6 +80,8 @@
     <Compile Include="Stats\Speed.cs" />
     <Compile Include="Stats\StatMgr.cs" />
     <Compile Include="Stats\Suffocation.cs" />
+    <Compile Include="Updater\UpdateHandler.cs" />
+    <Compile Include="Updater\WebHandler.cs" />
     <Compile Include="XP_Events.cs" />
     <Compile Include="XP_Handler.cs" />
   </ItemGroup>
