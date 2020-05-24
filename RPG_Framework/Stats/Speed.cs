@@ -1,25 +1,20 @@
 ﻿using Harmony;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Configuration;
-using System.Text;
+using SMLHelper.V2.Utility;
 using UnityEngine;
 
 namespace RPG_Framework.Stats
 {
     [HarmonyPatch(typeof(PlayerController))]
     [HarmonyPatch("SetMotorMode")]
-    class SetSpeed
+    class Speed
     {
         private static Config cfg = Config.GetConfig();
         private static SaveData saveData;
 
-        //order is: forward, back, strafe, accel
-        List<float> swimBaseValues = new List<float> { 5f, 5f, 5f, 5f };
-
-        //order is: forward, back, strafe, accel
-        List<float> walkBaseValues = new List<float> { 3.5f, 5f, 5f, 5f };
+        static float dontAddBoostTime;
+        static float nextBoostTime;
+        static float boostCount;
+        static float stallTime = 1.5f;
 
         [HarmonyPostfix]
         public static void PostFix(PlayerController __instance)
@@ -34,16 +29,44 @@ namespace RPG_Framework.Stats
 
             else if (Player.main.motorMode == Player.MotorMode.Run || Player.main.motorMode == Player.MotorMode.Walk)
                 UpdateWalkSpeed();
+            else
+            {
+                boostCount = 0;
+                dontAddBoostTime = Time.time + stallTime;
+            }
 
         }
-        public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, List<float> baseValues)
-            => UpdatePlayerController(__instance, currentBoost, baseValues, -999);
+        public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost)
+            => UpdatePlayerController(__instance, currentBoost, -999);
 
-        public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, List<float> baseValues, int max)
+        static bool isShiftPressed = false;
+        public static void IsShiftPressed()
+        {
+            if(GameInput.GetButtonDown(GameInput.Button.Sprint))
+            {
+                //Log.InGameMSG("BUTTON PRESSED!!!");
+                isShiftPressed = true;
+                return;
+            }
+
+            if(GameInput.GetButtonUp(GameInput.Button.Sprint))
+            {
+                isShiftPressed = false;
+                return;
+            }
+        }
+        public static void UpdatePlayerController(PlayerMotor __instance, int currentBoost, int max)
         {
             if (max != -999) if(currentBoost > max) currentBoost = max;
 
-            float boost = IncrementSpeedBoost(__instance, currentBoost);
+
+            float boost;
+            IsShiftPressed();
+            if (isShiftPressed)
+                boost = currentBoost;
+            else
+                boost = IncrementSpeedBoost(__instance, currentBoost);
+
 
             __instance.forwardMaxSpeed += boost;
             __instance.backwardMaxSpeed += boost;
@@ -51,16 +74,12 @@ namespace RPG_Framework.Stats
             __instance.strafeMaxSpeed += boost;
         }
 
-        static float dontAddBoostTime;
-        static float nextBoostTime;
-        static float boostCount;
         public static float IncrementSpeedBoost(PlayerMotor __instance, float currentBoost)
         {
             float tempBoost = 0f;
-            float stallTime = 0.9f;
-            float timeBetweenBoosts = 0.06f;
+            float timeBetweenBoosts = 0.1f;
 
-            if (currentBoost >= 1) tempBoost = 1f;
+            //if (currentBoost >= 1) tempBoost = 1f;
 
             if (Player.main.movementSpeed < 1)
             {
@@ -95,7 +114,7 @@ namespace RPG_Framework.Stats
         public static void UpdateSwimSpeed()
         {
             var __instance = Player.main.playerController;
-            SetSpeed setSpeed = new SetSpeed();
+            Speed setSpeed = new Speed();
 
             StatObject stat = new StatObject()
             {
@@ -109,7 +128,7 @@ namespace RPG_Framework.Stats
 
             if (!StatMgr.CanLevelUp(stat))
             {
-                UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+                UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel);
                 return;
             }
 
@@ -120,7 +139,7 @@ namespace RPG_Framework.Stats
             saveData.SwimSpeed_XP = stat.XP;
             saveData.SwimSpeed_XPToNextLevel = stat.XPToNextLevel;
 
-            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel, setSpeed.swimBaseValues);
+            UpdatePlayerController(__instance.underWaterController, saveData.SwimSpeedLevel);
         }
         #endregion
 
@@ -129,7 +148,7 @@ namespace RPG_Framework.Stats
         public static void UpdateWalkSpeed()
         {
             var __instance = Player.main.playerController;
-            SetSpeed setSpeed = new SetSpeed();
+            Speed setSpeed = new Speed();
 
             StatObject stat = new StatObject()
             {
@@ -143,7 +162,7 @@ namespace RPG_Framework.Stats
 
             if (!StatMgr.CanLevelUp(stat))
             {
-                UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
+                UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel);
                 return;
             }
 
@@ -154,7 +173,7 @@ namespace RPG_Framework.Stats
             saveData.WalkSpeed_XP = stat.XP;
             saveData.WalkSpeed_XPToNextLevel = stat.XPToNextLevel;
 
-            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel, setSpeed.walkBaseValues);
+            UpdatePlayerController(__instance.groundController, saveData.WalkSpeedLevel);
         }
 
         #endregion

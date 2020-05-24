@@ -11,7 +11,7 @@ namespace RPG_Framework
     {
         private static Config Cfg;
         public static string ConfigPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\Config.json";
-        public static float DefResistanceXPModifier = 1.5f;
+        public static float DefResistanceXPModifier = 1.2f;
         public static int DefResistanceMaxLvl = 38;
 
         public float XP_Multiplier { get; set; } = 1f;
@@ -24,8 +24,8 @@ namespace RPG_Framework
         public float BreathPeriod_XPNextLevel_Multiplier { get; set; } = 1.35f;
         //public float FoodXP_Modifier { get; set; } = 1.2f;
 
-        public int MaxSwimSpeedLevel { get; set; } = 20;
-        public int MaxWalkSpeedLevel { get; set; } = 15;
+        public int MaxSwimSpeedLevel { get; set; } = 25;
+        public int MaxWalkSpeedLevel { get; set; } = 25;
         public int MaxHealthLevel { get; set; } = 150;
         //public int MaxAirBoost { get; set; } = 100;
         public int MaxBreathPeriodLevel { get; set; } = 40;

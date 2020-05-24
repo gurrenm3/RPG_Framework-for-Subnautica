@@ -37,7 +37,7 @@ namespace RPG_Framework
         //public float SwimDistanceTravelled { get; set; } = 0f;
         public int SwimSpeedLevel { get; set; } = 0;
         public float SwimSpeed_XP { get; set; } = 0f;
-        public float SwimSpeed_XPToNextLevel { get; set; } = 6500f;
+        public float SwimSpeed_XPToNextLevel { get; set; } = 10;// 9500f;
         #endregion
 
         #region Land speed stuff
@@ -52,14 +52,14 @@ namespace RPG_Framework
         #region Health stuff
         public int HealthLevel { get; set; } = 0;
         public float Health_XP { get; set; } = 0;
-        public float Health_XPToNextLevel { get; set; } = 1250f;
+        public float Health_XPToNextLevel { get; set; } = 15;
         #endregion
 
 
         #region Breath Period stuff
         public int BreathPeriodLevel { get; set; }
         public float BreathPeriod_XP { get; set; }
-        public float BreathPeriod_XPToNextLevel { get; set; } = 50f;//1250f;
+        public float BreathPeriod_XPToNextLevel { get; set; } = 325f;//1250f;
         #endregion
 
 
@@ -188,9 +188,10 @@ namespace RPG_Framework
 
         public static SaveData LoadSave()
         {
-            string SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
-                + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), saveFileName);
+            /*string SaveDataPath = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("\\Roaming", "")
+                + "\\LocalLow\\Unknown Worlds\\Subnautica\\Subnautica\\SavedGames\\" + SaveLoadManager.main.GetCurrentSlot(), saveFileName);*/
 
+            string SaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
             Log.Output("Loading SaveData...");
             Log.Output("SaveData path:  "+SaveDataPath);
 
@@ -243,30 +244,9 @@ namespace RPG_Framework
         [HarmonyPostfix]
         public static void Postfix()
         {
-            //SaveData.FirstLoad(__result);
-            //Config.GetConfig();
-            //Log.InGameMSG("Loading RPG Data");
             SaveData.GetSaveData(true);
-            //Set movement stuff
-            //Player.main.playerController.SetMotorMode(Player.main.motorMode);
         }
     }
-
-    /*[HarmonyPatch(typeof(SaveLoadManager))]
-    [HarmonyPatch("StartNewSession")]
-    public class LoadSaveData
-    {
-        [HarmonyPostfix]
-        public static void Postfix()
-        {
-            Log.InGameMSG("Loading SaveData from file");
-            SaveData.GetSaveData();
-
-            //Set movement stuff
-            Player.main.playerController.SetMotorMode(Player.main.motorMode);
-        }
-    }*/
-
 
 
     [HarmonyPatch(typeof(SaveLoadManager))]
@@ -279,6 +259,7 @@ namespace RPG_Framework
         {
             SaveData.Save_SaveFile();
             Log.InGameMSG("RPG data saved");
+
             return true;
         }
     }

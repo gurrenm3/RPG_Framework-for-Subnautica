@@ -1,5 +1,6 @@
 ﻿using Harmony;
 using RPG_Framework.Stats;
+using SMLHelper.V2.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,11 +53,8 @@ namespace RPG_Framework
 
         public void UpdateMovement(Player __instance)
         {
-            if ((__instance.IsUnderwaterForSwimming() && (__instance.motorMode != Player.MotorMode.Mech
-                && __instance.motorMode != Player.MotorMode.Seaglide && __instance.motorMode != Player.MotorMode.Vehicle))
-                || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
+            if (__instance.IsUnderwaterForSwimming() || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
-                
                 if (saveData.SwimSpeedLevel <= cfg.MaxSwimSpeedLevel)
                     saveData.SwimSpeed_XP += __instance.movementSpeed * cfg.XP_Multiplier;
             }
@@ -77,7 +75,7 @@ namespace RPG_Framework
 
             if (Time.time > nextHealth)
             {
-                nextHealth = Time.time + 1f;
+                nextHealth = Time.time + 0.5f;//1f;
                 saveData.Health_XP += StatMgr.AddXP(__instance.liveMixin.health, __instance.liveMixin.maxHealth);
             }
             
