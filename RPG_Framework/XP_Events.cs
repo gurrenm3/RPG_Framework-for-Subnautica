@@ -20,18 +20,18 @@ namespace RPG_Framework
         private static bool hasAppliedBonusXP;
         internal static void DoubleXPEvent()
         {
+            var cfg = Config.GetConfig();
             XP_Events events = new XP_Events();
             if (!events.IsDoubleXP())
             {
                 if(hasAppliedBonusXP)
-                {
-                    var cfg = Config.GetConfig();
-                    cfg.XP_Multiplier -= 1;
-                }    
+                    cfg.XP_Multiplier -= Config.defaultXPMult;
+
                 return;
             }
 
             Log.InGameMSG("Double XP event has started! You get twice as much XP for the next 5 minutes");
+            cfg.XP_Multiplier += Config.defaultXPMult;
             hasAppliedBonusXP = true;
         }
 

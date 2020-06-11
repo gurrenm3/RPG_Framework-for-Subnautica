@@ -17,6 +17,7 @@ namespace RPG_Framework
         public static string ConfigPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\Config.json";
         public static float DefResistanceXPModifier = 1.2f;
         public static int DefResistanceMaxLvl = 38;
+        internal static float defaultXPMult = 1f;
 
         public KeyCode SpeedBoostToggle { get; set; } = KeyCode.CapsLock;
 
@@ -129,7 +130,8 @@ namespace RPG_Framework
 
                 DefResistanceMaxLvl = cfg.MaxResistanceLevel;
                 DefResistanceXPModifier = cfg.Resistance_XPNextLevel_Multiplier;
-                
+                defaultXPMult = cfg.XP_Multiplier;
+
                 try { var testKey = cfg.SpeedBoostToggle; }
                 catch { cfg.SpeedBoostToggle = KeyCode.CapsLock; }
                 
