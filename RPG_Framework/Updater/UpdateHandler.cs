@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using UnityEngine;
 
 namespace RPG_Framework.Updater
 {
@@ -24,12 +25,12 @@ namespace RPG_Framework.Updater
         {
             if (update == null) update = new UpdateHandler();
 
-            if (update.checkedUpdates) return;
+            if (!update.CanCheckForUpdate()) return;
 
             if (update.numOfCheckedUpdates >= update.maxCheckUpdates)
             {
-                Log.InGameMSG("RPG Framework timed out when checking for updates. It will try again later");
-                update.checkedUpdates = true;
+                Log.InGameMSG("RPG Framework timed out when checking for updates. This isn't bad and" +
+                    " it will try again later");
                 return;
             }            
 
@@ -41,7 +42,6 @@ namespace RPG_Framework.Updater
             string processedURL = update.reader.processGit_Text(update.readURL, "RPG_Framework: ", 0);
             string gitVersion = update.reader.Get_GitVersion(processedURL);
 
-            update.checkedUpdates = true;
             if (!update.IsGitVersionValid(gitVersion))
             {
                 Log.Output("Github version info is invalid");
@@ -51,14 +51,28 @@ namespace RPG_Framework.Updater
             bool isUpdate = update.CompareVersionsForUpdate(gitVersion, update.GetCurrentVersion());
             if(!isUpdate)
             {
-                Log.InGameMSG("RPG Framework is up to date!");
+                if(update.checkedUpdates == false)
+                {
+                    Log.InGameMSG("RPG Framework is up to date!");
+                    update.checkedUpdates = true;
+                }
+
                 return;
             }
 
             Log.InGameMSG("There is an update available for RPG Framework");
             return;
         }
-        
+
+        private static float nextUpdateCheck;
+        private bool CanCheckForUpdate()
+        {
+            if (Time.time < nextUpdateCheck)
+                return false;
+
+            nextUpdateCheck = Time.time + 1800;
+            return true;
+        }
 
         public bool IsUpdate()
         {

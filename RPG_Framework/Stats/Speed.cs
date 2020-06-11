@@ -14,8 +14,6 @@ namespace RPG_Framework.Stats
         private static float boostCount;
         private static float stallTime = 1.5f;
 
-
-        #region Swim Speed stuff
         internal void UpdateSpeed()
         {
             if (saveData == null)
@@ -31,8 +29,12 @@ namespace RPG_Framework.Stats
                 UpdateWalkSpeed();
             else
                 ResetSpeedBoost();
+
+            if ((saveData.SwimSpeedLevel > 0 || saveData.WalkSpeedLevel > 0) && !cfg.SpeedToggleMsgShown)
+                ShowSpeedToggleMSG();
         }
 
+        #region Swim Speed stuff
 
         private void UpdateSwimSpeed()
         {
@@ -98,6 +100,13 @@ namespace RPG_Framework.Stats
 
         #endregion
 
+        private void ShowSpeedToggleMSG()
+        {
+            Log.InGameMSG("You can toggle your Speed Boost On / Off with your SpeedBoostToggle key." +
+                "Default is CapsLock. You change it in the Settings.");
+            cfg.SpeedToggleMsgShown = true;
+            Config.SaveConfig();
+        }
 
         internal void ResetSpeedBoost()
         {

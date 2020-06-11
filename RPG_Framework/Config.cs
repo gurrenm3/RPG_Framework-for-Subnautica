@@ -21,7 +21,7 @@ namespace RPG_Framework
 
         public KeyCode SpeedBoostToggle { get; set; } = KeyCode.CapsLock;
 
-        public float XP_Multiplier { get; set; } = 1f;
+        public float XP_Multiplier { get; set; } = 0.8f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.25f;
 
         public float Swim_XPNextLevel_Multiplier { get; set; } = 2.3f;
@@ -95,6 +95,11 @@ namespace RPG_Framework
         public int MaxSmokeResistLevel { get; set; } = DefResistanceMaxLvl;
         public int MaxStarveResistLevel { get; set; } = DefResistanceMaxLvl;
         public int MaxUndefinedResistLevel { get; set; } = DefResistanceMaxLvl;
+
+        public bool EnableDoubleXPEvents { get; set; } = true;
+
+        public bool SpeedToggleMsgShown { get; set; } = false;
+        public bool UsingOldFramework { get; set; } = true;
 
         /// <summary>
         /// Use this to read and load Config

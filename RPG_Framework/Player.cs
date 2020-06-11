@@ -1,5 +1,6 @@
 ﻿using Harmony;
 using RPG_Framework.Stats;
+using RPG_Framework.Updater;
 using UnityEngine;
 
 namespace RPG_Framework
@@ -39,15 +40,15 @@ namespace RPG_Framework
                 return;
 
             saveData = SaveData.GetSaveData();
+            cfg = Config.GetConfig();
 
             RPGKeyPress.ProcessKeys();
 
-            XP_Events.DoubleXPEvent();
+            if(cfg.EnableDoubleXPEvents)
+                XP_Events.DoubleXPEvent();
 
             pUpdate.UpdateMovement(__instance);
-
             pUpdate.UpdateHealth(__instance);
-
             pUpdate.UpdateSuffocation(__instance);
         }
 

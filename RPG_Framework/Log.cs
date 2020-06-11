@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG_Framework
 {
@@ -53,6 +55,11 @@ namespace RPG_Framework
             writer.Write(writeText);
             writer.Close();
         }
+        
+        /// <summary>
+        /// Display a message in game on the HUD. Also outputs to RPG Log
+        /// </summary>
+        /// <param name="text">Message to display on screen</param>
         public static void InGameMSG(string text)
         {
             ErrorMessage.AddMessage(text);
