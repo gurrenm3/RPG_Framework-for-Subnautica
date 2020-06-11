@@ -1,1 +1,1 @@
-RPG_Framework: https://github.com/gurrenm3/RPG_Framework-for-Subnautica/releases/download/1.0.2/RPG_Framework.1.0.2.zip
+RPG_Framework: https://github.com/gurrenm3/RPG_Framework-for-Subnautica/releases/download/1.0.3/RPG_Framework.1.0.3.zip
