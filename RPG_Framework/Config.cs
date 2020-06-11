@@ -1,9 +1,13 @@
-﻿using Oculus.Newtonsoft.Json;
+﻿using Harmony;
+using Oculus.Newtonsoft.Json;
+using RPG_Framework.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG_Framework
 {
@@ -13,6 +17,8 @@ namespace RPG_Framework
         public static string ConfigPath = Environment.CurrentDirectory + "\\QMods\\RPG_Framework\\Config.json";
         public static float DefResistanceXPModifier = 1.2f;
         public static int DefResistanceMaxLvl = 38;
+
+        public KeyCode SpeedBoostToggle { get; set; } = KeyCode.CapsLock;
 
         public float XP_Multiplier { get; set; } = 1f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.25f;
@@ -89,38 +95,52 @@ namespace RPG_Framework
         public int MaxStarveResistLevel { get; set; } = DefResistanceMaxLvl;
         public int MaxUndefinedResistLevel { get; set; } = DefResistanceMaxLvl;
 
+        /// <summary>
+        /// Use this to read and load Config
+        /// </summary>
+        /// <returns></returns>
         public static Config GetConfig()
         {
             if (Cfg == null) Cfg = LoadConfig();
+            SaveConfig();   //Saving so new properties get added to file
             return Cfg;
         }
 
+        /// <summary>
+        /// Load config from file. Use GetConfig() instead unless you want to read a new config from file
+        /// </summary>
+        /// <returns></returns>
         public static Config LoadConfig()
         {
+            Config cfg;
             Log.Output("Loading Config...");
+            
             if (!File.Exists(ConfigPath) || File.ReadAllText(ConfigPath).Length == 0)
             {
                 Log.Output("Config file doesn't exist or it is empty. Creating a new one");
-                Cfg = new Config();
-                SaveConfig();
-                return Cfg;
+                cfg = new Config();
+                return cfg;
             }
 
             try
             {
-                Cfg = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath));
-                DefResistanceMaxLvl = Cfg.MaxResistanceLevel;
-                DefResistanceXPModifier = Cfg.Resistance_XPNextLevel_Multiplier;
-                SaveConfig();   //Saving so new properties get added to file
+                if(Cfg == null) Log.Output("Initializing RPG Framework");
+                cfg = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath));
+
+                DefResistanceMaxLvl = cfg.MaxResistanceLevel;
+                DefResistanceXPModifier = cfg.Resistance_XPNextLevel_Multiplier;
+                
+                try { var testKey = cfg.SpeedBoostToggle; }
+                catch { cfg.SpeedBoostToggle = KeyCode.CapsLock; }
+                
                 Log.Output("Successfully loaded Config");
-                return Cfg;
+                return cfg;
             }
             catch
             {
                 Log.Output("Config has invalid JSON. Creating a new one");
-                Cfg = new Config();
-                SaveConfig();
-                return Cfg;
+                cfg = new Config();
+                return cfg;
             }
         }
 
@@ -139,6 +159,19 @@ namespace RPG_Framework
             StreamWriter serialize = new StreamWriter(ConfigPath, false);
             serialize.Write(output_Cfg);
             serialize.Close();
+        }
+    }
+
+    [HarmonyPatch(typeof(GameSettings))]
+    [HarmonyPatch("SaveAsync")]
+    public class SaveConfig_Patch
+    {
+        [HarmonyPostfix]
+        public static void Postfix()
+        {
+            Log.Output("Saving RPG Config");
+            Config.SaveConfig();
+            Log.Output("RPG Config saved");
         }
     }
 }

@@ -34,6 +34,8 @@ namespace RPG_Framework
         public static void Output(string text, bool newLog)
         {
             string writeText = "";
+            Console.WriteLine("[RPGFramework] " + text);
+
             if (newLog)
             {
                 if (File.Exists(LogPath))
@@ -46,7 +48,6 @@ namespace RPG_Framework
             }
 
             writeText += ">> " + text;
-            Console.WriteLine(writeText);
 
             StreamWriter writer = new StreamWriter(LogPath);
             writer.Write(writeText);

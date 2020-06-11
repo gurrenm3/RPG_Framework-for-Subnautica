@@ -1,11 +1,5 @@
 ﻿using Harmony;
 using RPG_Framework.Stats;
-using RPG_Framework.Updater;
-using SMLHelper.V2.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace RPG_Framework
@@ -15,7 +9,7 @@ namespace RPG_Framework
     class Player_OnTakeDamage_Patch
     {
         [HarmonyPrefix]
-        public static bool Prefix(Player __instance, DamageInfo damageInfo)
+        internal static bool Prefix(Player __instance, DamageInfo damageInfo)
         {
             if (Guard.IsGamePaused())
                 return true;
@@ -39,22 +33,25 @@ namespace RPG_Framework
         private static Player_Update pUpdate = new Player_Update();
 
         [HarmonyPostfix]
-        public static void PostFix(Player __instance)
+        internal static void PostFix(Player __instance)
         {
             if (Guard.IsGamePaused())
                 return;
 
             saveData = SaveData.GetSaveData();
+
+            RPGKeyPress.ProcessKeys();
+
+            XP_Events.DoubleXPEvent();
+
             pUpdate.UpdateMovement(__instance);
 
             pUpdate.UpdateHealth(__instance);
 
             pUpdate.UpdateSuffocation(__instance);
-
-            UpdateHandler.CheckForUpdates();
         }
 
-        public void UpdateMovement(Player __instance)
+        internal void UpdateMovement(Player __instance)
         {
             if (__instance.IsUnderwaterForSwimming() || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
@@ -71,8 +68,8 @@ namespace RPG_Framework
         }
 
 
-        static float nextHealth;// = 0f;
-        public void UpdateHealth(Player __instance)
+        private static float nextHealth;// = 0f;
+        internal void UpdateHealth(Player __instance)
         {
             if (__instance.liveMixin.IsFullHealth()) return;
 
@@ -86,8 +83,8 @@ namespace RPG_Framework
         }
 
 
-        static float nextSuffocate;// = 0f;
-        public void UpdateSuffocation(Player __instance)
+        private static float nextSuffocate;// = 0f;
+        internal void UpdateSuffocation(Player __instance)
         {
             if(__instance.GetOxygenAvailable() > 3) return;
 
@@ -103,12 +100,33 @@ namespace RPG_Framework
 
     }
 
+
+
+    [HarmonyPatch(typeof(PlayerController))]
+    [HarmonyPatch("SetMotorMode")]
+    class PlayerController_SetMotorMode_Patch
+    {
+        [HarmonyPostfix]
+        internal static void PostFix()
+        {
+            if (Guard.IsGamePaused())
+                return;
+
+            Speed speedInst = new Speed();
+            speedInst.UpdateSpeed();
+        }
+    }
+    
+
+
+
+
     [HarmonyPatch(typeof(Player))]
     [HarmonyPatch("OnKill")]
     class Player_OnKill_Patch
     {
         [HarmonyPostfix]
-        public static void Postfix()
+        internal static void Postfix()
         {
             if (Guard.IsGamePaused())
                 return;
@@ -120,6 +138,7 @@ namespace RPG_Framework
     }
 
 
+
     [HarmonyPatch(typeof(Player))]
     [HarmonyPatch("GetBreathPeriod")]
     class Player_GetBreathPeriod_Patch
@@ -127,7 +146,7 @@ namespace RPG_Framework
         static float nextXP;
 
         [HarmonyPostfix]
-        public static void Postfix(Player __instance, ref float __result)
+        internal static void Postfix(Player __instance, ref float __result)
         {
             if (Guard.IsGamePaused() || __instance.CanBreathe() || __result == 99999) return;
 
@@ -151,7 +170,7 @@ namespace RPG_Framework
     {
         static float lastBreathInterval;
         [HarmonyPrefix]
-        public static bool Prefix(float breathingInterval)
+        internal static bool Prefix(float breathingInterval)
         {
             if (Guard.IsGamePaused()) return true;
             lastBreathInterval = breathingInterval;
@@ -162,7 +181,7 @@ namespace RPG_Framework
         
         static float nextXP;
         [HarmonyPostfix]
-        public static void Postfix(Player __instance, ref float __result)//, float __state)
+        internal static void Postfix(Player __instance, ref float __result)//, float __state)
         {
             if (Guard.IsGamePaused() || __instance.CanBreathe() || __result == 0) return;
 

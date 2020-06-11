@@ -1,9 +1,6 @@
 ﻿using Harmony;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
+using SMLHelper.V2.Handlers;
 
 namespace RPG_Framework
 {
@@ -13,6 +10,12 @@ namespace RPG_Framework
         {
             var harmony = HarmonyInstance.Create("gurrenm4.RPG_Framework");   // Change this line to match your mod. 
             harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+            OptionsPanelHandler.RegisterModOptions(new Options());
+
+            //Items.Items.CreateFabricatorTabs();
+            //Items.Items.CreateItems();
         }
     }
 }
+

@@ -1,9 +1,15 @@
 ﻿using FMOD;
+using FMODUnity;
+using Harmony;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
+using UnityEngine;
 
 namespace RPG_Framework.LevelUp
 {
@@ -36,7 +42,55 @@ namespace RPG_Framework.LevelUp
 
 
             var sound = SMLHelper.V2.Utility.AudioUtils.CreateSound(levelUpFile);
-            SMLHelper.V2.Utility.AudioUtils.PlaySound(sound);
+            PlaySound(sound, VolumeControl.Master);
+            //SMLHelper.V2.Utility.AudioUtils.PlaySound(sound);
+
+
+            /*RuntimeManager.LowlevelSystem.getMasterChannelGroup(out ChannelGroup channels);
+            var newChannels = channels;
+            newChannels.setVolume(SoundSystem.masterVolume);
+            RuntimeManager.LowlevelSystem.playSound(sound, newChannels, false, out Channel channel);*/
+
+        }
+
+        /// <summary>
+        /// The a list the different volume controls in the game
+        /// </summary>
+        public enum VolumeControl { Master, Music, Voice, Ambient }
+
+        /// <summary>
+        /// Plays a <see cref="Sound"/> globally at specified volume
+        /// </summary>
+        /// <param name="sound">The sound which should be played</param>
+        /// <param name="volumeControl">Which volume control to adjust sound levels by. How loud sound is.</param>
+        /// <returns>The channel on which the sound was created</returns>
+        public static Channel PlaySound(Sound sound, VolumeControl volumeControl)
+        {
+            float volumeLevel;
+            switch (volumeControl)
+            {
+                case VolumeControl.Master:
+                    volumeLevel = SoundSystem.masterVolume;
+                    break;
+                case VolumeControl.Music:
+                    volumeLevel = SoundSystem.musicVolume;
+                    break;
+                case VolumeControl.Voice:
+                    volumeLevel = SoundSystem.voiceVolume;
+                    break;
+                case VolumeControl.Ambient:
+                    volumeLevel = SoundSystem.ambientVolume;
+                    break;
+                default:
+                    volumeLevel = 1f;
+                    break;
+            }
+
+            RuntimeManager.LowlevelSystem.getMasterChannelGroup(out ChannelGroup channels);
+            var newChannels = channels;
+            newChannels.setVolume(volumeLevel);
+            RuntimeManager.LowlevelSystem.playSound(sound, newChannels, false, out Channel channel);
+            return channel;
         }
     }
 }
