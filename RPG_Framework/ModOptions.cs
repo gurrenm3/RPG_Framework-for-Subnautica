@@ -10,6 +10,7 @@ namespace RPG_Framework
     public class Options : ModOptions
     {
         Config cfg = Config.GetConfig();
+        Dictionary<string, float> XPGrowths = XP_Handler.XPGrowths;
         public Options() : base("RPG Options")
         {
             KeybindChanged += Options_KeybindChanged;
@@ -58,20 +59,6 @@ namespace RPG_Framework
             return "";
         }
 
-        Dictionary<string, float> XPGrowths = new Dictionary<string, float>()
-        {
-            {"Almost nothing | 0.1", 0.1f },
-            {"Super slow | 0.25", 0.25f },
-            {"Slow | 0.5", 0.5f },
-            {"A little slower | 0.75", 0.75f },
-            {"Normal | 1.0", 1.0f },
-            {"A little faster | 1.25", 1.25f },
-            {"Fast | 1.5", 1.5f },
-            {"Faster | 1.75", 1.75f },
-            {"Super fast | 2.0", 2f },
-            {"Super super fast | 3.0", 3f },
-            {"Extreme | 5.0", 5f },
-            {"Max | 10.0", 10f },
-        };
+        
     }
 }

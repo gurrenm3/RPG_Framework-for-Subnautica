@@ -43,6 +43,11 @@ namespace RPG_Framework
             cfg = Config.GetConfig();
 
             RPGKeyPress.ProcessKeys();
+            if (cfg.XP_Multiplier <= 0)
+            {
+                cfg.XP_Multiplier = 1;
+                Config.SaveConfig();
+            }
 
             if(cfg.EnableDoubleXPEvents)
                 XP_Events.DoubleXPEvent();
