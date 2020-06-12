@@ -7,13 +7,14 @@ namespace RPG_Framework.Stats
 {
     class Food
     {
-        private static Config cfg = Config.GetConfig();
+        private static Config cfg;
         private static SaveData saveData;
 
         public static void UpdateFood(Player __instance)
         {
-            //saveData = SaveData.GetSaveData();
-            /*StatObject stat = new StatObject()
+            /*saveData = SaveData.GetSaveData();
+            cfg = Config.GetConfig();
+            StatObject stat = new StatObject()
             {
                 Name = "Max Food",
                 Level = saveData.FoodBonusLevel,

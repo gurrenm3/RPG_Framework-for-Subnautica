@@ -6,7 +6,7 @@ namespace RPG_Framework.Stats
 {
     class Speed
     {
-        private static Config cfg = Config.GetConfig();
+        private static Config cfg;
         private static SaveData saveData;
 
         private static float dontAddBoostTime;
@@ -16,12 +16,8 @@ namespace RPG_Framework.Stats
 
         internal void UpdateSpeed()
         {
-            if (saveData == null)
-                saveData = SaveData.GetSaveData();
-
-            if (cfg == null)
-                cfg = Config.GetConfig();
-
+            cfg = Config.GetConfig();
+            saveData = SaveData.GetSaveData();
 
             if (Player.main.motorMode == Player.MotorMode.Dive)
                 UpdateSwimSpeed();
@@ -29,9 +25,6 @@ namespace RPG_Framework.Stats
                 UpdateWalkSpeed();
             else
                 ResetSpeedBoost();
-
-            if ((saveData.SwimSpeedLevel > 0 || saveData.WalkSpeedLevel > 0) && !cfg.SpeedToggleMsgShown)
-                ShowSpeedToggleMSG();
         }
 
         #region Swim Speed stuff
@@ -99,14 +92,6 @@ namespace RPG_Framework.Stats
         }
 
         #endregion
-
-        private void ShowSpeedToggleMSG()
-        {
-            Log.InGameMSG("You can toggle your Speed Boost On / Off with your SpeedBoostToggle key." +
-                "Default is CapsLock. You change it in the Settings.");
-            cfg.SpeedToggleMsgShown = true;
-            Config.SaveConfig();
-        }
 
         internal void ResetSpeedBoost()
         {

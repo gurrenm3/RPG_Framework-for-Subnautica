@@ -9,13 +9,15 @@ namespace RPG_Framework.Stats
 {
     class Suffocation
     {
-        private static Config cfg = Config.GetConfig();
+        private static Config cfg;
         private static SaveData saveData;
         private static float startSuffocation = 3;
 
         public static void UpdateSuffocation(Player __instance)
         {
+            cfg = Config.GetConfig();
             saveData = SaveData.GetSaveData();
+
             StatObject stat = new StatObject()
             {
                 Name = "Suffocation Time",

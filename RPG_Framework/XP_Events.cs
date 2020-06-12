@@ -12,6 +12,8 @@ namespace RPG_Framework
 {
     class XP_Events
     {
+        const float eventDuration = 5f;
+        static Config cfg;
         internal static void AddExperience(float amount)
         {
             SaveData.GetSaveData().PlayerXP += amount;
@@ -20,37 +22,73 @@ namespace RPG_Framework
         private static bool hasAppliedBonusXP;
         internal static void DoubleXPEvent()
         {
-            var cfg = Config.GetConfig();
+            cfg = Config.GetConfig();
             XP_Events events = new XP_Events();
             if (!events.IsDoubleXP())
             {
-                if(hasAppliedBonusXP)
-                    cfg.XP_Multiplier -= Config.defaultXPMult;
-
+                if (cfg.DoubleXPApplied || eventInProgress)
+                    events.StopEvent();
                 return;
             }
 
-            Log.InGameMSG("Double XP event has started! You get twice as much XP for the next 5 minutes");
-            cfg.XP_Multiplier += Config.defaultXPMult;
-            hasAppliedBonusXP = true;
+            events.StartXPEvent();
+        }
+
+        static bool eventInProgress = false;
+        private void StartXPEvent()
+        {
+            if(!eventInProgress)
+            {
+                numDoubleXPChecks = 0;
+                eventInProgress = true;
+                cfg.DoubleXPApplied = true;
+
+                cfg.XP_Multiplier *= 2;
+                Config.SaveConfig();
+                eventTime = time + (eventDuration * 60);
+                Log.InGameMSG("Double XP event has started! You get twice as much XP for the next " + eventDuration + " minutes");
+            }
+        }
+
+        static float eventTime;
+        private bool IsEventOver()
+        {
+            return Time.time > eventTime;
+        }
+
+        private void StopEvent()
+        {
+            eventInProgress = false;
+            cfg.XP_Multiplier /= 2;
+            cfg.DoubleXPApplied = false;
+            Config.SaveConfig();
         }
 
         private static float time;
         private static int numDoubleXPChecks = 0;
         private bool IsDoubleXP()
         {
+            if (!cfg.EnableDoubleXPEvents)
+                return false;
+
+            if (eventInProgress)
+            {
+                if (!IsEventOver())
+                    return true;
+
+                return false;
+            }
+
             float waitTime = 600;
             if (Time.time < time)
                 return false;
+
             time = Time.time + waitTime;
 
 
             numDoubleXPChecks++;
             if(numDoubleXPChecks > 20)
-            {
-                numDoubleXPChecks = 0;
                 return true;
-            }
 
             
             Random rand = new Random();
@@ -58,8 +96,6 @@ namespace RPG_Framework
             if (!result || (result && numDoubleXPChecks < 4))
                 return false;
 
-
-            numDoubleXPChecks = 0;
             return true;
         }
 

@@ -19,6 +19,18 @@ namespace RPG_Framework
             return true;
         }
 
+        public static bool IsXPNegative(float xp, float xpNextLevel, out float newXP)
+        {
+            if (xp > 0)
+            {
+                newXP = xp;
+                return false;
+            }
+
+            newXP = xpNextLevel / 2;            
+            return true;
+        }
+
         public static bool IsGamePaused()
         {
             if (Time.timeScale == 0f)

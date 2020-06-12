@@ -12,6 +12,8 @@ namespace RPG_Framework.Stats
         public static float UpdateBreathPeriod(Player __instance, ref float __result)
         {
             saveData = SaveData.GetSaveData();
+            cfg = Config.GetConfig();
+
             StatObject stat = new StatObject()
             {
                 Name = "Breath Period",

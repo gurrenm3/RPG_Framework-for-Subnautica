@@ -14,6 +14,7 @@ namespace RPG_Framework.Stats
         public static float AddXP(float current, float max)
         {
             if (current == max) return 0f;
+            cfg = Config.GetConfig();
 
             float percentEmpty = (max - current) / max;
 
@@ -25,6 +26,7 @@ namespace RPG_Framework.Stats
         public static bool CanLevelUp(StatObject stat)
         {
             if (stat.Level >= stat.MaxLevel) return false;
+
             if (!XP_Handler.DoesHaveLevelUp(stat.XP, stat.XPToNextLevel)) return false;
 
             LevelingSystem.PlayLevelUpSound();
@@ -56,6 +58,7 @@ namespace RPG_Framework.Stats
 
         public static float CalcResistance(int level)
         {
+            cfg = Config.GetConfig();
             float resistance = level * cfg.PercentResistancePerLevel;
             
             if (resistance >= 100)
@@ -202,7 +205,7 @@ namespace RPG_Framework.Stats
 
         public int Level { get; set; }
         public int MaxLevel { get; set; }
-        public float XP { get; set; }
+        public float  XP { get; set; }
         public float XPToNextLevel { get; set; }
         public float Modifier { get; set; }
     }

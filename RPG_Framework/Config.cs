@@ -20,8 +20,10 @@ namespace RPG_Framework
         internal static float defaultXPMult = 1f;
 
         public KeyCode SpeedBoostToggle { get; set; } = KeyCode.CapsLock;
+        public KeyCode StatsUIToggle { get; set; } = KeyCode.C;
 
-        public float XP_Multiplier { get; set; } = 0.8f;
+        public float XP_Multiplier { get; set; } = 1f;
+        public float XP_Bonus_Items { get; set; } = 0f;
         public float OnKillcreatureKillXP_Modifier { get; set; } = 0.25f;
 
         public float Swim_XPNextLevel_Multiplier { get; set; } = 2.3f;
@@ -96,10 +98,16 @@ namespace RPG_Framework
         public int MaxStarveResistLevel { get; set; } = DefResistanceMaxLvl;
         public int MaxUndefinedResistLevel { get; set; } = DefResistanceMaxLvl;
 
+        public bool UsingOldFramework { get; set; } = true;
+
         public bool EnableDoubleXPEvents { get; set; } = true;
+        public bool DoubleXPApplied { get; set; } = false;
 
         public bool SpeedToggleMsgShown { get; set; } = false;
-        public bool UsingOldFramework { get; set; } = true;
+        public bool XPGrowthMsgShown { get; set; } = false;
+        public bool DoubleXPMsgShown { get; set; } = false;
+
+        
 
         /// <summary>
         /// Use this to read and load Config
@@ -135,6 +143,10 @@ namespace RPG_Framework
 
                 DefResistanceMaxLvl = cfg.MaxResistanceLevel;
                 DefResistanceXPModifier = cfg.Resistance_XPNextLevel_Multiplier;
+
+                if (cfg.XP_Multiplier < 0)
+                    cfg.XP_Multiplier = 1;
+
                 defaultXPMult = cfg.XP_Multiplier;
 
                 try { var testKey = cfg.SpeedBoostToggle; }

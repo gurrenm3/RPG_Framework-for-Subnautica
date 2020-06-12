@@ -8,7 +8,7 @@ namespace RPG_Framework.Stats
     class DamageResistance
     {
         private static SaveData saveData;
-        private static Config cfg = Config.GetConfig();
+        private static Config cfg;
 
         public static float AddXP(float statValue, float amountToAdd)
         {
@@ -21,6 +21,7 @@ namespace RPG_Framework.Stats
             if(damageInfo == null) return;
 
             saveData = SaveData.GetSaveData();
+            cfg = Config.GetConfig();
 
             if (damageInfo.type == DamageType.Acid)
                 ApplyAcidResist(__instance, damageInfo);

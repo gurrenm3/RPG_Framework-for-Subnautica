@@ -97,6 +97,7 @@
     <Compile Include="Guard.cs" />
     <Compile Include="Items\Items.cs" />
     <Compile Include="Items\Pills\Pill.cs" />
+    <Compile Include="Hints.cs" />
     <Compile Include="RPGKeyPress.cs" />
     <Compile Include="LevelingSystem.cs" />
     <Compile Include="Log.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Stats\Speed.cs" />
     <Compile Include="Stats\StatMgr.cs" />
     <Compile Include="Stats\Suffocation.cs" />
+    <Compile Include="UI\StatsPanel.cs" />
     <Compile Include="UI\Test.cs" />
     <Compile Include="Updater\UpdateHandler.cs" />
     <Compile Include="Updater\WebHandler.cs" />

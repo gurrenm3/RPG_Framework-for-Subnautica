@@ -15,7 +15,7 @@ namespace RPG_Framework.UI
             if (!hasLoaded)
             {
                 string executingLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                string bundleLocation = Path.Combine(executingLocation, "testui");
+                string bundleLocation = Path.Combine(executingLocation, "statsui");
 
                 AssetBundle assetBundle = AssetBundle.LoadFromFile(bundleLocation);
                 prefab = assetBundle.LoadAsset<GameObject>("Canvas");
@@ -24,7 +24,7 @@ namespace RPG_Framework.UI
                 hasLoaded = true;                
             }
             i++;
-            prefab.GetComponent<Text>().text = "HEALTH " + i.ToString();
+            //prefab.GetComponent<Text>().text = "HEALTH " + i.ToString();
         }
     }
 }

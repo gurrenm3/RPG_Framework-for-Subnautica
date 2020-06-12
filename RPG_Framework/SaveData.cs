@@ -164,19 +164,7 @@ namespace RPG_Framework
         public float UndefinedResist_XPToNextLevel { get; set; } = resistBaseXP;
         #endregion
 
-
-        /*#region Air stuff
-        public int AirBonusLevel { get; set; }
-        public float Air_XP { get; set; }
-        public float Air_XPToNextLevel { get; set; } = 1500f;
-        #endregion*/
-        public static void FirstLoad(string currentSlot)
-        {
-            saveSlot = currentSlot;
-            /*Config.GetConfig();
-            Log.InGameMSG("Loading RPG Data");
-            saveData = GetSaveData(true);*/
-        }
+        
 
         public static SaveData GetSaveData() => GetSaveData(false);
         public static SaveData GetSaveData(bool reloadSave)
@@ -187,11 +175,10 @@ namespace RPG_Framework
                 UpdateHandler.CheckForUpdates();
             }
 
-
-
-
+            saveData.CheckForNegatives();
             return saveData;
         }
+
 
         public static SaveData LoadSave()
         {
@@ -228,6 +215,7 @@ namespace RPG_Framework
         public static void Save_SaveFile(SaveData save)
         {
             if (save == null) save = new SaveData();
+            save.CheckForNegatives();
 
             TempSaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
             FileInfo savePath = new FileInfo(TempSaveDataPath);
@@ -237,6 +225,46 @@ namespace RPG_Framework
             StreamWriter serialize = new StreamWriter(TempSaveDataPath, false);
             serialize.Write(output_Cfg);
             serialize.Close();
+        }
+
+        bool savedNegativeCheck = false;
+        private void CheckForNegatives()
+        {
+            saveData.SwimSpeed_XP = FixNegatives(saveData.SwimSpeed_XP, saveData.SwimSpeed_XPToNextLevel);
+            saveData.WalkSpeed_XP = FixNegatives(saveData.WalkSpeed_XP, saveData.WalkSpeed_XPToNextLevel);
+            saveData.Health_XP = FixNegatives(saveData.Health_XP, saveData.Health_XPToNextLevel);
+            saveData.BreathPeriod_XP = FixNegatives(saveData.BreathPeriod_XP, saveData.BreathPeriod_XPToNextLevel);
+            saveData.SuffocateResist_XP = FixNegatives(saveData.SuffocateResist_XP, saveData.SuffocateResist_XPToNextLevel);
+            saveData.AcidResist_XP = FixNegatives(saveData.AcidResist_XP, saveData.AcidResist_XPToNextLevel);
+            saveData.ColdResist_XP = FixNegatives(saveData.ColdResist_XP, saveData.ColdResist_XPToNextLevel);
+            saveData.CollideResist_XP = FixNegatives(saveData.CollideResist_XP, saveData.CollideResist_XPToNextLevel);
+            saveData.DrillResist_XP = FixNegatives(saveData.DrillResist_XP, saveData.DrillResist_XPToNextLevel);
+            saveData.ElectricResist_XP = FixNegatives(saveData.ElectricResist_XP, saveData.ElectricResist_XPToNextLevel);
+            saveData.ExplosiveResist_XP = FixNegatives(saveData.ExplosiveResist_XP, saveData.ExplosiveResist_XPToNextLevel);
+            saveData.FireResist_XP = FixNegatives(saveData.FireResist_XP, saveData.FireResist_XPToNextLevel);
+            saveData.HeatResist_XP = FixNegatives(saveData.HeatResist_XP, saveData.HeatResist_XPToNextLevel);
+            saveData.LaserCutterResist_XP = FixNegatives(saveData.LaserCutterResist_XP, saveData.LaserCutterResist_XPToNextLevel);
+            saveData.NormalResist_XP = FixNegatives(saveData.NormalResist_XP, saveData.NormalResist_XPToNextLevel);
+            saveData.PoisonResist_XP = FixNegatives(saveData.PoisonResist_XP, saveData.PoisonResist_XPToNextLevel);
+            saveData.PressureResist_XP = FixNegatives(saveData.PressureResist_XP, saveData.PressureResist_XPToNextLevel);
+            saveData.PunctureResist_XP = FixNegatives(saveData.PunctureResist_XP, saveData.PunctureResist_XPToNextLevel);
+            saveData.RadResist_XP = FixNegatives(saveData.RadResist_XP, saveData.RadResist_XPToNextLevel);
+            saveData.SmokeResist_XP = FixNegatives(saveData.SmokeResist_XP, saveData.SmokeResist_XPToNextLevel);
+            saveData.StarveResist_XP = FixNegatives(saveData.StarveResist_XP, saveData.StarveResist_XPToNextLevel);
+            saveData.UndefinedResist_XP = FixNegatives(saveData.UndefinedResist_XP, saveData.UndefinedResist_XPToNextLevel);
+
+            if (!savedNegativeCheck)
+            {
+                savedNegativeCheck = true;
+                Save_SaveFile();
+            }
+        }
+
+        private float FixNegatives(float xp, float xpNextLevel)
+        {
+            if (xp > 0)
+                return xp;
+            return xpNextLevel / 2;
         }
     }
 

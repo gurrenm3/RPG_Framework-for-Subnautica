@@ -39,22 +39,18 @@ namespace RPG_Framework
             if (Guard.IsGamePaused())
                 return;
 
-            saveData = SaveData.GetSaveData();
             cfg = Config.GetConfig();
+            saveData = SaveData.GetSaveData();
 
             RPGKeyPress.ProcessKeys();
-            if (cfg.XP_Multiplier <= 0)
-            {
-                cfg.XP_Multiplier = 1;
-                Config.SaveConfig();
-            }
-
-            if(cfg.EnableDoubleXPEvents)
-                XP_Events.DoubleXPEvent();
+            
+            XP_Events.DoubleXPEvent();
 
             pUpdate.UpdateMovement(__instance);
             pUpdate.UpdateHealth(__instance);
             pUpdate.UpdateSuffocation(__instance);
+
+            Hints.CheckMSGs();
         }
 
         internal void UpdateMovement(Player __instance)
@@ -158,6 +154,9 @@ namespace RPG_Framework
 
             if (Time.time > nextXP)
             {
+                if (SaveData.GetSaveData().BreathPeriod_XP < 0)
+                    SaveData.GetSaveData().BreathPeriod_XP = SaveData.GetSaveData().BreathPeriod_XPToNextLevel/2;
+
                 SaveData.GetSaveData().BreathPeriod_XP += Air.AddXP(__instance.oxygenMgr.GetOxygenAvailable(), __instance.oxygenMgr.GetOxygenCapacity());
                 nextXP = Time.time + 1f;
             }
