@@ -57,7 +57,7 @@ namespace RPG_Framework
         string XPGrowthMsg = "Did you know you can change how fast you level up? Open the game's settings" +
             " to change how fast you level up. Check it out";
         string SpeedToggleMsg = "You can toggle your Speed Boost On / Off with your SpeedBoostToggle key." +
-                "Default is CapsLock. You change it in the game's settings";
+                " Default is CapsLock. You change it in the game's settings";
         string DoubleXPMsg = "Don't like Double XP Events? Disable them in the game's settings";
     }
 }
