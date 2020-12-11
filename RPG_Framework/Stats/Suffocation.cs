@@ -51,13 +51,13 @@ namespace RPG_Framework.Stats
             StatMgr mgr = new StatMgr();
 
             int responseNum = random.Next(0, s.Notifs.Count - 1);
-            Log.InGameMSG(String.Format(s.Notifs[responseNum], stat.Name, 8 + stat.Level));
+            Logger.Log(String.Format(s.Notifs[responseNum], stat.Name, 8 + stat.Level));
 
 
             if (stat.Level >= stat.MaxLevel)
             {
                 int maxRandom = random.Next(0, mgr.maxLevelNotifs.Count - 1);
-                Log.InGameMSG(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name));
+                Logger.Log(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name));
             }
         }
 

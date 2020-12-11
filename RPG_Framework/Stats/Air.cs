@@ -79,13 +79,13 @@ namespace RPG_Framework.Stats
             StatMgr mgr = new StatMgr();
 
             int responseNum = random.Next(0, a.singleLevelNotifs.Count - 1);
-            Log.InGameMSG(String.Format(a.singleLevelNotifs[responseNum], stat.Name, CalcBreathPeriodPercent(stat.Level) + 3));
+            Logger.Log(String.Format(a.singleLevelNotifs[responseNum], stat.Name, CalcBreathPeriodPercent(stat.Level) + 3));
 
 
             if (stat.Level >= stat.MaxLevel)
             {
                 int maxRandom = random.Next(0, mgr.maxLevelNotifs.Count - 1);
-                Log.InGameMSG(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name) + ". Each breath now lasts " + (CalcBreathPeriodPercent(stat.Level) + 3) + " seconds");
+                Logger.Log(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name) + ". Each breath now lasts " + (CalcBreathPeriodPercent(stat.Level) + 3) + " seconds");
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +15,8 @@ namespace RPG_Framework.Stats
         {
             if (Guard.IsGamePaused()) return;
 
-            /*Log.InGameMSG("Current Health: " +liveMixin.health.ToString());
-            Log.InGameMSG("Max Health: " +liveMixin.maxHealth.ToString());*/
+            /*Logger.Log("Current Health: " +liveMixin.health.ToString());
+            Logger.Log("Max Health: " +liveMixin.maxHealth.ToString());*/
         }
     }
 }

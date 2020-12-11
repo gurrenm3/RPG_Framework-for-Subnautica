@@ -187,14 +187,14 @@ namespace RPG_Framework.Stats
 
             
             if (gainedLevels == 1)
-                Log.InGameMSG(String.Format(mgr.singleLevelNotifs[responseNum], stat.Name, stat.Level));
+                Logger.Log(String.Format(mgr.singleLevelNotifs[responseNum], stat.Name, stat.Level));
             else
-                Log.InGameMSG(String.Format(mgr.multiLevelNotifs[responseNum], stat.Name, gainedLevels, stat.Level));
+                Logger.Log(String.Format(mgr.multiLevelNotifs[responseNum], stat.Name, gainedLevels, stat.Level));
 
             if (stat.Level >= stat.MaxLevel)
             {
                 int maxRandom = random.Next(0, mgr.maxLevelNotifs.Count - 1);
-                Log.InGameMSG(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name));
+                Logger.Log(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name));
             }
         }
     }

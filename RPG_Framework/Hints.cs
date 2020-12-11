@@ -51,7 +51,7 @@ namespace RPG_Framework
 
         private void ShowMsg(string msg)
         {
-            Log.InGameMSG("[RPG Framework] " + msg);
+            Logger.Log("[RPG Framework] " + msg);
         }
 
         string XPGrowthMsg = "Did you know you can change how fast you level up? Open the game's settings" +

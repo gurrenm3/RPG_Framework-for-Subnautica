@@ -1,6 +1,8 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System.Reflection;
 using SMLHelper.V2.Handlers;
+using RPG_Framework.Lib;
+using System;
 
 namespace RPG_Framework
 {
@@ -8,13 +10,20 @@ namespace RPG_Framework
     {
         public static void Patch()
         {
-            var harmony = HarmonyInstance.Create("gurrenm4.RPG_Framework");   // Change this line to match your mod. 
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            var assembly = Assembly.GetExecutingAssembly();
+            new Harmony($"GurrenM4_{assembly.GetName().Name}").PatchAll(assembly);
 
+            Logger.MessageLogged += Logger_MessageLogged;
             OptionsPanelHandler.RegisterModOptions(new Options());
+        }
 
-            //Items.Items.CreateFabricatorTabs();
-            //Items.Items.CreateItems();
+        private static void Logger_MessageLogged(object sender, Logger.LogEvents e)
+        {
+            var logType = e.LogType;
+            if (logType == LogType.Both || logType == LogType.InGame)
+                ErrorMessage.AddMessage(e.Message);
+            if (logType == LogType.Both || logType == LogType.LogFile)
+                Console.WriteLine("[RPGFramework] " + e.Message);
         }
     }
 }

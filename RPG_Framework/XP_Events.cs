@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Harmony;
-using RPG_Framework.Items.Pills;
-using RPG_Framework.UI;
+using HarmonyLib;
 using UnityEngine;
 using Random = System.Random;
 
@@ -46,7 +44,7 @@ namespace RPG_Framework
                 cfg.XP_Multiplier *= 2;
                 Config.SaveConfig();
                 eventTime = time + (eventDuration * 60);
-                Log.InGameMSG("Double XP event has started! You get twice as much XP for the next " + eventDuration + " minutes");
+                Logger.Log("Double XP event has started! You get twice as much XP for the next " + eventDuration + " minutes");
             }
         }
 
@@ -137,7 +135,7 @@ namespace RPG_Framework
 
                 //CraftData.AddToInventory(a, rand.Next(count[0], count[1]), false, true);
 
-                /*Log.InGameMSG(CreatureClass.GetName(target) + " is dead!");
+                /*Logger.Log(CreatureClass.GetName(target) + " is dead!");
                 CreatureClass.GetMeatDropCount(CreatureClass.GetName(target));*/
             }
         }

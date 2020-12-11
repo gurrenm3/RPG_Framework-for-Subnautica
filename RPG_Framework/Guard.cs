@@ -10,13 +10,28 @@ namespace RPG_Framework
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]
         public static extern short GetKeyState(int keyCode);
 
-
-        public static bool IsStringValid(string text)
+        /// <summary>
+        /// Check if an object is null and throw an Argument exception if it is
+        /// </summary>
+        /// <param name="obj">Object to check if null</param>
+        public static void ThrowIfArgumentIsNull(object obj, string argumentName, string message = "")
         {
-            if (text.Trim() == "" || text == null)
-                return false;
-            
-            return true;
+            if (obj != null)
+                return;
+
+            if (string.IsNullOrEmpty(message))
+                throw new ArgumentNullException(argumentName);
+            else
+                throw new ArgumentNullException(argumentName, message);
+        }
+
+
+        public static void ThrowIfStringIsNull(string stringToCheck, string message)
+        {
+            if (String.IsNullOrEmpty(stringToCheck))
+            {
+                throw new Exception(message);
+            }
         }
 
         public static bool IsXPNegative(float xp, float xpNextLevel, out float newXP)

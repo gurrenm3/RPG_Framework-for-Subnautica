@@ -1,14 +1,8 @@
-﻿using Harmony;
-using SMLHelper;
+﻿using HarmonyLib;
 using Oculus.Newtonsoft.Json;
-using Oculus.Platform.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using SMLHelper.V2.Utility;
-using RPG_Framework.Updater;
+using RPG_Framework.Lib.Web;
 
 namespace RPG_Framework
 {
@@ -172,7 +166,8 @@ namespace RPG_Framework
             if (reloadSave || saveData == null)
             {
                 saveData = LoadSave();
-                UpdateHandler.CheckForUpdates();
+                UpdateHandler updateHandler = new UpdateHandler();
+                updateHandler.HandleUpdates();
             }
 
             saveData.CheckForNegatives();
@@ -183,12 +178,12 @@ namespace RPG_Framework
         public static SaveData LoadSave()
         {
             string SaveDataPath = Path.Combine(SaveLoadManager.GetTemporarySavePath(), saveFileName);
-            Log.Output("Loading SaveData...");
-            Log.Output("SaveData path:  "+SaveDataPath);
+            Logger.Log("Loading SaveData...", Lib.LogType.LogFile);
+            Logger.Log("SaveData path:  "+SaveDataPath, Lib.LogType.LogFile);
 
             if (!File.Exists(SaveDataPath) || File.ReadAllText(SaveDataPath).Length == 0)
             {
-                Log.Output("SaveData file doesn't exist or it is empty. Creating a new one");
+                Logger.Log("SaveData file doesn't exist or it is empty. Creating a new one", Lib.LogType.LogFile);
                 saveData = new SaveData();
                 Save_SaveFile();
                 return saveData;
@@ -198,12 +193,12 @@ namespace RPG_Framework
             {
                 saveData = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(SaveDataPath));
                 //Save_SaveFile();    //Saving here to add new properties to json file
-                Log.Output("Successfully loaded SaveData");
+                Logger.Log("Successfully loaded SaveData", Lib.LogType.LogFile);
                 return saveData;
             }
             catch
             {
-                Log.Output("SaveData has invalid JSON. Creating a new one");
+                Logger.Log("SaveData has invalid JSON. Creating a new one", Lib.LogType.LogFile);
                 saveData = new SaveData();
                 Save_SaveFile();
                 return saveData;
@@ -277,7 +272,7 @@ namespace RPG_Framework
         public static void Postfix()
         {
             SaveData.GetSaveData(true);
-
+            
         }
     }
 
@@ -291,7 +286,7 @@ namespace RPG_Framework
         public static bool Prefix()
         {
             SaveData.Save_SaveFile();
-            Log.InGameMSG("RPG data saved");
+            Logger.Log("RPG data saved");
 
             return true;
         }

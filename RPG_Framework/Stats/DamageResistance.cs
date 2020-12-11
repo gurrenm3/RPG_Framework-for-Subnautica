@@ -707,15 +707,15 @@ namespace RPG_Framework.Stats
 
             int responseNum = random.Next(0, d.singleLevelNotifs.Count - 1);
             if (gainedLevels == 1)
-                Log.InGameMSG(String.Format(d.singleLevelNotifs[responseNum], stat.Name, currentResistance));
+                Logger.Log(String.Format(d.singleLevelNotifs[responseNum], stat.Name, currentResistance));
             else
-                Log.InGameMSG(String.Format(d.multiLevelNotifs[responseNum], stat.Name, gainedLevels, currentResistance));
+                Logger.Log(String.Format(d.multiLevelNotifs[responseNum], stat.Name, gainedLevels, currentResistance));
 
 
             if (stat.Level >= stat.MaxLevel)
             {
                 int maxRandom = random.Next(0, mgr.maxLevelNotifs.Count - 1);
-                Log.InGameMSG(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name) + ". Current resistance is at " + currentResistance + "%");
+                Logger.Log(String.Format(mgr.maxLevelNotifs[maxRandom], stat.Name) + ". Current resistance is at " + currentResistance + "%");
             }
         }
     }

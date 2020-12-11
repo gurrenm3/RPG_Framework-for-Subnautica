@@ -1,6 +1,5 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using Oculus.Newtonsoft.Json;
-using RPG_Framework.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -127,18 +126,18 @@ namespace RPG_Framework
         public static Config LoadConfig()
         {
             Config cfg;
-            Log.Output("Loading Config...");
+            Logger.Log("Loading Config...", Lib.LogType.LogFile);
             
             if (!File.Exists(ConfigPath) || File.ReadAllText(ConfigPath).Length == 0)
             {
-                Log.Output("Config file doesn't exist or it is empty. Creating a new one");
+                Logger.Log("Config file doesn't exist or it is empty. Creating a new one", Lib.LogType.LogFile);
                 cfg = new Config();
                 return cfg;
             }
 
             try
             {
-                if(Cfg == null) Log.Output("Initializing RPG Framework");
+                if(Cfg == null) Logger.Log("Initializing RPG Framework", Lib.LogType.LogFile);
                 cfg = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigPath));
 
                 DefResistanceMaxLvl = cfg.MaxResistanceLevel;
@@ -151,13 +150,13 @@ namespace RPG_Framework
 
                 try { var testKey = cfg.SpeedBoostToggle; }
                 catch { cfg.SpeedBoostToggle = KeyCode.CapsLock; }
-                
-                Log.Output("Successfully loaded Config");
+
+                Logger.Log("Successfully loaded Config", Lib.LogType.LogFile);
                 return cfg;
             }
             catch
             {
-                Log.Output("Config has invalid JSON. Creating a new one");
+                Logger.Log("Config has invalid JSON. Creating a new one", Lib.LogType.LogFile);
                 cfg = new Config();
                 return cfg;
             }
@@ -188,9 +187,9 @@ namespace RPG_Framework
         [HarmonyPostfix]
         public static void Postfix()
         {
-            Log.Output("Saving RPG Config");
+            Logger.Log("Saving RPG Config", Lib.LogType.LogFile);
             Config.SaveConfig();
-            Log.Output("RPG Config saved");
+            Logger.Log("RPG Config saved", Lib.LogType.LogFile);
         }
     }
 }

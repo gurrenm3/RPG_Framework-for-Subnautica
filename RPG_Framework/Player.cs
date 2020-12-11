@@ -1,6 +1,5 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using RPG_Framework.Stats;
-using RPG_Framework.Updater;
 using UnityEngine;
 
 namespace RPG_Framework
@@ -134,7 +133,7 @@ namespace RPG_Framework
                 return;
 
             
-            Log.InGameMSG("All the XP you have gained since your last save is lost");
+            Logger.Log("All the XP you have gained since your last save is lost");
             SaveData.GetSaveData(true);
         }
     }
