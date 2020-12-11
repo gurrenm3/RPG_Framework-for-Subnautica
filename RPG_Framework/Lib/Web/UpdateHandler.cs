@@ -48,7 +48,7 @@ namespace RPG_Framework.Lib.Web
         private float nextUpdateCheck;
         private bool CanCheckForUpdate()
         {
-            if (!finishedCheckingUpdates || Time.time < nextUpdateCheck)
+            if (finishedCheckingUpdates || Time.time < nextUpdateCheck)
                 return false;
 
             const int nextCheckTime = 1800;
