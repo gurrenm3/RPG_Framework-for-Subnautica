@@ -2,9 +2,9 @@
 using RPG_Framework.Stats;
 using UnityEngine;
 
-namespace RPG_Framework
+namespace RPG_Framework.Patches
 {
-    [HarmonyPatch(typeof(Player))]
+    /*[HarmonyPatch(typeof(Player))]
     [HarmonyPatch("OnTakeDamage")]
     class Player_OnTakeDamage_Patch
     {
@@ -21,38 +21,12 @@ namespace RPG_Framework
         {
             DamageResistance.ApplyResistance(__instance, damageInfo);
         }
-    }
+    }*/
 
 
-    [HarmonyPatch(typeof(Player))]
-    [HarmonyPatch("Update")]
-    class Player_Update
-    {
-        private static SaveData saveData;
-        private static Config cfg = Config.GetConfig();
-        private static Player_Update pUpdate = new Player_Update();
+    
 
-        [HarmonyPostfix]
-        internal static void PostFix(Player __instance)
-        {
-            if (Guard.IsGamePaused())
-                return;
-
-            cfg = Config.GetConfig();
-            saveData = SaveData.GetSaveData();
-
-            RPGKeyPress.ProcessKeys();
-            
-            XP_Events.DoubleXPEvent();
-
-            pUpdate.UpdateMovement(__instance);
-            pUpdate.UpdateHealth(__instance);
-            pUpdate.UpdateSuffocation(__instance);
-
-            Hints.CheckMSGs();
-        }
-
-        internal void UpdateMovement(Player __instance)
+       /* internal void UpdateMovement(Player __instance)
         {
             if (__instance.IsUnderwaterForSwimming() || __instance.motorMode == Player.MotorMode.Dive)  //add xp to swim speed
             {
@@ -99,11 +73,11 @@ namespace RPG_Framework
             Suffocation.UpdateSuffocation(__instance);
         }
 
-    }
+    }*/
 
 
 
-    [HarmonyPatch(typeof(PlayerController))]
+    /*[HarmonyPatch(typeof(PlayerController))]
     [HarmonyPatch("SetMotorMode")]
     class PlayerController_SetMotorMode_Patch
     {
@@ -116,13 +90,13 @@ namespace RPG_Framework
             Speed speedInst = new Speed();
             speedInst.UpdateSpeed();
         }
-    }
+    }*/
     
 
 
 
 
-    [HarmonyPatch(typeof(Player))]
+    /*[HarmonyPatch(typeof(Player))]
     [HarmonyPatch("OnKill")]
     class Player_OnKill_Patch
     {
@@ -136,11 +110,11 @@ namespace RPG_Framework
             Logger.Log("All the XP you have gained since your last save is lost");
             SaveData.GetSaveData(true);
         }
-    }
+    }*/
 
 
 
-    [HarmonyPatch(typeof(Player))]
+    /*[HarmonyPatch(typeof(Player))]
     [HarmonyPatch("GetBreathPeriod")]
     class Player_GetBreathPeriod_Patch
     {
@@ -163,12 +137,12 @@ namespace RPG_Framework
             __result = Air.UpdateBreathPeriod(__instance, ref __result);
             return;
         }
-    }
+    }*/
 
 
 
 
-    [HarmonyPatch(typeof(Player))]
+    /*[HarmonyPatch(typeof(Player))]
     [HarmonyPatch("GetOxygenPerBreath")]
     class Player_GetOxygenPerBreath_Patch
     {
@@ -192,5 +166,5 @@ namespace RPG_Framework
             __result = Air.UpdateOxygenPerBreath(__instance, ref __result, lastBreathInterval);
             return;
         }
-    }
+    }*/
 }

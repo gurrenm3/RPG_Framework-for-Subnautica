@@ -2,7 +2,7 @@
 using SMLHelper.V2.Utility;
 using UnityEngine;
 
-namespace RPG_Framework.Stats
+namespace RPG_Framework.Stats.player
 {
     class Speed
     {

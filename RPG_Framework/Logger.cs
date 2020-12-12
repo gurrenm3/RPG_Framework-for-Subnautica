@@ -6,7 +6,7 @@ namespace RPG_Framework
     /// <summary>
     /// This class sends messages to the user
     /// </summary>
-    internal class Logger
+    public class Logger
     {
         #region Properties
 

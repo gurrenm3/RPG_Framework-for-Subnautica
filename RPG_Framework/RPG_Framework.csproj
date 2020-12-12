@@ -57,6 +57,9 @@
     <Reference Include="SMLHelper">
       <HintPath>F:\Program Files\Epic Games\Subnautica\QMods\Modding Helper\SMLHelper.dll</HintPath>
     </Reference>
+    <Reference Include="Stats Core">
+      <HintPath>F:\Program Files\Epic Games\Subnautica\QMods\Stats Core\Stats Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -88,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Creature.cs" />
+    <Compile Include="Extensions\PlayerExt.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Hints.cs" />
     <Compile Include="Lib\Web\UpdateHandler.cs" />
@@ -95,26 +99,35 @@
     <Compile Include="Lib\LogType.cs" />
     <Compile Include="Lib\Web\GithubReleaseConfig.cs" />
     <Compile Include="Lib\Web\WebReader.cs" />
+    <Compile Include="Patches\playerController\SetMotorMode.cs" />
+    <Compile Include="Patches\player\GetBreathPeriod.cs" />
+    <Compile Include="Patches\player\GetO2PerBreath.cs" />
+    <Compile Include="Patches\player\OnKill.cs" />
+    <Compile Include="Patches\player\Update.cs" />
     <Compile Include="RPGKeyPress.cs" />
     <Compile Include="LevelingSystem.cs" />
     <Compile Include="MainPatcher.cs" />
     <Compile Include="ModOptions.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Patches\player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveData.cs" />
-    <Compile Include="Stats\Attack.cs" />
+    <Compile Include="Stats\player\Attack.cs" />
     <Compile Include="Stats\DamageResistance.cs" />
-    <Compile Include="Stats\Food.cs" />
-    <Compile Include="Stats\Health.cs" />
-    <Compile Include="Stats\Air.cs" />
-    <Compile Include="Stats\Knife.cs" />
-    <Compile Include="Stats\Speed.cs" />
+    <Compile Include="Stats\player\Food.cs" />
+    <Compile Include="Stats\player\Health.cs" />
+    <Compile Include="Stats\player\Air.cs" />
+    <Compile Include="Stats\equiptment\Knife.cs" />
+    <Compile Include="Stats\RPGStat.cs" />
+    <Compile Include="Stats\player\Speed.cs" />
+    <Compile Include="Stats\RPGStatManager.cs" />
     <Compile Include="Stats\StatMgr.cs" />
-    <Compile Include="Stats\Suffocation.cs" />
+    <Compile Include="Stats\player\Suffocation.cs" />
     <Compile Include="XP_Events.cs" />
     <Compile Include="XP_Handler.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Stat Handlers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)$(TargetFileName)" "C:\Users\thoma\AppData\Roaming\Vortex\subnautica\mods\RPG Framework-491-1-1-2-1591933426\RPG_Framework\$(TargetFileName)" /y</PostBuildEvent>

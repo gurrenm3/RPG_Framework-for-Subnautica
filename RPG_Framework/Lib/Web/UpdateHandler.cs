@@ -36,8 +36,7 @@ namespace RPG_Framework.Lib.Web
             if (releaseConfig is null)
                 return;
 
-            bool isUpdate = IsUpdate(releaseConfig);
-            if (isUpdate)
+            if (IsUpdate(releaseConfig))
                 Logger.Log("An update is available for RPG Framework!", LogType.Both);
             else
                 Logger.Log("RPG Framework is up to date!", LogType.Both);

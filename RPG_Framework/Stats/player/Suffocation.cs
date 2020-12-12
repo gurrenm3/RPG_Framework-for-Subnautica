@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-namespace RPG_Framework.Stats
+namespace RPG_Framework.Stats.player
 {
     class Suffocation
     {

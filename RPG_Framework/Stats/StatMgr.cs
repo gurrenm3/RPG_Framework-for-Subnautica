@@ -1,9 +1,6 @@
 ﻿using RPG_Framework.LevelUp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Media;
-using System.Text;
 
 namespace RPG_Framework.Stats
 {
